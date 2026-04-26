@@ -1,0 +1,394 @@
+{
+  "site": {
+    "browserTitle": "吕晓维 | 产品设计师",
+    "metaDescription": "吕晓维，产品设计师，10年工作经验，长期负责复杂业务场景中的体验与策略设计。",
+    "name": "吕晓维",
+    "role": "· 产品设计师",
+    "navWork": "精选作品",
+    "navPlay": "实验",
+    "navAbout": "AI coding",
+    "navResume": "我的简历",
+    "adminLabel": "内容后台",
+    "heroEyebrow": "北京 / 10年工作经验",
+    "heroPrefix": "我是吕晓维，",
+    "heroHighlight": "长期在复杂业务里做产品设计与体验策略。",
+    "heroLead": "我是一名产品设计师，长期负责复杂业务场景中的体验与策略设计，具备从问题定义、方案决策、设计落地到数据验证的完整能力。过去几年主要在知乎核心业务中负责问答详情页、社区互动与社交方向设计，也有金融产品与增长系统的设计经验。",
+    "workSectionLabel": "精选作品",
+    "playLabel": "实验",
+    "playTitle": "原型、探索，以及不那么正式的设计练习。",
+    "playBody": "这里后续可以放原型实验、设计思考、Vibe Coding 小项目，或者那些还没有发展成完整 case study 的探索内容。",
+    "aboutLabel": "关于",
+    "aboutTitle": "擅长在用户体验、业务增长与社区长期价值之间做平衡与决策。",
+    "aboutBody": "我有内容社区与金融产品双领域经验，持续关注复杂系统设计、增长与体验平衡、数据驱动迭代，以及跨团队协作落地。",
+    "footerPrefix": "设计与实现",
+    "footerName": "吕晓维"
+  },
+  "experiences": [
+    {
+      "year": "2021 - 至今",
+      "company": "知乎",
+      "role": "产品设计师｜问答详情页 / 社区互动 / 社交方向",
+      "url": "/#work"
+    },
+    {
+      "year": "2019 - 2021",
+      "company": "北京优得网络科技有限公司",
+      "role": "UI设计负责人｜海外贷款产品全链路设计",
+      "url": "/#work"
+    },
+    {
+      "year": "2016 - 2019",
+      "company": "拍拍贷",
+      "role": "产品设计师｜贷款超市 / 信用卡管家",
+      "url": "/#work"
+    }
+  ],
+  "socialLinks": [
+    {
+      "label": "邮箱",
+      "url": "mailto:ginaxiaowei@gmail.com"
+    },
+    {
+      "label": "网站",
+      "url": "https://prosody.framer.website"
+    }
+  ],
+  "works": [
+    {
+      "slug": "zhihu-detail-container-rebuild",
+      "title": "问答页内容详情页容器重构",
+      "cardMeta": "知乎 · 内容消费结构 · 2021 - 至今",
+      "badge": "核心项目",
+      "coverImage": "/assets/rachel-covers/openai.png",
+      "coverMedia": "/assets/rachel-covers/openai.mp4",
+      "coverMediaType": "video",
+      "coverMediaAnimated": false,
+      "tone": "tone-01",
+      "ratio": "ratio-wide",
+      "caseStudy": {
+        "eyebrow": "Case Study / 知乎",
+        "lead": "目标是提升内容消费深度，构建更适配知乎内容生态的消费结构。这个 case study 下一轮会继续补完整数据、方案过程与关键界面。",
+        "type": "社区内容体验",
+        "year": "2021 - 至今",
+        "role": "产品设计师",
+        "coverLabel": "内容容器案例封面",
+        "sections": [
+          {
+            "label": "01 背景",
+            "title": "原有详情页以信息堆叠为主，阅读路径割裂",
+            "body": "用户难以形成持续消费，内容消费深度受到结构限制，因此需要重新定义知乎内容详情页的承载方式。"
+          },
+          {
+            "label": "02 挑战",
+            "title": "需要在体验、业务诉求与技术可行性之间不断权衡",
+            "body": "项目涉及复杂内容场景、多方协作与实验验证，需要在连续阅读、互动承载和后续扩展之间做系统性决策。"
+          },
+          {
+            "label": "03 方案",
+            "title": "围绕内容容器设计进行了多轮探索与验证",
+            "body": "基于用户消费路径数据和访谈结果，推动多轮方案探索、实验验证与决策收敛，逐步形成新的内容容器结构。"
+          },
+          {
+            "label": "04 结果",
+            "title": "重构知乎内容消费的容器架构",
+            "body": "提升阅读连续性与沉浸感，并为后续互动能力与内容扩展提供结构基础。下一轮补充商业化和指标数据。"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "zhihu-interaction-bar-redesign",
+      "title": "互动表达体系重构",
+      "cardMeta": "知乎 · 社区互动 · 2021 - 至今",
+      "badge": "核心项目",
+      "coverImage": "/assets/rachel-covers/alexa.png",
+      "coverMedia": "/assets/rachel-covers/alexa.mp4",
+      "coverMediaType": "video",
+      "coverMediaAnimated": false,
+      "tone": "tone-02",
+      "ratio": "ratio-wide",
+      "caseStudy": {
+        "eyebrow": "Case Study / 知乎",
+        "lead": "项目目标是提升整体互动率与表达效率，同时保证社区表达能力与内容质量。下一轮会继续补实验路径和结果数据。",
+        "type": "互动表达设计",
+        "year": "2021 - 至今",
+        "role": "产品设计师",
+        "coverLabel": "互动体系案例封面",
+        "sections": [
+          {
+            "label": "01 背景",
+            "title": "不同内容形态互动方式不统一，表达成本高",
+            "body": "原有互动结构弱化了社区表达特性，也让不同内容形态之间缺乏一致的互动体验。"
+          },
+          {
+            "label": "02 挑战",
+            "title": "需要同时满足增长目标与社区文化",
+            "body": "项目不能只追求互动率提升，还要保留知乎表达机制的完整性，避免伤害长期社区氛围。"
+          },
+          {
+            "label": "03 方案",
+            "title": "统一互动逻辑，重构表达结构",
+            "body": "围绕表达统一、结构合并与弱化反对等方向进行多方案探索，并持续做实验验证与组件化沉淀。"
+          },
+          {
+            "label": "04 结果",
+            "title": "提升互动率与表达效率，并建立组件体系",
+            "body": "关键决策是保留赞同 / 反对核心表达机制，在增长与社区文化之间取得平衡，同时支撑多内容形态统一分发。"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "zhihu-profile-rebuild",
+      "title": "个人页重构：人设与关注转化",
+      "cardMeta": "知乎 · 社交关系 · 2021 - 至今",
+      "badge": "社交设计",
+      "coverImage": "/assets/rachel-covers/figma.png",
+      "coverMedia": "/assets/rachel-covers/figma.mp4",
+      "coverMediaType": "video",
+      "coverMediaAnimated": false,
+      "tone": "tone-03",
+      "ratio": "ratio-portrait",
+      "caseStudy": {
+        "eyebrow": "Case Study / 知乎",
+        "lead": "这个项目聚焦提升内容到关注的转化效率，把个人页从展示工具转变为决策工具。下一轮继续补界面细节与数据表现。",
+        "type": "社交转化设计",
+        "year": "2021 - 至今",
+        "role": "产品设计师",
+        "coverLabel": "个人页重构封面",
+        "sections": [
+          {
+            "label": "01 背景",
+            "title": "个人页需要承担更明确的信任与转化作用",
+            "body": "原有页面更偏展示，缺乏帮助用户快速判断“是否值得关注”的关键信号。"
+          },
+          {
+            "label": "02 挑战",
+            "title": "如何让信息结构服务关注决策",
+            "body": "需要在身份、能力、内容沉淀和信任感之间建立更清晰的层级关系。"
+          },
+          {
+            "label": "03 方案",
+            "title": "强化人设表达并优化信息结构",
+            "body": "通过身份标签、能力表达、信任信号和页面结构重组，提升用户做出关注决策的效率。"
+          },
+          {
+            "label": "04 结果",
+            "title": "提升关注转化效率",
+            "body": "个人页从信息展示工具转变为帮助用户判断与决策的社交转化工具。"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "zhilink-digital-card",
+      "title": "知Link：可分享的数字名片",
+      "cardMeta": "知乎 · 社交传播 · 2021 - 至今",
+      "badge": "社交设计",
+      "coverImage": "/assets/rachel-covers/rbc.png",
+      "coverMedia": "/assets/rachel-covers/rbc.png",
+      "coverMediaType": "image",
+      "coverMediaAnimated": true,
+      "tone": "tone-04",
+      "ratio": "ratio-portrait",
+      "caseStudy": {
+        "eyebrow": "Case Study / 知乎",
+        "lead": "项目目标是补充弱连接之外的社交传播能力，通过可分享的个人名片承载用户内容与能力。下一轮继续补场景与结果。",
+        "type": "社交传播设计",
+        "year": "2021 - 至今",
+        "role": "产品设计师",
+        "coverLabel": "数字名片封面",
+        "sections": [
+          {
+            "label": "01 背景",
+            "title": "内容社区需要更多可外部传播的社交载体",
+            "body": "用户在社区内有影响力，但在外部场景中的传播和连接方式还不够自然。"
+          },
+          {
+            "label": "02 挑战",
+            "title": "要兼顾分享效率与个人表达完整性",
+            "body": "产品既要在外部场景里易于分享，也要真实承载用户内容、身份与能力。"
+          },
+          {
+            "label": "03 方案",
+            "title": "构建可分享的数字名片",
+            "body": "支持在微信等外部场景传播，让用户以更轻量的方式展示自己与内容沉淀。"
+          },
+          {
+            "label": "04 结果",
+            "title": "强化用户影响力与内容传播能力",
+            "body": "帮助用户在弱连接场景中建立更清晰的个人表达与外部传播入口。"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "interest-circle-community",
+      "title": "圈子：兴趣场构建",
+      "cardMeta": "知乎 · 社区参与 · 2021 - 至今",
+      "badge": "社交设计",
+      "coverImage": "/assets/rachel-covers/pokergpt.png",
+      "coverMedia": "/assets/rachel-covers/pokergpt.mp4",
+      "coverMediaType": "video",
+      "coverMediaAnimated": false,
+      "tone": "tone-05",
+      "ratio": "ratio-wide",
+      "caseStudy": {
+        "eyebrow": "Case Study / 知乎",
+        "lead": "项目目标是让用户从单条内容消费转向持续参与，构建更强的兴趣场景与互动关系。下一轮继续补方案细节。",
+        "type": "社区参与设计",
+        "year": "2021 - 至今",
+        "role": "产品设计师",
+        "coverLabel": "圈子案例封面",
+        "sections": [
+          {
+            "label": "01 背景",
+            "title": "社区需要从内容消费走向持续参与",
+            "body": "单条内容的阅读与互动之外，用户还需要更稳定的兴趣场和关系沉淀场景。"
+          },
+          {
+            "label": "02 挑战",
+            "title": "如何降低参与门槛并前置互动",
+            "body": "兴趣社区既要形成持续内容消费，也要让用户更轻松地表达和发布。"
+          },
+          {
+            "label": "03 方案",
+            "title": "构建兴趣场景并支持连续消费与互动",
+            "body": "围绕内容组织、互动方式和发布门槛进行设计，鼓励用户在更持续的关系场中参与。"
+          },
+          {
+            "label": "04 结果",
+            "title": "提升社区活跃度与内容消费深度",
+            "body": "让兴趣场景从单点消费延展到持续参与，增强社区关系的连续性。"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "overseas-loan-product-design",
+      "title": "海外贷款产品全链路设计",
+      "cardMeta": "优得网络 · 金融产品 · 2019 - 2021",
+      "badge": "金融产品",
+      "coverImage": "/assets/rachel-covers/1password.png",
+      "coverMedia": "/assets/rachel-covers/1password.mp4",
+      "coverMediaType": "video",
+      "coverMediaAnimated": false,
+      "tone": "tone-06",
+      "ratio": "ratio-wide",
+      "caseStudy": {
+        "eyebrow": "Case Study / 优得网络",
+        "lead": "负责海外贷款产品在印度、印尼、泰国市场的全链路设计，覆盖贷前、贷中、贷后，以及支付和营销系统。下一轮继续补完整案例。",
+        "type": "金融产品设计",
+        "year": "2019 - 2021",
+        "role": "UI设计负责人",
+        "coverLabel": "海外贷款产品封面",
+        "sections": [
+          {
+            "label": "01 背景",
+            "title": "服务多国家市场的贷款产品需要完整设计体系",
+            "body": "项目覆盖海外贷款业务全链路，设计需要兼顾转化效率、金融场景可信度和业务协同。"
+          },
+          {
+            "label": "02 挑战",
+            "title": "业务链路长，系统复杂，且市场差异明显",
+            "body": "不同国家市场、支付流程和营销策略，对设计提出了更高的一致性与适配要求。"
+          },
+          {
+            "label": "03 方案",
+            "title": "覆盖贷前、贷中、贷后与支付 / 营销系统设计",
+            "body": "负责贷款产品主流程、支付系统、营销活动和海外投放设计，支撑业务增长与流程效率。"
+          },
+          {
+            "label": "04 结果",
+            "title": "完成多类增长与效率型项目落地",
+            "body": "包括短信营销中台、支付自动对账系统和裂变活动设计，为转化效率和业务协作带来直接支持。"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "loan-supermarket-conversion-optimization",
+      "title": "贷款超市流量分发与转化优化",
+      "cardMeta": "拍拍贷 · 转化设计 · 2016 - 2019",
+      "badge": "金融产品",
+      "coverImage": "/assets/rachel-covers/hackwestern.png",
+      "coverMedia": "/assets/rachel-covers/hackwestern.png",
+      "coverMediaType": "image",
+      "coverMediaAnimated": true,
+      "tone": "tone-07",
+      "ratio": "ratio-wide",
+      "caseStudy": {
+        "eyebrow": "Case Study / 拍拍贷",
+        "lead": "在 66钱庄与大白信用卡管家相关项目中，长期围绕流量分发、转化路径与商业目标完成设计优化。下一轮继续补详细案例。",
+        "type": "转化体验设计",
+        "year": "2016 - 2019",
+        "role": "产品设计师",
+        "coverLabel": "转化优化案例封面",
+        "sections": [
+          {
+            "label": "01 背景",
+            "title": "金融流量产品核心目标是提升分发效率与商业转化",
+            "body": "项目需要围绕借款决策路径、流量分发策略和核心漏斗进行持续优化。"
+          },
+          {
+            "label": "02 挑战",
+            "title": "需要在高转化诉求下保持流程可理解性",
+            "body": "金融产品对效率要求极高，但同时也不能牺牲用户判断成本和流程清晰度。"
+          },
+          {
+            "label": "03 方案",
+            "title": "优化流量分发与转化路径，并提出一键借款方案",
+            "body": "主导 66钱庄 v2.0 - v4.0 设计，持续围绕入口、流程和承接结构提升转化效率。"
+          },
+          {
+            "label": "04 结果",
+            "title": "实现千万级月收入与显著转化提升",
+            "body": "平台月收入达到千万级，一键借款方案有效提升了用户转化效率。"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "credit-card-manager-growth",
+      "title": "信用卡管家多端设计与商业转化",
+      "cardMeta": "拍拍贷 · App / 小程序 / H5 · 2016 - 2019",
+      "badge": "金融产品",
+      "coverImage": "/assets/rachel-covers/earth.png",
+      "coverMedia": "/assets/rachel-covers/earth.mp4",
+      "coverMediaType": "video",
+      "coverMediaAnimated": false,
+      "tone": "tone-08",
+      "ratio": "ratio-wide",
+      "caseStudy": {
+        "eyebrow": "Case Study / 拍拍贷",
+        "lead": "负责大白信用卡管家 App、小程序与 H5 设计，围绕流量承接与商业转化目标推进多端体验。下一轮继续补详细内容。",
+        "type": "多端产品设计",
+        "year": "2016 - 2019",
+        "role": "产品设计师",
+        "coverLabel": "信用卡管家案例封面",
+        "sections": [
+          {
+            "label": "01 背景",
+            "title": "产品需要同时覆盖 App、小程序与 H5 多端场景",
+            "body": "设计需要在不同终端保持一致性，同时匹配各自的使用场景与商业目标。"
+          },
+          {
+            "label": "02 挑战",
+            "title": "多端体验一致性与转化目标需要同时兼顾",
+            "body": "产品既要保证品牌与体验统一，也要适配不同终端的流量承接方式和商业化目标。"
+          },
+          {
+            "label": "03 方案",
+            "title": "负责多端产品设计并持续优化关键流程",
+            "body": "围绕核心功能、信息结构和商业转化场景进行设计，支撑产品在多个入口中的一致表达。"
+          },
+          {
+            "label": "04 结果",
+            "title": "累计流量 50w+，实现商业转化目标",
+            "body": "项目在多端场景中达成既定商业目标，也沉淀了更稳定的多端设计方法。"
+          }
+        ]
+      }
+    }
+  ]
+}
