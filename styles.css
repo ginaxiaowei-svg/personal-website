@@ -1,4 +1,25 @@
 :root {
+  --color-text-primary: #32404f;
+  --color-text-secondary: rgba(50, 64, 79, 0.5);
+  --color-brand: #0066ff;
+  --color-yellow-text: #f59e0c;
+  --color-yellow-bg: #fffbec;
+  --color-green-text: #12b981;
+  --color-green-bg: #ecfef6;
+  --color-purple-text: #7c5dfc;
+  --color-purple-bg: #f1edff;
+  --color-red-text: #f05159;
+  --color-red-bg: #fdeaeb;
+  --font-title: "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", serif;
+  --font-body: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  --font-size-title-52: 52px;
+  --font-size-title-30: 30px;
+  --font-size-title-24: 24px;
+  --font-size-title-16: 16px;
+  --font-size-body-14: 14px;
+  --space-40: 40px;
+  --space-20: 20px;
+  --space-12: 12px;
   --bg: #f7f8f4;
   --panel: rgba(247, 248, 244, 0.84);
   --text: #131515;
@@ -12,7 +33,7 @@
   --page: min(1800px, calc(100vw - 48px));
   --content: minmax(0, 1fr);
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
-  --serif-title: "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", serif;
+  --serif-title: var(--font-title);
 }
 
 * {
@@ -974,7 +995,15 @@ h1 span {
 
 .case-study-page--zhihu {
   background: #fff;
-  color: #324154;
+  color: #32404f;
+  --zhihu-yellow-text: #f59e0c;
+  --zhihu-yellow-bg: #fffbec;
+  --zhihu-green-text: #12b981;
+  --zhihu-green-bg: #ecfef6;
+  --zhihu-purple-text: #7c5dfc;
+  --zhihu-purple-bg: #f1edff;
+  --zhihu-red-text: #f05159;
+  --zhihu-red-bg: #fdeaeb;
 }
 
 .case-study-page--zhihu::before {
@@ -982,7 +1011,7 @@ h1 span {
 }
 
 .case-study-page--zhihu .cursor-dot {
-  background: #2367f2;
+  background: #0066ff;
   mix-blend-mode: normal;
 }
 
@@ -1002,54 +1031,129 @@ h1 span {
 .case-study-page--zhihu .back-label,
 .case-study-page--zhihu .site-nav a,
 .case-study-page--zhihu .footer-links a {
-  color: rgba(50, 65, 84, 0.72);
+  color: rgba(50, 64, 79, 0.5);
 }
 
 .zhihu-case-shell {
   width: min(1248px, calc(100vw - 48px));
   display: grid;
-  grid-template-columns: 176px minmax(0, 768px);
-  justify-content: center;
-  gap: 56px;
+  grid-template-columns: 246px minmax(0, 768px);
+  justify-content: start;
+  gap: 46px;
   padding: 52px 0 112px;
 }
 
 .zhihu-case-rail {
   position: sticky;
   top: 124px;
+  width: 246px;
   align-self: start;
-  display: grid;
-  gap: 10px;
 }
 
-.zhihu-case-rail-link {
-  display: grid;
-  grid-template-columns: 28px 1fr;
+.zhihu-case-outline {
+  display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 0;
-  color: rgba(50, 65, 84, 0.44);
-  transition: color 180ms var(--ease);
+  gap: var(--space-12);
+  width: 246px;
+  min-height: 230px;
 }
 
-.zhihu-case-rail-link:hover {
-  color: #2367f2;
+.zhihu-case-outline-line {
+  position: relative;
+  width: 2px;
+  align-self: stretch;
+  border-radius: 999px;
+  background: rgba(50, 64, 79, 0.2);
 }
 
-.zhihu-case-rail-link span {
-  font-family: "SF Mono", "IBM Plex Mono", "Menlo", monospace;
-  font-size: 0.73rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+.zhihu-case-outline-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1.5px;
+  height: 22px;
+  border-radius: 999px;
+  background: #32404f;
+  opacity: 0;
+  transition:
+    transform 220ms var(--ease),
+    height 220ms var(--ease),
+    opacity 160ms var(--ease);
 }
 
-.zhihu-case-rail-link strong {
-  font-size: 0.9rem;
+.zhihu-case-outline-content {
+  display: grid;
+  gap: var(--space-12);
+  width: 100%;
+  padding: 5px 0;
+}
+
+.zhihu-case-outline-item {
+  display: grid;
+  gap: var(--space-12);
+}
+
+.zhihu-case-outline-link,
+.zhihu-case-outline-child {
+  color: #32404f;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 12px;
+  line-height: 1.4;
+  letter-spacing: 0;
+  opacity: 0.5;
+  transition:
+    color 180ms var(--ease),
+    opacity 180ms var(--ease);
+}
+
+.zhihu-case-outline-link {
+  font-weight: 600;
+  line-height: 22px;
+}
+
+.zhihu-case-outline-item--medium > .zhihu-case-outline-link {
   font-weight: 500;
+}
+
+.zhihu-case-outline-children {
+  display: grid;
+  gap: var(--space-12);
+}
+
+.zhihu-case-outline-child {
+  display: block;
+  padding-left: 16px;
+  font-weight: 400;
+  font-size: 12px;
+}
+
+.zhihu-case-outline-link:hover,
+.zhihu-case-outline-child:hover {
+  color: #32404f;
+  opacity: 1;
+}
+
+.zhihu-case-outline-link.is-active,
+.zhihu-case-outline-child.is-active {
+  color: #0066ff;
+  opacity: 1;
 }
 
 .zhihu-case-main {
   min-width: 0;
+}
+
+#strategy-1,
+#metrics,
+#reflection,
+#closing {
+  padding-top: 40px;
+  border-top: 1px solid rgba(50, 64, 79, 0.1);
+}
+
+#metrics,
+#closing {
+  border-top: 0;
 }
 
 .zhihu-case-hero,
@@ -1060,55 +1164,49 @@ h1 span {
 }
 
 .zhihu-case-hero {
-  padding-bottom: 38px;
+  padding-top: 0;
+  padding-bottom: 40px;
   border-bottom: 1px solid rgba(50, 65, 84, 0.1);
 }
 
 .zhihu-case-brand {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
   width: 92px;
   height: 92px;
   border-radius: 10px;
-  background: linear-gradient(180deg, #27adff 0%, #1f66f2 100%);
-  color: #fff;
-  font-family: var(--serif-title);
-  font-size: 2.5rem;
-  font-weight: 600;
-  letter-spacing: -0.04em;
+  object-fit: cover;
 }
 
 .zhihu-case-title,
 .zhihu-case-section h2,
 .zhihu-case-closing p {
   margin: 0;
-  color: #3b4b62;
-  font-family: var(--serif-title);
+  color: #32404f;
+  font-family: "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", serif;
   font-weight: 500;
-  letter-spacing: -0.04em;
+  letter-spacing: 0;
 }
 
 .zhihu-case-title {
   max-width: none;
   margin-top: 28px;
-  font-size: clamp(3.4rem, 5vw, 4.7rem);
-  line-height: 1.08;
+  font-size: 52px;
+  line-height: 1.3;
 }
 
 .zhihu-case-meta {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 28px;
+  gap: var(--space-20);
   max-width: 560px;
-  margin-top: 34px;
+  margin-top: var(--space-40);
 }
 
 .zhihu-case-meta span,
 .zhihu-card-label,
 .zhihu-case-muted {
   display: block;
-  color: rgba(50, 65, 84, 0.52);
+  color: rgba(50, 64, 79, 0.5);
 }
 
 .zhihu-case-meta span,
@@ -1118,89 +1216,267 @@ h1 span {
 }
 
 .zhihu-case-meta strong {
-  font-size: 1.45rem;
+  font-size: 14px;
   font-weight: 500;
-  letter-spacing: -0.03em;
+  color: #32404f;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  letter-spacing: 0;
 }
 
 .zhihu-case-intro {
-  margin-top: 34px;
+  margin-top: var(--space-40);
   padding-left: 18px;
-  border-left: 2px solid #3b4b62;
+  border-left: 2px solid #32404f;
 }
 
 .zhihu-case-intro p,
-.zhihu-case-section p,
+.zhihu-case-section p:not(.zhihu-case-muted),
 .zhihu-case-list li,
 .zhihu-decision-card p,
 .zhihu-interview-card p,
-.zhihu-reflection-card p,
 .zhihu-metric-card p {
   margin: 0;
-  font-size: 1rem;
-  line-height: 1.85;
-  color: rgba(50, 65, 84, 0.88);
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #32404f;
 }
 
 .zhihu-case-section {
-  margin-top: 44px;
+  margin-top: 40px;
 }
 
 .zhihu-case-section h2 {
-  font-size: clamp(2.05rem, 4vw, 3rem);
-  line-height: 1.18;
+  font-size: 30px;
+  line-height: 1.35;
+}
+
+.zhihu-case-section > h2 {
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.zhihu-case-section .zhihu-case-kicker {
+  margin-top: 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.zhihu-case-section .zhihu-case-list {
+  margin-top: var(--space-12);
+}
+
+.zhihu-case-section .zhihu-case-list li {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.zhihu-case-section p + p {
+  margin-top: var(--space-12);
+}
+
+.zhihu-case-section .zhihu-case-muted + .zhihu-case-kicker,
+.zhihu-case-section .zhihu-case-kicker + .zhihu-case-list,
+.zhihu-case-section .zhihu-case-muted + .zhihu-case-list {
+  margin-top: var(--space-12);
 }
 
 .zhihu-case-kicker {
-  margin-top: 18px;
+  margin-top: var(--space-20);
   font-weight: 500;
 }
 
 .zhihu-case-muted {
-  margin-top: 18px;
-  font-size: 0.98rem;
-  line-height: 1.75;
+  margin-top: var(--space-20);
+  color: #32404f7f;
+  font-size: 0.875rem;
+  line-height: 1.4;
 }
 
 .zhihu-case-list {
-  margin: 16px 0 0;
+  margin: var(--space-12) 0 0;
   padding-left: 1.25rem;
 }
 
 .zhihu-case-list li + li {
-  margin-top: 8px;
+  margin-top: var(--space-12);
 }
 
 .zhihu-case-list--compact {
-  margin-top: 10px;
+  margin-top: var(--space-12);
+}
+
+.zhihu-test-wall-list li + li {
+  margin-top: 0;
 }
 
 .zhihu-figure {
-  margin: 24px 0 0;
+  margin: 20px 0 0;
 }
 
 .zhihu-figure--panel {
-  padding: 18px;
-  border: 1px solid rgba(50, 65, 84, 0.08);
-  border-radius: 22px;
-  background: linear-gradient(180deg, #fbfcff 0%, #ffffff 100%);
-  box-shadow: 0 22px 48px rgba(50, 65, 84, 0.06);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .zhihu-figure img {
   display: block;
-  width: 100%;
+  width: auto;
+  max-width: 100%;
   height: auto;
+  margin: 0 auto;
+  border-radius: 0;
+}
+
+.zhihu-attempt-a-image img {
+  width: auto;
+  max-width: 100%;
+}
+
+.zhihu-attempt-a-image {
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.zhihu-attempt-b-shell {
+  width: 100%;
+  max-width: 768px;
+  margin-top: 20px;
+  border: 1px solid rgba(50, 64, 79, 0.08);
   border-radius: 16px;
+  background: linear-gradient(180deg, #f9fafb 0%, #ffffff 100%);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+#strategy-2 .zhihu-attempt-b-shell {
+  margin-top: 0;
+  overflow: visible;
+}
+
+.zhihu-attempt-b-shell img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+}
+
+.js-zoomable-image {
+  cursor: zoom-in;
+}
+
+.image-zoom-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: none;
+  overflow: auto;
+  padding: 12px;
+}
+
+.image-zoom-modal.is-open {
+  display: grid;
+  place-items: center;
+}
+
+.image-zoom-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(10, 16, 26, 0.82);
+  cursor: zoom-out;
+}
+
+.image-zoom-dialog {
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+  max-width: calc(100vw - 24px);
+  max-height: calc(100dvh - 24px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #f9fafb 0%, #ffffff 100%);
+  pointer-events: none;
+}
+
+.image-zoom-modal-image {
+  width: auto;
+  max-width: calc(100vw - 104px);
+  max-height: calc(100dvh - 104px);
+  object-fit: contain;
+  background: transparent;
+  border-radius: 8px;
+  box-shadow: none;
+  pointer-events: auto;
+}
+
+.image-zoom-nav {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(50, 64, 79, 0.18);
+  border-radius: 999px;
+  background: #ffffff;
+  color: #32404f;
+  font-size: 30px;
+  line-height: 1;
+  transform: translateY(-50%);
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.image-zoom-modal.has-zoom-nav .image-zoom-nav {
+  display: inline-flex;
+}
+
+.image-zoom-nav--prev {
+  left: -40px;
+}
+
+.image-zoom-nav--next {
+  right: -40px;
+}
+
+.image-zoom-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 999px;
+  background: rgba(10, 16, 26, 0.56);
+  color: #fff;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .zhihu-scroll-figure {
   width: 100%;
-  margin-top: 24px;
+  margin-top: var(--space-20);
   overflow-x: auto;
   padding-bottom: 12px;
   scrollbar-width: thin;
-  scrollbar-color: rgba(35, 103, 242, 0.28) transparent;
+  scrollbar-color: rgba(0, 102, 255, 0.28) transparent;
 }
 
 .zhihu-scroll-figure::-webkit-scrollbar {
@@ -1209,64 +1485,994 @@ h1 span {
 
 .zhihu-scroll-figure::-webkit-scrollbar-thumb {
   border-radius: 999px;
-  background: rgba(35, 103, 242, 0.24);
+  background: rgba(0, 102, 255, 0.24);
 }
 
 .zhihu-figure--wide {
-  width: 888px;
-  min-width: 888px;
+  width: 768px;
+  min-width: 768px;
   margin: 0;
-  padding: 18px;
-  border: 1px solid rgba(50, 65, 84, 0.08);
-  border-radius: 22px;
-  background: linear-gradient(180deg, #fbfcff 0%, #ffffff 100%);
-  box-shadow: 0 22px 48px rgba(50, 65, 84, 0.06);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
-.zhihu-model-head {
+.zhihu-strategy-one-detail {
+  display: grid;
+  gap: 20px;
+  width: 768px;
+  max-width: 100%;
+  margin-top: 20px;
+  padding: 30px;
+  border: 0;
+  border-radius: 16px;
+  background: #f1edff;
+  box-sizing: border-box;
+}
+
+.zhihu-strategy-one-row {
+  display: grid;
+  grid-template-columns: 2px minmax(0, 1fr);
+  align-items: stretch;
+  gap: var(--space-20);
+}
+
+.zhihu-strategy-one-line {
+  display: block;
+  width: 2px;
+  border-radius: 999px;
+  background: #7c5dfc;
+}
+
+.zhihu-strategy-one-content {
+  display: grid;
+  gap: 12px;
+}
+
+.zhihu-strategy-one-content h3 {
+  margin: 0;
+  color: #7c5dfc;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.zhihu-strategy-one-card h4 {
+  margin: 0 0 8px;
+  color: #32404F;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.zhihu-strategy-one-list {
+  margin: 0;
+  padding-left: 1rem;
+  color: #32404f;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.zhihu-strategy-one-list li + li {
+  margin-top: 12px;
+}
+
+body.case-study-page.case-study-page--zhihu > main.case-shell.zhihu-case-shell > div.zhihu-case-main > #strategy-1 > div.zhihu-strategy-one-detail > article.zhihu-strategy-one-row:nth-of-type(1) > div.zhihu-strategy-one-content > ul.zhihu-strategy-one-list > li:nth-of-type(3) {
+  margin-top: 1px;
+  margin-bottom: 1px;
+}
+
+.zhihu-strategy-one-summary,
+.zhihu-strategy-one-card p {
+  margin: 0;
+  color: #32404f;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  overflow-wrap: break-word;
+}
+
+.zhihu-strategy-one-summary strong {
+  font-weight: 500;
+}
+
+.zhihu-data-negative {
+  color: #06a072;
+}
+
+.zhihu-data-positive {
+  color: #f05159;
+}
+
+.zhihu-keyword-emphasis {
+  color: #f05159;
+  font-weight: 700;
+}
+
+.zhihu-inline-bullet-list {
+  margin: 0;
+  padding-left: 1em;
+}
+
+.zhihu-inline-bullet-list li {
+  margin: 0;
+}
+
+.zhihu-inline-bullet-list li + li {
+  margin-top: 0;
+}
+
+.zhihu-tech-note {
+  color: #32404f7f;
+}
+
+.zhihu-strategy-one-indent-line {
+  display: inline-block;
+  padding-left: 14px;
+}
+
+.zhihu-triangle-note {
+  margin: 30px 0;
+  color: #7c5dfc;
+  font-family: "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.zhihu-strategy-two-decision-copy {
+  color: #32404F;
+  font-size: 14px;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-weight: 400;
+  word-wrap: break-word;
+}
+
+.zhihu-strategy-one-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.zhihu-strategy-one-cards--single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.zhihu-strategy-one-card {
+  display: block;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 0;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+body.case-study-page.case-study-page--zhihu .zhihu-strategy-one-next {
+  margin: 30px 0;
+  color: #7c5dfc;
+  font-family: "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.zhihu-test-wall {
+  display: grid;
+  gap: 20px;
+  width: 100%;
+  max-width: 768px;
+  padding: 30px;
+  border: 1px solid rgba(50, 64, 79, 0.08);
+  border-radius: 16px;
+  background: linear-gradient(180deg, #f9fafb 0%, #ffffff 100%);
+  box-sizing: border-box;
+}
+
+.zhihu-test-wall-label,
+.zhihu-test-wall-title {
+  margin: 0;
+  color: #32404f;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.zhihu-test-wall-title {
+  font-family: "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", serif;
+  color: rgba(50, 64, 79, 0.8);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.zhihu-test-wall-product-line {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+  width: 100%;
+  max-width: 708px;
+  padding: 12px 20px;
+  border: 1px solid rgba(50, 64, 79, 0.08);
+  border-radius: 6px;
+  background: rgba(50, 64, 79, 0.08);
+  color: #32404f;
+  font-family: "SF Compact", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+  box-sizing: border-box;
+}
+
+.zhihu-test-wall-product-line--model-one {
+  border: 1px solid rgba(23, 114, 246, 0.08);
+  background: rgba(23, 114, 246, 0.08);
+  color: #1772f6;
+}
+
+.zhihu-test-wall-figure {
+  margin-top: 0;
+}
+
+.zhihu-test-wall-module + .zhihu-test-wall-module {
+  margin-top: 60px;
+}
+
+.zhihu-test-wall-module > .zhihu-test-wall-product-line + .zhihu-test-wall-body {
+  margin-top: 20px;
+}
+
+.zhihu-test-wall-module .zhihu-strategy-one-detail {
+  width: 708px;
+  max-width: 100%;
+}
+
+.zhihu-test-wall-module .zhihu-strategy-one-card {
+  border: 1px solid rgba(124, 93, 252, 0.2);
+}
+
+.zhihu-test-wall-interview-card {
+  width: 708px;
+  max-width: 100%;
+  padding: 30px;
+  border-radius: 16px;
+  background: #fff7ed;
+  box-sizing: border-box;
+}
+
+.zhihu-test-wall-interview-head {
+  display: grid;
+  gap: 8px;
+}
+
+.zhihu-test-wall-interview-head h2 {
+  margin: 0;
+  color: #32404f;
+  font-family: "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", serif;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.zhihu-test-wall-interview-lead {
+  margin: 0;
+  color: #32404f;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.zhihu-test-wall-voices-board {
+  width: 648px;
+  max-width: 100%;
+  margin-top: 20px;
+  padding: 40px 45px;
+  border: 0.5px solid rgba(255, 199, 128, 0.5);
+  border-radius: 12px;
+  background: rgba(255, 199, 128, 0.1);
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+}
+
+.zhihu-test-wall-voices-col {
+  display: grid;
+  gap: 20px;
+}
+
+.zhihu-test-wall-voices-col h4 {
+  margin: 0;
+  color: #32404f;
+  font-family: "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.zhihu-test-wall-voice-stack {
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+}
+
+.zhihu-test-wall-voice-bubble {
+  width: fit-content;
+  max-width: 100%;
+  margin: 0;
+  padding: 8px 20px 8px 8px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.5);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  justify-self: center;
+}
+
+.zhihu-test-wall-voice-bubble p {
+  margin: 0;
+  color: rgba(43, 64, 95, 0.8);
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+.zhihu-test-wall-avatar {
+  width: 24px !important;
+  height: 24px !important;
+  min-width: 24px;
+  min-height: 24px;
+  max-width: 24px !important;
+  max-height: 24px !important;
+  border-radius: 999px;
+  flex: 0 0 24px;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+  cursor: default;
+}
+
+.zhihu-test-wall-interview-section-title {
+  margin: 20px 0 0;
+  color: #32404f;
+  font-family: "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.zhihu-test-wall-interview-insights {
+  width: 648px;
+  max-width: 100%;
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.zhihu-test-wall-interview-insights article,
+.zhihu-test-wall-interview-actions article {
+  border: 0.5px solid rgba(221, 221, 221, 0.5);
+  border-radius: 12px;
+  background: #ffffff66;
+  box-sizing: border-box;
+}
+
+.zhihu-test-wall-interview-insights article {
+  min-height: 105px;
+  padding: 24px 16px;
+  text-align: center;
+}
+
+.zhihu-test-wall-interview-insights h4,
+.zhihu-test-wall-interview-actions h4 {
+  margin: 0;
+  color: #32404f;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.zhihu-test-wall-interview-insights p,
+.zhihu-test-wall-interview-actions p {
+  margin: 4px 0 0;
+  color: rgba(50, 64, 79, 0.5);
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.zhihu-test-wall-interview-actions {
+  width: 648px;
+  max-width: 100%;
+  margin-top: 20px;
+  display: grid;
+  gap: 20px;
+}
+
+.zhihu-test-wall-interview-actions article {
+  min-height: 81px;
+  padding: 20px;
+}
+
+.zhihu-test-wall-body {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.zhihu-test-wall-switch-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
+.zhihu-test-wall-desc {
+  display: block;
+  margin: 0;
+  color: #32404f;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  opacity: 1;
+  visibility: visible;
+  line-height: normal;
+  letter-spacing: 0;
+}
+
+.zhihu-test-wall-desc--model-two {
+  display: grid;
+  gap: 0;
+}
+
+.zhihu-test-wall-desc-note {
+  color: #32404f7f;
+}
+
+.zhihu-model-two-desc-line {
+  display: block;
+}
+
+.zhihu-test-wall-body .zhihu-view-panels {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.zhihu-test-wall-image-panel {
+  margin: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: transparent;
+}
+
+.zhihu-test-wall-image {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.zhihu-attempt-b-shell .zhihu-test-wall-image {
+  width: auto;
+  max-width: 100%;
+  min-width: auto;
+  height: auto;
+}
+
+.zhihu-test-wall-note {
+  margin: 0 0 12px;
+  color: #32404f;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.zhihu-test-wall-phones {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.zhihu-test-wall-phone {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  min-height: 220px;
+  padding: 16px;
+  border: 2px solid #65a8ff;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(246, 250, 255, 0.9) 100%);
+}
+
+.zhihu-test-wall-phone span {
+  color: #0066ff;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.zhihu-test-wall-phone p {
+  margin: 0;
+  color: #32404f;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.zhihu-test-wall-ui-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.zhihu-test-wall-ui-grid article {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid rgba(50, 64, 79, 0.12);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.zhihu-test-wall-ui-grid h4 {
+  margin: 0;
+  color: #32404f;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.zhihu-test-wall-ui-grid p {
+  margin: 0;
+  color: #32404f;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.zhihu-strategy-two {
+  display: grid;
+  gap: 20px;
+}
+
+.zhihu-case-section#strategy-2-attempt-a {
+  display: grid;
+  gap: 20px;
+}
+
+.zhihu-case-section#strategy-2-attempt-a > h2 {
+  margin-bottom: 0;
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.zhihu-case-section#strategy-2-attempt-a .zhihu-case-muted,
+.zhihu-case-section#strategy-2-attempt-a .zhihu-case-kicker,
+.zhihu-case-section#strategy-2-attempt-a .zhihu-figure,
+.zhihu-case-section#strategy-2-attempt-a .zhihu-strategy-one-detail {
+  margin-top: 0;
+}
+
+.zhihu-strategy-two-module {
+  display: grid;
+  gap: 20px;
+}
+
+.zhihu-strategy-two-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
 }
 
-.zhihu-tabs {
+.zhihu-strategy-two-head h3 {
+  margin: 0;
+  color: #32404f;
+  font-family: "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", serif;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.zhihu-view-switch {
   display: inline-flex;
   align-items: center;
   gap: 8px;
 }
 
-.zhihu-tabs span {
+.zhihu-view-switch button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-width: 52px;
   height: 34px;
   padding: 0 14px;
-  border: 1px solid rgba(50, 65, 84, 0.12);
+  border: 1px solid rgba(50, 64, 79, 0.1);
   border-radius: 999px;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0.12) 100%),
+    linear-gradient(135deg, rgba(190, 219, 255, 0.16) 0%, rgba(190, 219, 255, 0.04) 100%);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  box-shadow: none;
   color: rgba(50, 65, 84, 0.74);
-  font-size: 0.95rem;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.zhihu-view-switch button.is-active {
+  border-color: rgba(50, 64, 79, 0.1);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.42) 0%, rgba(255, 255, 255, 0.16) 100%),
+    linear-gradient(135deg, rgba(0, 102, 255, 0.18) 0%, rgba(0, 102, 255, 0.06) 100%);
+  color: #0066ff;
+}
+
+.zhihu-view-panels {
+  position: relative;
+  display: grid;
+  overflow: visible;
+}
+
+.zhihu-view-panel {
+  grid-area: 1 / 1;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 300ms ease,
+    visibility 0ms linear 360ms;
+}
+
+.zhihu-view-panel.is-active {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  transition-delay: 0ms;
+}
+
+.zhihu-view-panel.is-entering-right {
+  visibility: visible;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.zhihu-view-panel.is-leaving-left {
+  visibility: visible;
+  opacity: 0;
+  pointer-events: none;
+  transition-delay: 0ms;
+}
+
+.zhihu-b-board {
+  display: grid;
+  gap: var(--space-20);
+  width: 100%;
+  padding: 20px;
+  border: 1px solid rgba(50, 64, 79, 0.08);
+  border-radius: 14px;
+  background: linear-gradient(180deg, #f9fafb 0%, #ffffff 100%);
+}
+
+.zhihu-b-board--phones {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.zhihu-b-phone {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid rgba(50, 64, 79, 0.12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.zhihu-b-phone h4,
+.zhihu-b-ui-card h4,
+.zhihu-b-target-content h4,
+.zhihu-b-interview h4 {
+  margin: 0;
+  color: #32404F;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.zhihu-b-phone ul {
+  margin: 0;
+  padding-left: 1rem;
+  color: #32404f;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.zhihu-b-phone li + li {
+  margin-top: 8px;
+}
+
+.zhihu-b-board--ui {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.zhihu-b-ui-card {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid rgba(50, 64, 79, 0.12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.zhihu-b-ui-card p,
+.zhihu-b-target-content p,
+.zhihu-b-interview p {
+  margin: 0;
+  color: #32404f;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.zhihu-b-target {
+  display: grid;
+  gap: var(--space-20);
+  padding: 20px;
+  border: 1px solid rgba(50, 64, 79, 0.08);
+  border-radius: 14px;
+  background: linear-gradient(180deg, #f9fafb 0%, #ffffff 100%);
+}
+
+.zhihu-b-target-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-20);
+}
+
+.zhihu-b-target-top span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid rgba(50, 64, 79, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  color: #32404f;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.zhihu-b-target-content {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-20);
+}
+
+.zhihu-b-target-content article {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid rgba(50, 64, 79, 0.12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.zhihu-b-flow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 20px;
+  border: 1px solid rgba(50, 64, 79, 0.08);
+  border-radius: 14px;
+  background: linear-gradient(180deg, #f9fafb 0%, #ffffff 100%);
+}
+
+.zhihu-b-flow--stack {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.zhihu-b-flow-node {
+  flex: 1 1 0;
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid rgba(50, 64, 79, 0.12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.94);
+  color: #32404f;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.zhihu-b-flow-arrow {
+  color: #7c5dfc;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.zhihu-b-flow--stack .zhihu-b-flow-arrow {
+  align-self: center;
+}
+
+.zhihu-b-interview {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-20);
+}
+
+.zhihu-b-interview article {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid rgba(50, 64, 79, 0.12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.zhihu-model-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.zhihu-tabs {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+.zhihu-tabs span,
+.zhihu-tabs button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  height: 34px;
+  padding: 8px 20px;
+  border: 1px solid rgba(50, 64, 79, 0.1);
+  border-radius: 100px;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0.12) 100%),
+    linear-gradient(135deg, rgba(190, 219, 255, 0.16) 0%, rgba(190, 219, 255, 0.04) 100%);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  box-shadow: none;
+  color: #32404f;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 14.7px;
+  cursor: pointer;
 }
 
 .zhihu-tabs .is-active {
-  border-color: rgba(35, 103, 242, 0.16);
-  background: rgba(35, 103, 242, 0.08);
-  color: #2367f2;
+  border-color: rgba(50, 64, 79, 0.1);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.42) 0%, rgba(255, 255, 255, 0.16) 100%),
+    linear-gradient(135deg, rgba(0, 102, 255, 0.18) 0%, rgba(0, 102, 255, 0.06) 100%);
+  color: #0066ff;
+}
+
+.zhihu-view-switch button::before,
+.zhihu-tabs span::before,
+.zhihu-tabs button::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  background:
+    linear-gradient(165deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.08) 38%, rgba(255, 255, 255, 0) 62%),
+    radial-gradient(120% 75% at 12% -10%, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 58%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.zhihu-strategy-two-figma-block {
+  display: grid;
+  gap: 10px;
+  width: 522px;
+  max-width: 100%;
+}
+
+.zhihu-strategy-two-figma-tabs {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  width: 251px;
+  height: 34px;
+}
+
+.zhihu-strategy-two-figma-tabs button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+  padding: 8px 20px;
+  border: 1px solid rgba(50, 64, 79, 0.1);
+  border-radius: 100px;
+  background: rgba(190, 219, 255, 0.01);
+  color: #32404f;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.0168em;
+  cursor: default;
+}
+
+.zhihu-strategy-two-figma-tabs button.is-active {
+  background: rgba(0, 102, 255, 0.08);
+  color: #0066ff;
+}
+
+.zhihu-strategy-two-figma-block p {
+  margin: 0;
+  color: #32404f;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.4;
 }
 
 .zhihu-decision-card {
-  margin-top: 44px;
+  margin-top: var(--space-40);
   padding: 26px 26px 30px;
-  border: 1px solid rgba(181, 158, 255, 0.3);
+  border: 1px solid color-mix(in srgb, var(--zhihu-purple-text) 26%, transparent);
   border-radius: 24px;
-  background: linear-gradient(180deg, rgba(243, 239, 255, 0.95) 0%, rgba(240, 236, 255, 0.92) 100%);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--zhihu-purple-bg) 94%, white) 0%,
+    color-mix(in srgb, var(--zhihu-purple-bg) 88%, white) 100%
+  );
 }
 
 .zhihu-decision-card header p:first-child,
 .zhihu-decision-note,
 .zhihu-next-step h3 {
-  color: #655bff;
+  color: var(--zhihu-purple-text);
 }
 
 .zhihu-decision-card header p:first-child,
@@ -1282,10 +2488,11 @@ h1 span {
 
 .zhihu-decision-card header h2 {
   margin: 8px 0 8px;
-  font-family: var(--serif-title);
-  font-size: clamp(1.9rem, 3vw, 2.5rem);
+  color: #32404f;
+  font-family: "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", serif;
+  font-size: 30px;
   font-weight: 500;
-  line-height: 1.2;
+  line-height: 1.35;
 }
 
 .zhihu-decision-compare,
@@ -1299,7 +2506,7 @@ h1 span {
 
 .zhihu-decision-compare {
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  margin-top: 24px;
+  margin-top: var(--space-20);
 }
 
 .zhihu-decision-compare article,
@@ -1309,7 +2516,7 @@ h1 span {
 .zhihu-next-step,
 .zhihu-decision-stack article {
   padding: 20px;
-  border: 1px solid rgba(116, 95, 255, 0.16);
+  border: 1px solid color-mix(in srgb, var(--zhihu-purple-text) 16%, transparent);
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.56);
 }
@@ -1322,16 +2529,17 @@ h1 span {
 .zhihu-interview-summary h4,
 .zhihu-interview-decisions h4,
 .zhihu-next-step h3 {
-  color: #3b4b62;
-  font-size: 1.2rem;
-  font-weight: 600;
+  color: #32404f;
+  font-family: "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", serif;
+  font-size: 24px;
+  font-weight: 500;
   line-height: 1.4;
 }
 
 .zhihu-triangle {
-  margin-top: 24px;
+  margin-top: var(--space-20);
   padding: 24px;
-  border: 1px dashed rgba(116, 95, 255, 0.24);
+  border: 1px dashed color-mix(in srgb, var(--zhihu-purple-text) 24%, transparent);
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.42);
   text-align: center;
@@ -1343,10 +2551,10 @@ h1 span {
   justify-content: center;
   min-height: 56px;
   padding: 0 20px;
-  margin-top: 20px;
+  margin-top: var(--space-20);
   border-radius: 999px;
-  background: rgba(116, 95, 255, 0.08);
-  color: #3b4b62;
+  background: color-mix(in srgb, var(--zhihu-purple-bg) 70%, white);
+  color: #32404f;
   font-weight: 600;
 }
 
@@ -1356,7 +2564,7 @@ h1 span {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  margin-top: 16px;
+  margin-top: var(--space-12);
 }
 
 .zhihu-triangle-pills span {
@@ -1369,7 +2577,7 @@ h1 span {
 
 .zhihu-triangle-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin-top: 20px;
+  margin-top: var(--space-20);
 }
 
 .zhihu-triangle-grid article {
@@ -1385,17 +2593,17 @@ h1 span {
 }
 
 .zhihu-decision-note {
-  margin-top: 20px;
+  margin-top: var(--space-20);
   font-weight: 500;
 }
 
 .zhihu-experiment {
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  margin-top: 20px;
+  margin-top: var(--space-20);
 }
 
 .zhihu-next-step {
-  margin-top: 20px;
+  margin-top: var(--space-20);
 }
 
 .zhihu-next-step p + p {
@@ -1403,57 +2611,62 @@ h1 span {
 }
 
 .zhihu-next-step ol {
-  margin: 14px 0 0;
+  margin: var(--space-12) 0 0;
   padding-left: 1.4rem;
 }
 
 .zhihu-next-step li + li {
-  margin-top: 8px;
+  margin-top: var(--space-12);
 }
 
 .zhihu-interview-card {
   padding: 28px;
-  border: 1px solid rgba(232, 198, 132, 0.24);
+  border: 1px solid color-mix(in srgb, var(--zhihu-yellow-text) 26%, transparent);
   border-radius: 24px;
-  background: linear-gradient(180deg, #fff7ea 0%, #fff5e6 100%);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--zhihu-yellow-bg) 96%, white) 0%,
+    color-mix(in srgb, var(--zhihu-yellow-bg) 90%, white) 100%
+  );
 }
 
 .zhihu-interview-card header h2 {
-  font-family: var(--serif-title);
-  font-size: clamp(2rem, 4vw, 2.75rem);
+  color: #32404f;
+  font-family: "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", serif;
+  font-size: 30px;
   font-weight: 500;
-  line-height: 1.2;
+  line-height: 1.35;
 }
 
 .zhihu-voices,
 .zhihu-interview-summary,
 .zhihu-interview-decisions {
-  margin-top: 26px;
+  margin-top: var(--space-20);
 }
 
 .zhihu-voice-panel {
-  margin-top: 14px;
+  margin-top: var(--space-12);
   padding: 26px;
-  border: 1px solid rgba(232, 198, 132, 0.3);
+  border: 1px solid color-mix(in srgb, var(--zhihu-yellow-text) 30%, transparent);
   border-radius: 20px;
-  background: rgba(255, 249, 239, 0.86);
+  background: color-mix(in srgb, var(--zhihu-yellow-bg) 90%, white);
 }
 
 .zhihu-voice-title {
   text-align: center;
   font-weight: 600;
-  color: #5a4d32;
+  color: var(--zhihu-yellow-text);
 }
 
 .zhihu-voice-title--secondary {
-  margin-top: 22px;
+  margin-top: var(--space-20);
 }
 
 .zhihu-voice-bubble {
   width: fit-content;
   max-width: min(100%, 540px);
   padding: 12px 16px;
-  margin-top: 14px;
+  margin-top: var(--space-12);
   border-radius: 999px;
   background: #fff;
   box-shadow: 0 14px 30px rgba(90, 77, 50, 0.06);
@@ -1465,12 +2678,12 @@ h1 span {
 
 .zhihu-insight-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin-top: 14px;
+  margin-top: var(--space-12);
 }
 
 .zhihu-insight-grid article {
   padding: 18px;
-  border: 1px solid rgba(232, 198, 132, 0.3);
+  border: 1px solid color-mix(in srgb, var(--zhihu-yellow-text) 28%, transparent);
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.78);
 }
@@ -1480,76 +2693,144 @@ h1 span {
 .zhihu-metric-card h3,
 .zhihu-reflection-card h3 {
   margin: 0 0 8px;
-  color: #3b4b62;
-  font-size: 1.04rem;
-  font-weight: 600;
+  color: #32404f;
+  font-family: "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", serif;
+  font-size: 24px;
+  font-weight: 500;
   line-height: 1.45;
 }
 
 .zhihu-decision-stack {
   display: grid;
-  gap: 14px;
-  margin-top: 14px;
+  gap: var(--space-12);
+  margin-top: var(--space-12);
 }
 
 .zhihu-metric-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin-top: 28px;
+  gap: 40px;
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 
 .zhihu-metric-card {
-  padding: 12px 0 6px;
+  padding: 0;
+  display: grid;
+  align-content: start;
+  gap: 6px;
 }
 
 .zhihu-metric-card strong {
   display: block;
-  color: #2367f2;
-  font-size: clamp(2.2rem, 4vw, 3.1rem);
+  color: #1772f6;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 30px;
   font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: -0.04em;
+  line-height: 1.35;
+  letter-spacing: 0;
+}
+
+.zhihu-metric-card h3 {
+  margin: 0 0 6px;
+  color: #6a7282;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.zhihu-metric-card p {
+  color: #32404f7f;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+body.case-study-page.case-study-page--zhihu > main.case-shell.zhihu-case-shell > div.zhihu-case-main > #metrics .zhihu-metric-card p {
+  color: #32404f7f;
 }
 
 .zhihu-reflection-grid {
   display: grid;
-  gap: 14px;
-  margin-top: 24px;
+  gap: var(--space-12);
+  margin-top: var(--space-20);
 }
 
 .zhihu-reflection-card {
+  border-radius: 8px;
   border-color: rgba(50, 65, 84, 0.08);
+  color: #32404f;
 }
 
 .zhihu-reflection-card--rose {
-  background: linear-gradient(135deg, rgba(255, 242, 248, 0.9), rgba(255, 255, 255, 0.92));
+  border-color: #e9d4ff;
+  background: linear-gradient(90deg, #faf5ff 0%, #ffffff 100%);
 }
 
 .zhihu-reflection-card--blue {
-  background: linear-gradient(135deg, rgba(241, 248, 255, 0.9), rgba(255, 255, 255, 0.92));
+  border-color: rgba(190, 219, 255, 0.5);
+  background: linear-gradient(90deg, #eff6ff 0%, #ffffff 100%);
 }
 
 .zhihu-reflection-card--green {
-  background: linear-gradient(135deg, rgba(242, 252, 245, 0.9), rgba(255, 255, 255, 0.92));
+  border-color: rgba(185, 248, 207, 0.5);
+  background: linear-gradient(90deg, #f0fdf4 0%, #ffffff 100%);
 }
 
 .zhihu-reflection-card--amber {
-  background: linear-gradient(135deg, rgba(255, 248, 236, 0.92), rgba(255, 255, 255, 0.92));
+  border-color: rgba(248, 231, 185, 0.5);
+  background: linear-gradient(90deg, #fff8e3 0%, #ffffff 100%);
+}
+
+.zhihu-reflection-card--blue h3 {
+  color: #32404f;
+}
+
+.zhihu-reflection-card--green h3 {
+  color: #32404f;
+}
+
+.zhihu-reflection-card h3 {
+  margin: 0 0 8px;
+  color: #32404f;
+  font-family: "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.zhihu-reflection-card p {
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.zhihu-reflection-card > p:last-of-type {
+  color: #32404f7f;
 }
 
 .zhihu-reflection-subtitle {
-  margin-bottom: 8px;
-  font-weight: 500;
+  margin-bottom: 12px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #32404f !important;
+}
+
+.zhihu-reflection-body {
+  margin-top: 0;
+  font-size: 14px;
+  color: rgba(50, 64, 79, 0.5);
 }
 
 .zhihu-case-closing {
-  padding: 46px 0 0;
+  padding: var(--space-40) 0 0;
 }
 
 .zhihu-case-closing p {
-  max-width: 18ch;
-  margin: 0 auto;
-  font-size: clamp(1.8rem, 4vw, 2.7rem);
-  line-height: 1.45;
+  width: 100%;
+  max-width: 768px;
+  margin: 40px auto;
+  font-size: 30px;
+  line-height: 1.35;
   text-align: center;
 }
 
@@ -1646,9 +2927,12 @@ h1 span {
   }
 
   .zhihu-case-rail {
-    position: static;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 8px 18px;
+    display: none;
+  }
+
+  .zhihu-case-outline {
+    width: 100%;
+    min-height: 0;
   }
 
   .zhihu-case-main {
@@ -1659,6 +2943,14 @@ h1 span {
   .zhihu-insight-grid,
   .zhihu-metric-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .zhihu-b-board--ui,
+  .zhihu-b-target-content,
+  .zhihu-b-interview,
+  .zhihu-test-wall-phones,
+  .zhihu-test-wall-ui-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -1846,13 +3138,23 @@ h1 span {
   .zhihu-experiment,
   .zhihu-triangle-grid,
   .zhihu-insight-grid,
-  .zhihu-metric-grid {
+  .zhihu-metric-grid,
+  .zhihu-strategy-one-cards {
     grid-template-columns: 1fr;
   }
 
   .zhihu-model-head {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .zhihu-strategy-two-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .zhihu-b-board--phones {
+    grid-template-columns: 1fr;
   }
 
   .zhihu-figure--wide {
@@ -2132,7 +3434,6 @@ h1 span {
   .zhihu-case-brand {
     width: 76px;
     height: 76px;
-    font-size: 2rem;
   }
 
   .zhihu-case-meta {
@@ -2196,7 +3497,7 @@ h1 span {
   }
 
   .zhihu-metric-card strong {
-    font-size: 2.35rem;
+    font-size: 30px;
   }
 }
 

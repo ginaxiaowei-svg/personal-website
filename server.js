@@ -135,7 +135,7 @@ function renderSiteHeader(content, currentPath = "/") {
   const { site } = content;
   const isHome = currentPath === "/";
   const navLinks = [
-    { href: "/works", label: site.navWork },
+    { href: "/#work", label: site.navWork },
     { href: "/ai-coding", label: site.navAbout },
     { href: "/resume", label: site.navResume }
   ];
@@ -230,6 +230,7 @@ function renderPublicScript() {
     <script>
       const cursor = document.querySelector(".cursor-dot");
       const reveals = document.querySelectorAll(".reveal");
+      const outline = document.querySelector(".zhihu-case-outline");
 
       if (cursor && window.matchMedia("(pointer:fine)").matches) {
         window.addEventListener("mousemove", (event) => {
@@ -254,19 +255,485 @@ function renderPublicScript() {
       );
 
       reveals.forEach((section) => observer.observe(section));
+
+      if (outline) {
+        const line = outline.querySelector(".zhihu-case-outline-line");
+        const indicator = outline.querySelector(".zhihu-case-outline-indicator");
+        const links = Array.from(outline.querySelectorAll('a[href^="#"]'));
+        const sectionItems = links
+          .map((link) => {
+            const href = link.getAttribute("href");
+            if (!href || href === "#") {
+              return null;
+            }
+            const section = document.querySelector(href);
+            if (!section) {
+              return null;
+            }
+            return { link, section, href };
+          })
+          .filter(Boolean);
+
+        const setActiveLink = (activeLink) => {
+          links.forEach((link) => {
+            link.classList.toggle("is-active", link === activeLink);
+          });
+
+          if (!line || !indicator || !activeLink) {
+            return;
+          }
+
+          const lineRect = line.getBoundingClientRect();
+          const linkRect = activeLink.getBoundingClientRect();
+          const top = Math.max(0, linkRect.top - lineRect.top);
+          const height = Math.max(1, linkRect.height);
+
+          indicator.style.transform = \`translateY(\${top}px)\`;
+          indicator.style.height = \`\${height}px\`;
+          indicator.style.opacity = "1";
+        };
+
+        const pickActiveByScroll = () => {
+          if (!sectionItems.length) {
+            return;
+          }
+
+          const anchorOffset = 160;
+          let current = sectionItems[0];
+
+          sectionItems.forEach((item) => {
+            const top = item.section.getBoundingClientRect().top;
+            if (top <= anchorOffset) {
+              current = item;
+            }
+          });
+
+          setActiveLink(current.link);
+        };
+
+        let ticking = false;
+        const onScrollOrResize = () => {
+          if (ticking) {
+            return;
+          }
+          ticking = true;
+          window.requestAnimationFrame(() => {
+            pickActiveByScroll();
+            ticking = false;
+          });
+        };
+
+        links.forEach((link) => {
+          link.addEventListener("click", () => {
+            setActiveLink(link);
+          });
+        });
+
+        window.addEventListener("scroll", onScrollOrResize, { passive: true });
+        window.addEventListener("resize", onScrollOrResize);
+        pickActiveByScroll();
+      }
+
+      const viewSwitchers = Array.from(document.querySelectorAll("[data-view-switch]"));
+      viewSwitchers.forEach((switcher) => {
+        const module = switcher.closest("[data-view-module]");
+        if (!module) {
+          return;
+        }
+
+        const tabs = Array.from(switcher.querySelectorAll("[data-view-tab]"));
+        const panels = Array.from(module.querySelectorAll("[data-view-panel]"));
+        if (!tabs.length || !panels.length) {
+          return;
+        }
+        const isTestWallModule = module.classList.contains("zhihu-test-wall-body");
+        let autoplayTimer = null;
+        let isImageHovered = false;
+
+        const stopAutoplay = () => {
+          if (!autoplayTimer) {
+            return;
+          }
+          window.clearInterval(autoplayTimer);
+          autoplayTimer = null;
+        };
+
+        const startAutoplay = () => {
+          if (!isTestWallModule || tabs.length < 2 || autoplayTimer) {
+            return;
+          }
+          autoplayTimer = window.setInterval(() => {
+            if (isImageHovered) {
+              return;
+            }
+            const activeTab = tabs.find((tab) => tab.classList.contains("is-active")) || tabs[0];
+            const activeIndex = tabs.indexOf(activeTab);
+            const nextTab = tabs[(activeIndex + 1) % tabs.length];
+            const nextView = nextTab && nextTab.getAttribute("data-view-tab");
+            if (!nextView) {
+              return;
+            }
+            setActiveView(nextView, { animate: true });
+          }, 4000);
+        };
+
+        const setActiveView = (viewName, options = {}) => {
+          const { animate = true } = options;
+          const currentPanel = panels.find((panel) => panel.classList.contains("is-active"));
+          const nextPanel = panels.find((panel) => panel.getAttribute("data-view-panel") === viewName);
+          if (!nextPanel) {
+            return;
+          }
+
+          if (currentPanel === nextPanel) {
+            tabs.forEach((tab) => {
+              const isActive = tab.getAttribute("data-view-tab") === viewName;
+              tab.classList.toggle("is-active", isActive);
+              tab.setAttribute("aria-selected", isActive ? "true" : "false");
+            });
+            return;
+          }
+
+          tabs.forEach((tab) => {
+            const isActive = tab.getAttribute("data-view-tab") === viewName;
+            tab.classList.toggle("is-active", isActive);
+            tab.setAttribute("aria-selected", isActive ? "true" : "false");
+          });
+
+          if (!animate || !currentPanel) {
+            panels.forEach((panel) => {
+              const isActive = panel === nextPanel;
+              panel.classList.remove("is-entering-right", "is-leaving-left");
+              panel.classList.toggle("is-active", isActive);
+              panel.setAttribute("aria-hidden", isActive ? "false" : "true");
+            });
+            return;
+          }
+
+          panels.forEach((panel) => {
+            if (panel !== currentPanel && panel !== nextPanel) {
+              panel.classList.remove("is-active", "is-entering-right", "is-leaving-left");
+              panel.setAttribute("aria-hidden", "true");
+            }
+          });
+
+          currentPanel.classList.remove("is-entering-right");
+          currentPanel.classList.add("is-leaving-left");
+          currentPanel.setAttribute("aria-hidden", "false");
+
+          nextPanel.classList.remove("is-leaving-left");
+          nextPanel.classList.add("is-active", "is-entering-right");
+          nextPanel.setAttribute("aria-hidden", "false");
+
+          // Force reflow so entering state is applied before transition.
+          void nextPanel.offsetWidth;
+          nextPanel.classList.remove("is-entering-right");
+
+          const finishTransition = () => {
+            currentPanel.classList.remove("is-active", "is-leaving-left");
+            currentPanel.setAttribute("aria-hidden", "true");
+            nextPanel.classList.remove("is-entering-right");
+          };
+
+          let finished = false;
+          const handleTransitionEnd = (event) => {
+            if (event.target !== nextPanel || event.propertyName !== "transform" || finished) {
+              return;
+            }
+            finished = true;
+            nextPanel.removeEventListener("transitionend", handleTransitionEnd);
+            finishTransition();
+          };
+
+          nextPanel.addEventListener("transitionend", handleTransitionEnd);
+          window.setTimeout(() => {
+            if (finished) {
+              return;
+            }
+            finished = true;
+            nextPanel.removeEventListener("transitionend", handleTransitionEnd);
+            finishTransition();
+          }, 420);
+        };
+
+        tabs.forEach((tab) => {
+          tab.addEventListener("click", () => {
+            const nextView = tab.getAttribute("data-view-tab");
+            if (!nextView) {
+              return;
+            }
+            setActiveView(nextView, { animate: true });
+            if (isTestWallModule) {
+              stopAutoplay();
+              startAutoplay();
+            }
+          });
+        });
+
+        const defaultTab = tabs.find((tab) => tab.classList.contains("is-active")) || tabs[0];
+        const defaultView = defaultTab.getAttribute("data-view-tab");
+        if (defaultView) {
+          setActiveView(defaultView, { animate: false });
+        }
+
+        if (isTestWallModule) {
+          const hoverTargets = Array.from(module.querySelectorAll(".zhihu-test-wall-image-panel, .zhihu-test-wall-image"));
+          hoverTargets.forEach((target) => {
+            target.addEventListener("mouseenter", () => {
+              isImageHovered = true;
+              stopAutoplay();
+            });
+            target.addEventListener("mouseleave", () => {
+              isImageHovered = false;
+              startAutoplay();
+            });
+          });
+          startAutoplay();
+        }
+      });
+
+      const zoomableImages = Array.from(document.querySelectorAll("img")).filter((image) => {
+        return !image.classList.contains("image-zoom-modal-image") && !image.closest(".image-zoom-modal");
+      });
+      if (zoomableImages.length) {
+        const zoomModal = document.createElement("div");
+        zoomModal.className = "image-zoom-modal";
+        zoomModal.setAttribute("aria-hidden", "true");
+        zoomModal.innerHTML = \`
+          <button class="image-zoom-backdrop" type="button" data-zoom-close aria-label="关闭放大图片"></button>
+          <div class="image-zoom-dialog" role="dialog" aria-modal="true" aria-label="图片预览">
+            <button class="image-zoom-nav image-zoom-nav--prev" type="button" data-zoom-nav="prev" aria-label="查看上一张">‹</button>
+            <button class="image-zoom-nav image-zoom-nav--next" type="button" data-zoom-nav="next" aria-label="查看下一张">›</button>
+            <img class="image-zoom-modal-image" alt="" />
+          </div>
+        \`;
+        document.body.appendChild(zoomModal);
+
+        const zoomModalImage = zoomModal.querySelector(".image-zoom-modal-image");
+        const zoomPrevButton = zoomModal.querySelector('[data-zoom-nav="prev"]');
+        const zoomNextButton = zoomModal.querySelector('[data-zoom-nav="next"]');
+        let isModalOpen = false;
+        let openRequestId = 0;
+        let currentZoomIndex = 0;
+        let currentZoomGallery = [];
+        const zoomSourceCache = new Map();
+
+        const dedupeSources = (sources) => Array.from(new Set(sources.filter(Boolean)));
+
+        const splitImageSource = (rawSrc) => {
+          if (!rawSrc) {
+            return null;
+          }
+          const [pathPart, queryPart = ""] = rawSrc.split("?");
+          const querySuffix = queryPart ? "?" + queryPart : "";
+          const extMatch = pathPart.match(/(\.[a-z0-9]+)$/i);
+          if (!extMatch) {
+            return null;
+          }
+          const ext = extMatch[1];
+          const stem = pathPart.slice(0, -ext.length);
+          const scaleMatch = stem.match(/^(.*?)(?:@(\d+)x|-(\d+)x)$/i);
+          const baseStem = scaleMatch ? scaleMatch[1] : stem;
+          return { ext, querySuffix, baseStem };
+        };
+
+        const buildHighResCandidates = (rawSrc) => {
+          const sourceParts = splitImageSource(rawSrc);
+          if (!sourceParts) {
+            return dedupeSources([rawSrc]);
+          }
+          const { ext, querySuffix, baseStem } = sourceParts;
+          return [
+            baseStem + "@5x" + ext + querySuffix,
+            baseStem + "-5x" + ext + querySuffix,
+            baseStem + "@4x" + ext + querySuffix,
+            baseStem + "-4x" + ext + querySuffix,
+            baseStem + "@3x" + ext + querySuffix,
+            baseStem + "-3x" + ext + querySuffix,
+            rawSrc
+          ];
+        };
+
+        const canLoadImage = (src) =>
+          new Promise((resolve) => {
+            const probe = new Image();
+            probe.onload = () => resolve(true);
+            probe.onerror = () => resolve(false);
+            probe.src = src;
+          });
+
+        const resolveZoomSource = async (image) => {
+          const explicitZoomSrc = image.dataset.zoomSrc;
+          const fallbackSrc = explicitZoomSrc || image.currentSrc || image.src;
+          if (zoomSourceCache.has(fallbackSrc)) {
+            return zoomSourceCache.get(fallbackSrc);
+          }
+          const candidates = dedupeSources(buildHighResCandidates(fallbackSrc));
+          for (const candidate of candidates) {
+            if (await canLoadImage(candidate)) {
+              zoomSourceCache.set(fallbackSrc, candidate);
+              return candidate;
+            }
+          }
+          zoomSourceCache.set(fallbackSrc, fallbackSrc);
+          return fallbackSrc;
+        };
+
+        const closeZoomModal = () => {
+          if (!isModalOpen) {
+            return;
+          }
+          zoomModal.classList.remove("is-open");
+          zoomModal.setAttribute("aria-hidden", "true");
+          document.body.style.overflow = "";
+          isModalOpen = false;
+        };
+
+        const getZoomGallery = (image) => {
+          const zoomGroup = image.dataset.zoomGroup;
+          if (!zoomGroup) {
+            return [image];
+          }
+          const sameGroup = zoomableImages.filter((candidate) => candidate.dataset.zoomGroup === zoomGroup);
+          if (sameGroup.length < 2) {
+            return [image];
+          }
+          return sameGroup
+            .slice()
+            .sort((a, b) => {
+              const aOrder = Number(a.dataset.zoomOrder || 0);
+              const bOrder = Number(b.dataset.zoomOrder || 0);
+              return aOrder - bOrder;
+            });
+        };
+
+        const updateZoomNavState = () => {
+          const canNavigate = currentZoomGallery.length > 1;
+          zoomModal.classList.toggle("has-zoom-nav", canNavigate);
+          if (!canNavigate) {
+            return;
+          }
+          const prevImage = currentZoomGallery[(currentZoomIndex - 1 + currentZoomGallery.length) % currentZoomGallery.length];
+          const nextImage = currentZoomGallery[(currentZoomIndex + 1) % currentZoomGallery.length];
+          const prevLabel = prevImage && prevImage.dataset.zoomView === "interaction" ? "交互图" : prevImage && prevImage.dataset.zoomView === "ui" ? "UI图" : "上一张";
+          const nextLabel = nextImage && nextImage.dataset.zoomView === "interaction" ? "交互图" : nextImage && nextImage.dataset.zoomView === "ui" ? "UI图" : "下一张";
+          if (zoomPrevButton) {
+            zoomPrevButton.setAttribute("aria-label", "查看上一张（" + prevLabel + "）");
+          }
+          if (zoomNextButton) {
+            zoomNextButton.setAttribute("aria-label", "查看下一张（" + nextLabel + "）");
+          }
+        };
+
+        const openZoomModal = async (image, options = {}) => {
+          const { preserveGallery = false } = options;
+          if (!preserveGallery) {
+            currentZoomGallery = getZoomGallery(image);
+            currentZoomIndex = Math.max(0, currentZoomGallery.indexOf(image));
+          }
+          const requestId = ++openRequestId;
+          const fallbackSrc = image.dataset.zoomSrc || image.currentSrc || image.src;
+          zoomModalImage.src = fallbackSrc;
+          zoomModalImage.alt = image.alt || "放大图片";
+          updateZoomNavState();
+          zoomModal.classList.add("is-open");
+          zoomModal.setAttribute("aria-hidden", "false");
+          document.body.style.overflow = "hidden";
+          isModalOpen = true;
+          const resolvedSrc = await resolveZoomSource(image);
+          if (!isModalOpen || requestId !== openRequestId) {
+            return;
+          }
+          zoomModalImage.src = resolvedSrc;
+        };
+
+        const stepZoomImage = (step) => {
+          if (!isModalOpen || currentZoomGallery.length < 2) {
+            return;
+          }
+          const nextIndex = (currentZoomIndex + step + currentZoomGallery.length) % currentZoomGallery.length;
+          currentZoomIndex = nextIndex;
+          const nextImage = currentZoomGallery[nextIndex];
+          if (!nextImage) {
+            return;
+          }
+          openZoomModal(nextImage, { preserveGallery: true });
+        };
+
+        zoomableImages.forEach((image) => {
+          image.classList.add("js-zoomable-image");
+          image.tabIndex = 0;
+          image.addEventListener("click", () => openZoomModal(image));
+          image.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              openZoomModal(image);
+            }
+          });
+        });
+
+        zoomModal.addEventListener("click", (event) => {
+          const target = event.target;
+          if (!(target instanceof HTMLElement)) {
+            return;
+          }
+          if (target.closest("[data-zoom-close]")) {
+            closeZoomModal();
+            return;
+          }
+          const navButton = target.closest("[data-zoom-nav]");
+          if (navButton) {
+            const direction = navButton.getAttribute("data-zoom-nav");
+            stepZoomImage(direction === "prev" ? -1 : 1);
+          }
+        });
+
+        window.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") {
+            closeZoomModal();
+            return;
+          }
+          if (!isModalOpen) {
+            return;
+          }
+          if (event.key === "ArrowLeft") {
+            event.preventDefault();
+            stepZoomImage(-1);
+          } else if (event.key === "ArrowRight") {
+            event.preventDefault();
+            stepZoomImage(1);
+          }
+        });
+      }
     </script>
   `;
 }
 
 const zhihuDetailCase = {
-  nav: [
-    { href: "#overview", label: "项目概览" },
-    { href: "#scope", label: "范围收敛" },
-    { href: "#insight", label: "用户洞察" },
-    { href: "#strategy-1", label: "策略一" },
-    { href: "#interviews", label: "用户访谈" },
-    { href: "#metrics", label: "效果总览" },
-    { href: "#reflection", label: "项目沉淀" }
+  outline: [
+    {
+      href: "#overview",
+      label: "项目概览",
+      tone: "strong",
+      children: [
+        { href: "#why", label: "业务愿景（Why）" },
+        { href: "#scope", label: "范围收敛（Scope）" },
+        { href: "#insight", label: "用户行为洞察（Insight）" },
+        { href: "#what", label: "阶段目标（What）" }
+      ]
+    },
+    {
+      href: "#strategy-1",
+      label: "方案落地",
+      tone: "strong",
+      children: [
+        { href: "#strategy-1", label: "设计策略 1" },
+        { href: "#strategy-2-attempt-a", label: "设计策略 2" },
+        { href: "#strategy-3", label: "设计策略 3" }
+      ]
+    },
+    { href: "#metrics", label: "项目收益", tone: "strong" },
+    { href: "#reflection", label: "项目沉淀", tone: "strong" }
   ],
   metrics: [
     {
@@ -281,12 +748,12 @@ const zhihuDetailCase = {
     },
     {
       value: "4.5 亿",
-      title: "短容器 Cardshow（50% 的流量）",
+      title: "短容器 cardshow（50%的流量）",
       body: "短容器成为站内第三大流量场"
     },
     {
       value: "40.96",
-      title: "短容器人均 CARDSHOW",
+      title: "短容器人均 Cardshow",
       body: "短容器的用户平均产生 40 次卡片曝光，用户在单个 SESSION 阅读中消费更多内容"
     },
     {
@@ -296,7 +763,7 @@ const zhihuDetailCase = {
     },
     {
       value: "+14.8%",
-      title: "商业广告 Adload",
+      title: "商业广告Adload",
       body: "每 100 次内容曝光约 15 次商业曝光，在不影响体验的情况下提升商业承载"
     }
   ],
@@ -316,26 +783,46 @@ const zhihuDetailCase = {
     {
       tone: "green",
       title: "三、降低决策风险",
-      subtitle: "通过实验逐步验证关键假设，为团队决策提供可靠证据",
-      body: "不把结构改版当成一次性拍板，而是通过实验、小流量和访谈逐步收窄风险。"
+      subtitle: "通过实验逐步验证关键假设，为团队决策提供可靠证据"
     },
     {
       tone: "amber",
       title: "四、推动方案落地",
-      subtitle: "推动方案进入产品决策与落地，实现验证到全量闭环",
-      body: "结构改版最终同时带来消费增长与商业价值提升，完成从策略到结果的闭环。"
+      subtitle: "推动方案进入产品决策与落地，实现验证到全量闭环，结构改版带来消费与商业价值的双提升"
     }
   ]
 };
 
 function renderZhihuDetailCasePage(content, work) {
-  const navMarkup = zhihuDetailCase.nav
+  const normalizeStrategyLabel = (label) => {
+    const value = String(label || "");
+    const matched = value.match(/^(设计策略\s*\d+)\s*[：:].*$/);
+    if (matched) {
+      return matched[1];
+    }
+    return value;
+  };
+
+  const navMarkup = zhihuDetailCase.outline
     .map(
-      (item, index) => `
-        <a href="${escapeHtml(item.href)}" class="zhihu-case-rail-link">
-          <span>${String(index + 1).padStart(2, "0")}</span>
-          <strong>${escapeHtml(item.label)}</strong>
-        </a>
+      (item) => `
+        <div class="zhihu-case-outline-item${item.tone === "medium" ? " zhihu-case-outline-item--medium" : ""}">
+          <a href="${escapeHtml(item.href)}" class="zhihu-case-outline-link">${escapeHtml(item.label)}</a>
+          ${
+            Array.isArray(item.children)
+              ? `
+                <div class="zhihu-case-outline-children">
+                  ${item.children
+                    .map(
+                      (child) =>
+                        `<a href="${escapeHtml(child.href)}" class="zhihu-case-outline-child">${escapeHtml(normalizeStrategyLabel(child.label))}</a>`
+                    )
+                    .join("")}
+                </div>
+              `
+              : ""
+          }
+        </div>
       `
     )
     .join("");
@@ -358,23 +845,459 @@ function renderZhihuDetailCasePage(content, work) {
         <article class="zhihu-reflection-card zhihu-reflection-card--${escapeHtml(item.tone)}">
           <h3>${escapeHtml(item.title)}</h3>
           <p class="zhihu-reflection-subtitle">${escapeHtml(item.subtitle)}</p>
-          <p>${escapeHtml(item.body)}</p>
+          ${item.body ? `<p class="zhihu-reflection-body">${escapeHtml(item.body)}</p>` : ""}
         </article>
       `
     )
     .join("");
+
+  const renderStrategyFollowupBlock = (customHtml = "") => `
+    <div class="zhihu-strategy-one-detail">
+      ${customHtml ||
+      `
+      <article class="zhihu-strategy-one-row">
+        <span class="zhihu-strategy-one-line" aria-hidden="true"></span>
+        <div class="zhihu-strategy-one-content">
+          <h3>方案决策：</h3>
+          <p class="zhihu-strategy-one-summary">待补充</p>
+        </div>
+      </article>
+      <article class="zhihu-strategy-one-row">
+        <span class="zhihu-strategy-one-line" aria-hidden="true"></span>
+        <div class="zhihu-strategy-one-content">
+          <h3>结论与下一步：</h3>
+          <p class="zhihu-strategy-one-summary">待补充</p>
+        </div>
+      </article>
+      `}
+    </div>
+  `;
+
+  const renderStrategyTwoSwitchModule = ({
+    title,
+    titleClass = "",
+    noTitle = false,
+    ariaLabel,
+    descriptionHtml,
+    descriptionItems = [],
+    descriptionClass = "",
+    interactionImage,
+    uiImage,
+    customContentHtml = "",
+    appendFollowupBlock = false,
+    followupHtml = ""
+  }) => {
+    if (customContentHtml) {
+      return `
+        <section class="zhihu-test-wall-module">
+          ${noTitle ? "" : `<div class="zhihu-test-wall-product-line${titleClass ? ` ${titleClass}` : ""}">${escapeHtml(title)}</div>`}
+          <section class="zhihu-test-wall-body">
+            ${customContentHtml}
+          </section>
+        </section>
+      `;
+    }
+
+    const renderModuleImage = (image, zoomGroup = "", zoomView = "", zoomOrder = "") => {
+      const isZoomable = Boolean(image.zoomSrc);
+      const zoomSource = image.zoomSrc || image.src;
+      return `
+        <figure class="zhihu-test-wall-image-panel">
+          <img
+            class="zhihu-test-wall-image${isZoomable ? " js-zoomable-image" : ""}"
+            src="${escapeHtml(image.src)}"
+            ${isZoomable ? `data-zoom-src="${escapeHtml(zoomSource)}"` : ""}
+            ${zoomGroup ? `data-zoom-group="${escapeHtml(zoomGroup)}"` : ""}
+            ${zoomView ? `data-zoom-view="${escapeHtml(zoomView)}"` : ""}
+            ${zoomOrder !== "" ? `data-zoom-order="${escapeHtml(String(zoomOrder))}"` : ""}
+            alt="${escapeHtml(image.alt)}"
+            loading="lazy"
+          />
+        </figure>
+      `;
+    };
+
+    return `
+      <section class="zhihu-test-wall-module">
+        <div class="zhihu-test-wall-product-line${titleClass ? ` ${titleClass}` : ""}">${escapeHtml(title)}</div>
+        <section class="zhihu-test-wall-body" data-view-module>
+          ${
+            descriptionItems.length
+              ? `
+                <ul class="zhihu-case-list zhihu-case-list--compact zhihu-test-wall-list">
+                  ${descriptionItems.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+                </ul>
+              `
+              : `<p class="zhihu-test-wall-desc${descriptionClass ? ` ${descriptionClass}` : ""}">${descriptionHtml}</p>`
+          }
+          <div class="zhihu-test-wall-switch-row">
+            <div class="zhihu-view-switch" data-view-switch role="tablist" aria-label="${escapeHtml(ariaLabel)}">
+              <button type="button" data-view-tab="interaction" class="is-active" role="tab" aria-selected="true">交互</button>
+              <button type="button" data-view-tab="ui" role="tab" aria-selected="false">UI</button>
+            </div>
+          </div>
+          <div class="zhihu-view-panels">
+            <div class="zhihu-view-panel is-active" data-view-panel="interaction" aria-hidden="false">
+              ${renderModuleImage(interactionImage, ariaLabel, "interaction", 0)}
+            </div>
+            <div class="zhihu-view-panel" data-view-panel="ui" aria-hidden="true">
+              ${renderModuleImage(uiImage, ariaLabel, "ui", 1)}
+            </div>
+          </div>
+          ${appendFollowupBlock ? renderStrategyFollowupBlock(followupHtml) : ""}
+        </section>
+      </section>
+    `;
+  };
+
+  const strategyTwoModules = [
+    {
+      title: "产品现状",
+      ariaLabel: "尝试B产品现状视图切换",
+      descriptionHtml: "仅一个「阅读态」的容器，正向滚动和点击「下一个」按钮都进入同一个容器",
+      interactionImage: {
+        src: "/assets/case-study/strategy-2-product-interaction-0@3x.png?v=20260427-2142",
+        alt: "尝试B交互图"
+      },
+      uiImage: {
+        src: "/assets/case-study/strategy-2-product-ui-0@3x.png?v=20260427-2142",
+        alt: "尝试B UI图"
+      }
+    },
+    {
+      title: "目标页面（静态页面）",
+      titleClass: "zhihu-test-wall-product-line--model-one",
+      ariaLabel: "目标页面视图切换",
+      descriptionHtml:
+        '首篇回答仍然是「长容器」，其他回答是「短容器」<br /><span class="zhihu-test-wall-desc-note">*以后我把「阅读态」称作长容器，把「筛选+阅读态」称作短容器</span>',
+      interactionImage: {
+        src: "/assets/case-study/strategy-2-target-interaction-static@3x.png?v=20260427-2142",
+        alt: "目标页面交互图"
+      },
+      uiImage: {
+        src: "/assets/case-study/strategy-2-target-ui-static@3x.png?v=20260427-2142",
+        alt: "目标页面UI图"
+      }
+    },
+    {
+      title: "交互模型一",
+      titleClass: "zhihu-test-wall-product-line--model-one",
+      ariaLabel: "交互模型一视图切换",
+      descriptionItems: [
+        "仅首篇回答是「长容器」",
+        "正向滚动：进入「短容器」",
+        "点击「下一个」按钮：进入「短容器」",
+        "每进入一个详情就会进入一个更深层级的页面"
+      ],
+      interactionImage: {
+        src: "/assets/case-study/strategy-2-model-1-interaction@3x.png?v=20260427-2142",
+        alt: "交互模型一交互图"
+      },
+      uiImage: {
+        src: "/assets/case-study/strategy-2-model-1-ui@3x.png?v=20260427-2148",
+        alt: "交互模型一UI图"
+      },
+      appendFollowupBlock: true,
+      followupHtml: `
+        <article class="zhihu-strategy-one-row">
+          <span class="zhihu-strategy-one-line" aria-hidden="true"></span>
+          <div class="zhihu-strategy-one-content">
+            <h3>方案决策：</h3>
+            <p class="zhihu-strategy-one-summary">
+              PROS：离目标（提高消费渗透）最近，且对用户核心消费场景影响最小<br />
+              CONS：返回路径存在套娃的问题
+            </p>
+            <p class="zhihu-strategy-one-summary">
+              我们也给出了「合理」的回答：<br />
+              - 目前用户每次进入详情页平均消费 1.4 个回答，消费深度不高，新容器套层的问题平均看影响较小；（逻辑谬误）<br />
+              - 深度消费用户的占比不高，且用户点了「下一个」按钮，滚动至下方大卡流，如果动态高度策略使至少 70% 的内容在当前展示完全，那用户需要由点进详情页消费的内容占比很小；<br />
+              - 研发成本高，业务侧需要在规定时间内能拿到一波数据反馈来验证目标
+            </p>
+          </div>
+        </article>
+        <article class="zhihu-strategy-one-row">
+          <span class="zhihu-strategy-one-line" aria-hidden="true"></span>
+          <div class="zhihu-strategy-one-content">
+            <h3>小流量实验：</h3>
+            <div class="zhihu-strategy-one-cards">
+              <section class="zhihu-strategy-one-card">
+                <h4>验证命题</h4>
+                <p>长容器后接短容器能带来消费渗透的提升</p>
+              </section>
+              <section class="zhihu-strategy-one-card">
+                <h4>验证指标</h4>
+                <p>大盘消费时长（平稳 or ⬆️）<br />首篇回答的消费时长（平稳 or ⬆️）<br />短容器的渗透率 ⬆️</p>
+              </section>
+            </div>
+          </div>
+        </article>
+        <article class="zhihu-strategy-one-row">
+          <span class="zhihu-strategy-one-line" aria-hidden="true"></span>
+          <div class="zhihu-strategy-one-content">
+            <h3>结论与下一步：</h3>
+            <div class="zhihu-strategy-one-cards zhihu-strategy-one-cards--single">
+              <section class="zhihu-strategy-one-card">
+                <h4>数据指标</h4>
+                <p>数据指标：大盘整体消费时长 <span class="zhihu-data-negative">-1.3%</span>，其中 daily 用户消费时长 <span class="zhihu-data-negative">-2.42%</span>，短容器的渗透率 <span class="zhihu-data-positive">+25.3%</span>，短容器的 <span class="zhihu-data-positive">cardshow 800w</span>。</p>
+                <p>用户反馈：用户不习惯新的滚动交互（去掉阻尼了）；层级套娃；大卡还要多点一次才能看完整回答，不适应大卡。</p>
+              </section>
+            </div>
+            <p class="zhihu-strategy-one-next">下一步：<br />1）解决层级套娃问题；<br />2）降低用户对大卡的不适应。业务决策：首篇回答核心体验未受影响，仅小部分会下滑消费用户受影响，继续验证提高大卡曝光带来的收益。</p>
+          </div>
+        </article>
+      `
+    },
+    {
+      title: "交互模型二",
+      titleClass: "zhihu-test-wall-product-line--model-one",
+      ariaLabel: "交互模型二视图切换",
+      descriptionItems: [
+        "正向滚动：进入「短容器」流",
+        "点击「下一个」按钮：进入「长容器」流",
+        "总共为 1.5 个层级"
+      ],
+      interactionImage: {
+        src: "/assets/case-study/strategy-2-model-2-interaction@3x.png?v=20260427-2142",
+        alt: "交互模型二交互图"
+      },
+      uiImage: {
+        src: "/assets/case-study/strategy-2-model-2-ui@3x.png?v=20260427-2142",
+        alt: "交互模型二UI图"
+      },
+      appendFollowupBlock: true,
+      followupHtml: `
+        <article class="zhihu-strategy-one-row">
+          <span class="zhihu-strategy-one-line" aria-hidden="true"></span>
+          <div class="zhihu-strategy-one-content">
+            <h3>方案决策：</h3>
+            <div class="zhihu-strategy-one-summary">
+              1、为什么不直接拍成 1 层，而要保留 1.5 层？<br />
+              <ul class="zhihu-inline-bullet-list">
+                <li>因为“下一条”是高频用户的习惯路径，强行改成短容器会破坏这部分用户的预期。</li>
+              </ul>
+              → 所以：点“下一条”仍进入长容器流，保持连续深读体验。
+            </div>
+            <div class="zhihu-strategy-one-summary">
+              2、为什么短容器点进详情要用 1.5 层？<br />
+              <ul class="zhihu-inline-bullet-list">
+                <li><span class="zhihu-keyword-emphasis">技术约束</span>：短容器是 native，长内容详情是历史 hybrid 承载，无法在当前成本下做到 native 内同层无缝深读。</li>
+              </ul>
+              → 所以：短容器点击进入详情用 pop（1.5 层）承接，实现 native → hybrid 的过渡，并统一深读仍落在 hybrid。
+            </div>
+            <div class="zhihu-strategy-one-summary">
+              最终形成两条“可共存”的路径：<br />
+              <ul class="zhihu-inline-bullet-list">
+                <li>路径A（深读用户）：长容器流（保持原习惯）</li>
+                <li>路径B（筛选用户）：短容器列表 → pop进入详情 → 返回列表（减少层级叠加）</li>
+              </ul>
+              <br />
+              <span class="zhihu-tech-note">hybrid：核心用 Web 技术，放在 App 的 WebView 里</span><br />
+              <span class="zhihu-tech-note">native：用 iOS / Android 原生代码开发</span>
+            </div>
+          </div>
+        </article>
+        <article class="zhihu-strategy-one-row">
+          <span class="zhihu-strategy-one-line" aria-hidden="true"></span>
+          <div class="zhihu-strategy-one-content">
+            <h3>小流量实验：</h3>
+            <div class="zhihu-strategy-one-cards">
+              <section class="zhihu-strategy-one-card">
+                <h4>验证命题</h4>
+                <p>- 收敛层级 + pop 承接，能否显著降低“套娃感 / 返回复杂”，让用户更容易理解“我在哪、怎么回”？<br />- 1.5 层 pop 是否会引入新的打扰 / 误触？</p>
+              </section>
+              <section class="zhihu-strategy-one-card">
+                <h4>验证指标</h4>
+                <p>- 用户对于层级的反馈是否减少？<br />- 大盘消费时长（平稳 or ⬆️）<br />- 首篇回答的消费时长（平稳 or ⬆️）<br />- 短容器的渗透率 ⬆️</p>
+              </section>
+            </div>
+          </div>
+        </article>
+        <article class="zhihu-strategy-one-row">
+          <span class="zhihu-strategy-one-line" aria-hidden="true"></span>
+          <div class="zhihu-strategy-one-content">
+            <h3>结论与下一步：</h3>
+            <div class="zhihu-strategy-one-cards zhihu-strategy-one-cards--single">
+              <section class="zhihu-strategy-one-card">
+                <h4>用户反馈</h4>
+                <p>两层回退问题：从 1.5 层返回首页面需要点两次。</p>
+                <p>需要多点一步才能看到详情页（daily 用户不习惯）；动效实际落地效果受技术架构影响，容易误触，iOS 端反馈较多。</p>
+                <p>数据反馈：总体数据无大影响，也继续验证了短容器渗透在提升。</p>
+              </section>
+            </div>
+            <p class="zhihu-strategy-one-next">下一步：决定通过用户访谈进一步收集用户真实反馈，为决策提供依据。</p>
+          </div>
+        </article>
+      `
+    },
+    {
+      title: "用户访谈",
+      titleClass: "zhihu-test-wall-product-line--model-one",
+      noTitle: true,
+      customContentHtml: `
+        <section class="zhihu-test-wall-interview-card">
+          <header class="zhihu-test-wall-interview-head">
+            <h2>用户访谈</h2>
+            <p class="zhihu-test-wall-interview-lead">
+              我主导了 10 位高频用户的结构化访谈，通过行为回溯、对比追问和情绪归因，定位短容器改版中的真实痛点，并为后续方案迭代提供决策依据。
+            </p>
+          </header>
+          <h3 class="zhihu-test-wall-interview-section-title">用户原声</h3>
+          <section class="zhihu-test-wall-voices-board">
+            <div class="zhihu-test-wall-voices-col">
+              <h4>方向没错：短容器确实提升了筛选效率</h4>
+              <div class="zhihu-test-wall-voice-stack">
+                <div class="zhihu-test-wall-voice-bubble">
+                  <img class="zhihu-test-wall-avatar" src="/assets/case-study/interview-avatar-a.png" alt="" loading="lazy" />
+                  <p>更方便找感兴趣的回答，不需要再点进去，能更节省时间。</p>
+                </div>
+                <div class="zhihu-test-wall-voice-bubble">
+                  <img class="zhihu-test-wall-avatar" src="/assets/case-study/interview-avatar-b.png" alt="" loading="lazy" />
+                  <p>提高了筛选效率，还比较方便。</p>
+                </div>
+                <div class="zhihu-test-wall-voice-bubble">
+                  <img class="zhihu-test-wall-avatar" src="/assets/case-study/interview-avatar-c.png" alt="" loading="lazy" />
+                  <p>可以快速看出回答是否专业的，还是故意“玩梗”，可以瞬间过滤掉。</p>
+                </div>
+              </div>
+            </div>
+            <div class="zhihu-test-wall-voices-col">
+              <h4>核心问题：卡片能筛选，但不能顺滑承接消费</h4>
+              <div class="zhihu-test-wall-voice-stack">
+                <div class="zhihu-test-wall-voice-bubble">
+                  <img class="zhihu-test-wall-avatar" src="/assets/case-study/interview-avatar-d.png" alt="" loading="lazy" />
+                  <p>为什么下一条不是直接显示了，而是只能看到一部分，要看下一条还要重新点进去，看着好难受好出戏。</p>
+                </div>
+                <div class="zhihu-test-wall-voice-bubble">
+                  <img class="zhihu-test-wall-avatar" src="/assets/case-study/interview-avatar-e.png" alt="" loading="lazy" />
+                  <p>进入 1.5 层，下拉退出时，回到大卡，此动作本身会超出认知预期……认为应该直接到下一个。</p>
+                </div>
+                <div class="zhihu-test-wall-voice-bubble">
+                  <img class="zhihu-test-wall-avatar" src="/assets/case-study/interview-avatar-f.png" alt="" loading="lazy" />
+                  <p>在短容器上一刷刷到很多回答，个人就会对这个问答不再感兴趣。</p>
+                </div>
+              </div>
+            </div>
+          </section>
+          <h3 class="zhihu-test-wall-interview-section-title">访谈结论</h3>
+          <section class="zhihu-test-wall-interview-insights">
+            <article>
+              <h4>筛选成立，但消费被打断</h4>
+              <p>用户认可短容器提升筛选效率，但不接受消费完后退回卡片列表。</p>
+            </article>
+            <article>
+              <h4>路径不符合旧习惯</h4>
+              <p>下拉、返回、问题页进入后的层级关系与原有消费习惯冲突。</p>
+            </article>
+            <article>
+              <h4>知乎感被削弱</h4>
+              <p>非正文元素变多，信息密度下降，专业感变弱。</p>
+            </article>
+          </section>
+          <h3 class="zhihu-test-wall-interview-section-title">对决策的作用</h3>
+          <section class="zhihu-test-wall-interview-actions">
+            <article>
+              <h4>确认方向成立</h4>
+              <p>短容器的筛选价值是成立的，用户会用它快速判断内容值不值得看。</p>
+            </article>
+            <article>
+              <h4>确认核心问题</h4>
+              <p>问题不在“要不要做卡片”，而在“卡片之后怎么继续消费”——能筛选，但消费不顺、路径不符合旧习惯。</p>
+            </article>
+            <article>
+              <h4>推动下一步决策</h4>
+              <p>不再继续打磨细节，转向提升原地消费能力，并推进图文混排，减少跳转，恢复沉浸感。</p>
+            </article>
+          </section>
+        </section>
+      `
+    },
+    {
+      title: "交互模三（最终版）",
+      titleClass: "zhihu-test-wall-product-line--model-one",
+      ariaLabel: "交互模三视图切换",
+      descriptionItems: [
+        "正向滚动：进入「短容器」",
+        "每次点击「下一个」按钮：同层替换，进入「长容器」",
+        "仅 1 个层级"
+      ],
+      interactionImage: {
+        src: "/assets/case-study/strategy-2-model-3-interaction@3x.png?v=20260427-2142",
+        alt: "交互模三交互图"
+      },
+      uiImage: {
+        src: "/assets/case-study/strategy-2-model-3-ui@3x.png?v=20260427-2142",
+        alt: "交互模三UI图"
+      },
+      appendFollowupBlock: true,
+      followupHtml: `
+        <article class="zhihu-strategy-one-row">
+          <span class="zhihu-strategy-one-line" aria-hidden="true"></span>
+          <div class="zhihu-strategy-one-content">
+            <h3>方案决策（非常关键）：</h3>
+            <p class="zhihu-strategy-one-summary">
+              交互模型2和用户访谈验证：短容器筛选成立，但消费体验不足。<br />
+              关键决策：<span class="zhihu-keyword-emphasis">结构化 or 截断化</span>？
+            </p>
+            <figure class="zhihu-test-wall-image-panel">
+              <img class="zhihu-test-wall-image" src="/assets/case-study/strategy-2-model-3-structure-cut@3x.png?v=20260427-1856" alt="交互模型三结构化与截断化图" loading="lazy" />
+            </figure>
+            <figure class="zhihu-test-wall-image-panel">
+              <img class="zhihu-test-wall-image" src="/assets/case-study/strategy-2-model-3-product-triangle.png?v=20260427-1935" alt="短容器 Product Triangle 图" loading="lazy" />
+            </figure>
+            <p class="zhihu-triangle-note">我整理了用户研究、业务目标与技术约束等信息，为方案选择提供决策支持</p>
+          </div>
+        </article>
+        <article class="zhihu-strategy-one-row">
+          <span class="zhihu-strategy-one-line" aria-hidden="true"></span>
+          <div class="zhihu-strategy-one-content">
+            <h3>小流量实验：</h3>
+            <div class="zhihu-strategy-one-cards">
+              <section class="zhihu-strategy-one-card">
+                <h4>验证命题</h4>
+                <p>- 短容器（截断化方案）内容呈现，能否承接更多阅读行为，实现真正的筛选 + 阅读内容消费场</p>
+              </section>
+              <section class="zhihu-strategy-one-card">
+                <h4>验证指标</h4>
+                <p>- 用户对当前方案的反馈和接受度 ⬆️<br />- 短容器的渗透率 ⬆️<br />- 大盘消费时长（平稳 or ⬆️）<br />- 首篇回答的消费时长（平稳 or ⬆️）</p>
+              </section>
+            </div>
+          </div>
+        </article>
+        <article class="zhihu-strategy-one-row">
+          <span class="zhihu-strategy-one-line" aria-hidden="true"></span>
+          <div class="zhihu-strategy-one-content">
+            <h3>结论与下一步：</h3>
+            <div class="zhihu-strategy-one-cards zhihu-strategy-one-cards--single">
+              <section class="zhihu-strategy-one-card">
+                <h4>数据反馈</h4>
+                <p>待补充</p>
+              </section>
+            </div>
+            <p class="zhihu-strategy-one-next">下一步：<br />1）改造首篇回答（短回答），提升首屏的利用率，增加短容器的曝光。<br />2）将想法详情页能力整合进短容器，最终实现统一消费结构。</p>
+          </div>
+        </article>
+      `
+    }
+  ];
 
   const body = `
     ${renderSiteHeader(content, `/work/${work.slug}`)}
 
     <main class="case-shell zhihu-case-shell">
       <aside class="zhihu-case-rail reveal is-visible" aria-label="章节导航">
-        ${navMarkup}
+        <div class="zhihu-case-outline">
+          <span class="zhihu-case-outline-line" aria-hidden="true">
+            <span class="zhihu-case-outline-indicator"></span>
+          </span>
+          <div class="zhihu-case-outline-content">
+            ${navMarkup}
+          </div>
+        </div>
       </aside>
 
       <div class="zhihu-case-main">
         <section class="zhihu-case-hero reveal is-visible" id="overview">
-          <div class="zhihu-case-brand" aria-hidden="true">知乎</div>
+          <img class="zhihu-case-brand" src="/assets/zhicon_brand_zhihu_logo.svg" alt="知乎 Logo" />
           <h1 class="zhihu-case-title">知乎问答详情页容器重构</h1>
 
           <div class="zhihu-case-meta">
@@ -400,8 +1323,7 @@ function renderZhihuDetailCasePage(content, work) {
           <h2>业务愿景（Why）</h2>
           <p class="zhihu-case-kicker">通过「统一、融合」的产品设计手段来达到「降本增效」</p>
           <ul class="zhihu-case-list">
-            <li>统一的容器 & 互动（本项目不讲）提升消费效率，降低认知成本。</li>
-            <li>减少不同内容形态与规则不一致导致的反复适应，帮助用户更快进入消费状态。</li>
+            <li>统一的容器 & 互动（本项目不讲）提升消费效率，降低认知成本（不同内容形态/规则不一致，用户需要反复适应）｜</li>
           </ul>
         </section>
 
@@ -410,13 +1332,18 @@ function renderZhihuDetailCasePage(content, work) {
           <p class="zhihu-case-muted">当前的内容组织形式有 3 种，用户认知成本高（如下图，3 种容器）</p>
           <p class="zhihu-case-kicker">阶段聚焦：先做核心消费容器 A（回答 / 文章 - 长图文内容）</p>
           <ul class="zhihu-case-list">
-            <li>回答 / 文章是知乎最核心的消费载体，在消费时长、消费深度、互动量与变现等指标上的贡献最高。</li>
-            <li>本轮结构统一优先聚焦回答 / 文章容器，先把核心消费链路跑顺，再逐步扩展到其他形态。</li>
-            <li>视频不在业务中心，可以暂不纳入本轮结构统一。</li>
+            <li>回答/文章是知乎最核心的消费载体，（消费时长/消费深度/互动量/变现）等关键指标上贡献最高，因此本轮结构统一优先聚焦回答/文章容器，先把核心消费链路跑顺，再逐步扩展到其他形态。</li>
+            <li>视频不在业务中心 → 可以暂不纳入本轮结构统一</li>
           </ul>
 
           <figure class="zhihu-figure zhihu-figure--panel">
-            <img src="/assets/case-study/40000371-127413.png" alt="知乎现有三种内容容器对比图" loading="lazy" />
+            <img
+              class="js-zoomable-image"
+              src="/assets/case-study/40000371-127413.png"
+              data-zoom-src="/assets/case-study/40000371-127413.png"
+              alt="知乎现有三种内容容器对比图"
+              loading="lazy"
+            />
           </figure>
         </section>
 
@@ -429,19 +1356,10 @@ function renderZhihuDetailCasePage(content, work) {
           </ul>
         </section>
 
-        <section class="zhihu-case-section reveal is-visible">
+        <section class="zhihu-case-section reveal is-visible" id="what">
           <h2>阶段目标（What）</h2>
           <ul class="zhihu-case-list">
             <li>让用户在一个问题下更容易继续筛选更多回答，提升消费深度，多看几条。</li>
-          </ul>
-        </section>
-
-        <section class="zhihu-case-section reveal is-visible">
-          <h2>设计策略（How）</h2>
-          <ul class="zhihu-case-list">
-            <li>策略 1：首篇回答内增强「还有内容可看」的感知。</li>
-            <li>策略 2：其他回答让“筛选 + 阅读”并存，做结构改造。</li>
-            <li>策略 3：改造首篇回答，提升短容器曝光。</li>
           </ul>
         </section>
 
@@ -449,190 +1367,140 @@ function renderZhihuDetailCasePage(content, work) {
           <h2>设计策略 1：首篇回答内——增强“还有内容可看”的感知</h2>
           <div class="zhihu-scroll-figure">
             <figure class="zhihu-figure zhihu-figure--wide">
-              <img src="/assets/case-study/40000371-128588.png" alt="首篇回答内增强内容连续感的多种尝试方案" loading="lazy" />
+              <img
+                class="js-zoomable-image"
+                src="/assets/case-study/40000371-128588.png"
+                data-zoom-src="/assets/case-study/40000371-128588.png"
+                alt="首篇回答内增强内容连续感的多种尝试方案"
+                loading="lazy"
+              />
             </figure>
           </div>
+          <div class="zhihu-strategy-one-detail">
+            <article class="zhihu-strategy-one-row">
+              <span class="zhihu-strategy-one-line" aria-hidden="true"></span>
+              <div class="zhihu-strategy-one-content">
+                <h3>方案决策：</h3>
+                <ul class="zhihu-strategy-one-list">
+                  <li>A（小流量实验）：明确按钮含义</li>
+                  <li>B1（淘汰）：将「下一条」放到内容顶部 → 过早切换，不符合阅读顺序</li>
+                  <li>B2（淘汰）：强提醒常驻底部 → 挤压互动区，影响互动量，打扰感强</li>
+                  <li>B3（淘汰）：滑到底部再提示 → 触达太晚；大量用户 10 秒内退出，覆盖不到核心人群，强推荐感。</li>
+                </ul>
+                <p class="zhihu-strategy-one-summary zhihu-strategy-two-decision-copy">
+                  <strong>方案选择：A</strong>
+                  （在不影响首篇阅读与互动体验底盘的前提下，尝试触达更早、干扰更小、研发改动小且验证成本低的方案）
+                </p>
+              </div>
+            </article>
+
+            <article class="zhihu-strategy-one-row">
+              <span class="zhihu-strategy-one-line" aria-hidden="true"></span>
+              <div class="zhihu-strategy-one-content">
+                <h3>小流量实验：</h3>
+                <div class="zhihu-strategy-one-cards">
+                  <section class="zhihu-strategy-one-card">
+                    <h4>验证命题</h4>
+                    <p>用户能否在首条回答内感知“下面还有更多内容”，从而降低 10 秒内退出？</p>
+                  </section>
+                  <section class="zhihu-strategy-one-card">
+                    <h4>验证指标</h4>
+                    <p>10 秒退出率降低 ⬇️<br />「下一个」按钮点击率上升 ⬆️<br />消费深度上升 ⬆️</p>
+                  </section>
+                </div>
+              </div>
+            </article>
+
+            <article class="zhihu-strategy-one-row">
+              <span class="zhihu-strategy-one-line" aria-hidden="true"></span>
+              <div class="zhihu-strategy-one-content">
+                <h3>结论与下一步：</h3>
+                <div class="zhihu-strategy-one-cards">
+                  <section class="zhihu-strategy-one-card">
+                    <h4>数据指标</h4>
+                    <p>XXX</p>
+                  </section>
+                  <section class="zhihu-strategy-one-card">
+                    <h4>用户反馈</h4>
+                    <p>遮挡正文 / 易误触 / 希望隐藏「下个回答」按钮</p>
+                  </section>
+                </div>
+                <p class="zhihu-strategy-one-next">下一步：首篇回答内的可尝试空间不大，进入策略 2</p>
+              </div>
+            </article>
+          </div>
         </section>
 
-        <section class="zhihu-case-section reveal is-visible">
-          <div class="zhihu-model-head">
-            <h2>交互模型（最终版）</h2>
-            <div class="zhihu-tabs" aria-hidden="true">
-              <span class="is-active">交互</span>
-              <span>UI</span>
-            </div>
-          </div>
-          <ul class="zhihu-case-list">
-            <li>正向滚动：进入「短容器」。</li>
-            <li>每次点击「下一个」按钮：同层替换，进入「长容器」。</li>
-            <li>仅 1 个层级。</li>
-          </ul>
-          <figure class="zhihu-figure zhihu-figure--panel">
-            <img src="/assets/case-study/40000371-132523-flow.png" alt="短容器最终交互模型流程图" loading="lazy" />
+        <section class="zhihu-case-section reveal is-visible zhihu-strategy-two" id="strategy-2-attempt-a">
+          <h2>设计策略 2：其他回答——让“筛选 + 阅读”并存（结构改造）</h2>
+
+          <figure class="zhihu-figure zhihu-figure--panel zhihu-attempt-a-image">
+            <img
+              class="js-zoomable-image"
+              src="/assets/case-study/40000371-130053-3x.png"
+              data-zoom-src="/assets/case-study/40000371-130053-3x.png"
+              alt="设计策略2尝试A页面结构图"
+              loading="lazy"
+            />
           </figure>
-        </section>
 
-        <section class="zhihu-decision-card reveal is-visible">
-          <header>
-            <p>方案决策（非常关键）</p>
-            <h2>短容器筛选成立，但消费体验仍然不足</h2>
-            <p>交互模型 2 和用户访谈验证后，真正的争议点变成了：短容器应该是筛选容器，还是消费容器？</p>
-          </header>
-
-          <div class="zhihu-decision-compare">
-            <article>
-              <h3>结构化：更适合筛选</h3>
-              <p class="zhihu-card-label">特点</p>
-              <ul class="zhihu-case-list zhihu-case-list--compact">
-                <li>内容摘要</li>
-                <li>图片集中</li>
-                <li>引导进入详情</li>
-              </ul>
-              <p class="zhihu-card-label">问题</p>
-              <p>无法承接消费。</p>
+          <div class="zhihu-strategy-one-detail">
+            <article class="zhihu-strategy-one-row">
+              <span class="zhihu-strategy-one-line" aria-hidden="true"></span>
+              <div class="zhihu-strategy-one-content">
+                <h3>方案决策：</h3>
+                <p class="zhihu-strategy-one-summary">
+                  优点：能同时满足消费和筛选的需求，还能简化层级，所有入口进去都是一个页面，实现「内容连续消费」体验<br />
+                  缺点：回答页和问题页的流量路径：<br />
+                  <span class="zhihu-strategy-one-indent-line">90.6% 的用户会从推荐/搜索/关注页直接进入回答页消费</span><br />
+                  <span class="zhihu-strategy-one-indent-line">9.4% 的用户会从热榜进入问题页——再进入回答页消费</span><br />
+                  首页进入内容详情页应该是一个「阅读态」，而非「筛选态」<br /><br />
+                  ❌ 放弃此方案：影响 90% 用户的消费和互动体验
+                </p>
+              </div>
             </article>
 
-            <article>
-              <h3>截断化：更适合筛选 + 消费</h3>
-              <p class="zhihu-card-label">特点</p>
-              <ul class="zhihu-case-list zhihu-case-list--compact">
-                <li>原始内容顺序</li>
-                <li>超出容器截断</li>
-                <li>可原地展开继续阅读</li>
-              </ul>
-              <p class="zhihu-card-label">问题</p>
-              <p>技术实现复杂且成本巨高。</p>
+            <article class="zhihu-strategy-one-row">
+              <span class="zhihu-strategy-one-line" aria-hidden="true"></span>
+              <div class="zhihu-strategy-one-content">
+                <h3>结论与下一步：</h3>
+                <p class="zhihu-strategy-one-summary">该尝试引导团队从数据层重新关注流量来源，把重心收回回答页，明确首页进入第一篇回答应保持「阅读态」。</p>
+                <p class="zhihu-strategy-one-next">下一步：在不影响首篇阅读与互动底盘的前提下，继续尝试提升消费渗透（进入 Test B）。</p>
+              </div>
             </article>
-          </div>
-
-          <section class="zhihu-triangle">
-            <h3>短容器的 Product Triangle：UX × Biz × Tech</h3>
-            <div class="zhihu-triangle-center">短容器内容承载方案</div>
-            <div class="zhihu-triangle-pills">
-              <span>结构化内容</span>
-              <span>VS</span>
-              <span>截断式内容</span>
-            </div>
-            <div class="zhihu-triangle-grid">
-              <article>
-                <h4>用户体验</h4>
-                <p>用户希望在短容器内连续阅读内容，减少跳转详情页。</p>
-              </article>
-              <article>
-                <h4>业务目标</h4>
-                <p>提升内容消费深度，减少无效退出，实现「筛选 + 消费」并存。</p>
-              </article>
-              <article>
-                <h4>技术约束</h4>
-                <p>当前富文本以 Hybrid 渲染为主，Native 承载完整消费存在技术成本，需考虑架构升级。</p>
-              </article>
-            </div>
-          </section>
-
-          <p class="zhihu-decision-note">我整理了用户研究、业务目标与技术约束等信息，为方案选择提供决策支持。</p>
-
-          <div class="zhihu-experiment">
-            <article>
-              <h3>小流量实验：验证命题</h3>
-              <ul class="zhihu-case-list zhihu-case-list--compact">
-                <li>短容器（截断化方案）内容呈现，能否承接更多阅读行为，实现真正的筛选 + 阅读的内容消费场。</li>
-              </ul>
-            </article>
-            <article>
-              <h3>验证指标</h3>
-              <ul class="zhihu-case-list zhihu-case-list--compact">
-                <li>用户对当前方案的反馈和接受度</li>
-                <li>短容器的渗透率</li>
-                <li>大盘消费时长（平稳 or 提升）</li>
-                <li>首篇回答的消费时长（平稳 or 提升）</li>
-              </ul>
-            </article>
-          </div>
-
-          <div class="zhihu-next-step">
-            <h3>结论与下一步</h3>
-            <p class="zhihu-card-label">数据反馈</p>
-            <p>待补充</p>
-            <ol>
-              <li>改造首篇回答（短回答），提升首屏的利用率，增加短容器的曝光。</li>
-              <li>将想法详情页能力整合进短容器，最终实现统一消费结构。</li>
-            </ol>
           </div>
         </section>
 
-        <section class="zhihu-case-section reveal is-visible" id="interviews">
-          <div class="zhihu-interview-card">
-            <header>
-              <h2>用户访谈</h2>
-              <p>
-                我主导了 10 位高频用户的结构化访谈，通过行为回溯、对比追问和情绪归因，
-                定位短容器改版中的真实痛点，并为后续方案迭代提供决策依据。
-              </p>
-            </header>
-
-            <section class="zhihu-voices">
-              <h3>用户原声</h3>
-              <div class="zhihu-voice-panel">
-                <p class="zhihu-voice-title">方向没错：短容器确实提升了筛选效率</p>
-                <div class="zhihu-voice-bubble">更方便找感兴趣的回答，不需要再点进去，能更节省时间。</div>
-                <div class="zhihu-voice-bubble zhihu-voice-bubble--right">提高了筛选效率，还比较方便。</div>
-                <div class="zhihu-voice-bubble">可以快速看出回答是否专业的，还是故意“玩梗”，可以瞬间过滤掉。</div>
-                <p class="zhihu-voice-title zhihu-voice-title--secondary">核心问题：卡片能筛选，但不能顺滑承接消费</p>
-                <div class="zhihu-voice-bubble">为什么下一条不是直接显示了，而是只能看到一部分，要看下一条还要重新点进去，看着好难受好出戏。</div>
-                <div class="zhihu-voice-bubble zhihu-voice-bubble--right">进入 1.5 层，下拉退出时，回到大卡，此动作本身会超出认知预期……认为应该直接到下一个。</div>
-                <div class="zhihu-voice-bubble">在短容器上一刷刷到很多回答，个人就会对这个问答不再感兴趣。</div>
-              </div>
-            </section>
-
-            <section class="zhihu-interview-summary">
-              <h3>访谈结论</h3>
-              <div class="zhihu-insight-grid">
-                <article>
-                  <h4>筛选成立，但消费被打断</h4>
-                  <p>用户认可短容器提升筛选效率，但不接受消费完后退回卡片列表。</p>
-                </article>
-                <article>
-                  <h4>路径不符合旧习惯</h4>
-                  <p>下拉、返回、问题页进入后的层级关系，与原有消费习惯冲突。</p>
-                </article>
-                <article>
-                  <h4>知乎感被削弱</h4>
-                  <p>非正文元素变多，信息密度下降，专业感变弱。</p>
-                </article>
-              </div>
-            </section>
-
-            <section class="zhihu-interview-decisions">
-              <h3>对决策的作用</h3>
-              <div class="zhihu-decision-stack">
-                <article>
-                  <h4>确认方向成立</h4>
-                  <p>短容器的筛选价值是成立的，用户会用它快速判断内容值不值得看。</p>
-                </article>
-                <article>
-                  <h4>确认核心问题</h4>
-                  <p>问题不在“要不要做卡片”，而在“卡片之后怎么继续消费”——能筛选，但消费不顺，路径不符合旧习惯。</p>
-                </article>
-                <article>
-                  <h4>推动下一步决策</h4>
-                  <p>不再继续打磨细节，转向提升原地消费能力，并推进图文混排，减少跳转，恢复沉浸感。</p>
-                </article>
-              </div>
-            </section>
-          </div>
+        <section class="zhihu-case-section reveal is-visible" id="strategy-2">
+          <article class="zhihu-attempt-b-shell zhihu-test-wall" aria-label="尝试方案B容器背景">
+            <h3 class="zhihu-test-wall-title">尝试 B：回答详情页的探索</h3>
+            ${strategyTwoModules.map((module) => renderStrategyTwoSwitchModule(module)).join("")}
+          </article>
         </section>
 
-        <section class="zhihu-case-section reveal is-visible">
+        <section class="zhihu-case-section reveal is-visible" id="strategy-3">
           <h2>设计策略 3：改造首篇回答，提升短容器曝光</h2>
           <figure class="zhihu-figure zhihu-figure--panel">
-            <img src="/assets/case-study/40000371-132867.png" alt="改造首篇回答前后的对比示意图" loading="lazy" />
+            <img
+              class="js-zoomable-image"
+              src="/assets/case-study/40000371-132867.png"
+              data-zoom-src="/assets/case-study/40000371-132867.png"
+              alt="改造首篇回答前后的对比示意图"
+              loading="lazy"
+            />
           </figure>
         </section>
 
-        <section class="zhihu-case-section reveal is-visible">
+        <section class="zhihu-case-section reveal is-visible" id="unified-container">
           <h2>目标达成：容器最终统一</h2>
           <figure class="zhihu-figure zhihu-figure--panel">
-            <img src="/assets/case-study/40000371-133580.png" alt="短容器统一后的想法详情页、回答详情页与文章详情页效果图" loading="lazy" />
+            <img
+              class="js-zoomable-image"
+              src="/assets/case-study/40000371-133580@3x.png"
+              data-zoom-src="/assets/case-study/40000371-133580@3x.png"
+              alt="短容器统一后的想法详情页、回答详情页与文章详情页效果图"
+              loading="lazy"
+            />
           </figure>
         </section>
 
@@ -651,7 +1519,7 @@ function renderZhihuDetailCasePage(content, work) {
           </div>
         </section>
 
-        <section class="zhihu-case-closing reveal is-visible">
+        <section class="zhihu-case-closing reveal is-visible" id="closing">
           <p>在复杂产品改版中，设计师不仅是提出方案，还要通过共识构建与阶段验证，推动组织完成关键决策。</p>
         </section>
       </div>
@@ -678,7 +1546,7 @@ function renderLayout({ title, description, bodyClass = "", content, body, scrip
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${escapeHtml(title)}</title>
     <meta name="description" content="${escapeHtml(description)}" />
-    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/styles.css?v=20260427-2233" />
   </head>
   <body class="${escapeHtml(bodyClass)}">
     ${content ? '<div class="cursor-dot" aria-hidden="true"></div>' : ""}
@@ -1515,7 +2383,7 @@ const server = createServer(async (request, response) => {
     }
 
     if ((pathname === "/works" || pathname === "/works/" || pathname === "/works.html") && isReadRequest) {
-      sendHtml(response, renderWorksPage(content), 200, request.method);
+      redirect(response, "/#work");
       return;
     }
 
