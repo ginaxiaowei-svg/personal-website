@@ -224,42 +224,42 @@
     },
     {
       "slug": "interest-circle-community",
-      "title": "圈子：兴趣场构建",
-      "cardMeta": "知乎 · 社区参与 · 2021 - 至今",
-      "badge": "社交设计",
-      "coverImage": "/assets/rachel-covers/pokergpt.png",
-      "coverMedia": "/assets/rachel-covers/pokergpt.mp4",
-      "coverMediaType": "video",
-      "coverMediaAnimated": false,
+      "title": "知乎社交设计",
+      "cardMeta": "知乎 · 社交设计 · 2021 - 至今",
+      "badge": "核心项目",
+      "coverImage": "/assets/rachel-covers/pokergpt.gif",
+      "coverMedia": "/assets/rachel-covers/pokergpt.gif",
+      "coverMediaType": "image",
+      "coverMediaAnimated": true,
       "tone": "tone-05",
       "ratio": "ratio-wide",
       "caseStudy": {
         "eyebrow": "Case Study / 知乎",
-        "lead": "项目目标是让用户从单条内容消费转向持续参与，构建更强的兴趣场景与互动关系。下一轮继续补方案细节。",
-        "type": "社区参与设计",
+        "lead": "围绕知乎社交主路径，我负责将个人页、ZhiLink 与圈子等模块做成一套可连续消费与连接的社交体验系统。",
+        "type": "社交体验设计",
         "year": "2021 - 至今",
         "role": "产品设计师",
-        "coverLabel": "圈子案例封面",
+        "coverLabel": "知乎社交设计封面",
         "sections": [
           {
             "label": "01 背景",
-            "title": "社区需要从内容消费走向持续参与",
-            "body": "单条内容的阅读与互动之外，用户还需要更稳定的兴趣场和关系沉淀场景。"
+            "title": "社交体验需要从单点功能走向系统协同",
+            "body": "原有社交触点相对分散，用户在个人表达、关系建立与持续互动之间缺少顺滑路径。"
           },
           {
             "label": "02 挑战",
-            "title": "如何降低参与门槛并前置互动",
-            "body": "兴趣社区既要形成持续内容消费，也要让用户更轻松地表达和发布。"
+            "title": "如何兼顾表达效率、连接效率与社区氛围",
+            "body": "项目既要提升互动和连接效率，也要保证知乎内容社区的专业感与长期价值。"
           },
           {
             "label": "03 方案",
-            "title": "构建兴趣场景并支持连续消费与互动",
-            "body": "围绕内容组织、互动方式和发布门槛进行设计，鼓励用户在更持续的关系场中参与。"
+            "title": "重构个人页、ZhiLink 与圈子的关键链路",
+            "body": "通过结构重排、流程精简与模块协同，构建从人设表达到关系连接的完整社交路径。"
           },
           {
             "label": "04 结果",
-            "title": "提升社区活跃度与内容消费深度",
-            "body": "让兴趣场景从单点消费延展到持续参与，增强社区关系的连续性。"
+            "title": "形成可持续迭代的知乎社交设计框架",
+            "body": "沉淀了可复用的模块策略，为后续社交增长与跨场景联动提供设计基础。"
           }
         ]
       }

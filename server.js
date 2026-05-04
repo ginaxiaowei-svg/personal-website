@@ -169,7 +169,38 @@ function renderSiteHeader(content, currentPath = "/") {
   `;
 }
 
-function renderFooter(content) {
+function buildCaseFooterLinks(content, currentWorkSlug = "") {
+  const works = Array.isArray(content.works) ? content.works : [];
+  if (!works.length) {
+    return {
+      allWorksHref: "/",
+      nextWorkHref: "/works"
+    };
+  }
+
+  const currentIndex = works.findIndex((item) => item.slug === currentWorkSlug);
+  const nextIndex = currentIndex >= 0 ? (currentIndex + 1) % works.length : 0;
+  const nextWork = works[nextIndex];
+
+  return {
+    allWorksHref: "/",
+    nextWorkHref: nextWork ? `/work/${nextWork.slug}` : "/works"
+  };
+}
+
+function renderFooter(content, options = {}) {
+  const { caseNav = null } = options;
+  if (caseNav) {
+    return `
+      <footer class="site-footer site-footer--case-nav reveal is-visible">
+        <div class="footer-links footer-links--case-nav">
+          <a href="${escapeHtml(caseNav.allWorksHref)}">查看全部作品</a>
+          <a href="${escapeHtml(caseNav.nextWorkHref)}">查看下个作品</a>
+        </div>
+      </footer>
+    `;
+  }
+
   return `
     <footer class="site-footer reveal">
       <div class="footer-credit">
@@ -230,7 +261,9 @@ function renderPublicScript() {
     <script>
       const cursor = document.querySelector(".cursor-dot");
       const reveals = document.querySelectorAll(".reveal");
-      const outline = document.querySelector(".zhihu-case-outline");
+      const outlines = Array.from(
+        document.querySelectorAll(".zhihu-case-outline, .zhihu-social-outline, .template-case-outline")
+      );
 
       if (cursor && window.matchMedia("(pointer:fine)").matches) {
         window.addEventListener("mousemove", (event) => {
@@ -256,7 +289,7 @@ function renderPublicScript() {
 
       reveals.forEach((section) => observer.observe(section));
 
-      if (outline) {
+      outlines.forEach((outline) => {
         const line = outline.querySelector(".zhihu-case-outline-line");
         const indicator = outline.querySelector(".zhihu-case-outline-indicator");
         const links = Array.from(outline.querySelectorAll('a[href^="#"]'));
@@ -273,6 +306,10 @@ function renderPublicScript() {
             return { link, section, href };
           })
           .filter(Boolean);
+
+        if (!sectionItems.length) {
+          return;
+        }
 
         const setActiveLink = (activeLink) => {
           links.forEach((link) => {
@@ -294,10 +331,6 @@ function renderPublicScript() {
         };
 
         const pickActiveByScroll = () => {
-          if (!sectionItems.length) {
-            return;
-          }
-
           const anchorOffset = 160;
           let current = sectionItems[0];
 
@@ -332,7 +365,7 @@ function renderPublicScript() {
         window.addEventListener("scroll", onScrollOrResize, { passive: true });
         window.addEventListener("resize", onScrollOrResize);
         pickActiveByScroll();
-      }
+      });
 
       const viewSwitchers = Array.from(document.querySelectorAll("[data-view-switch]"));
       viewSwitchers.forEach((switcher) => {
@@ -490,6 +523,78 @@ function renderPublicScript() {
           });
           startAutoplay();
         }
+      });
+
+      const socialPlanModules = Array.from(document.querySelectorAll("[data-social-plan-module]"));
+      socialPlanModules.forEach((module) => {
+        const tabs = Array.from(module.querySelectorAll("[data-social-plan-tab]"));
+        const slides = Array.from(module.querySelectorAll("[data-social-plan-slide]"));
+        const track = module.querySelector(".zhihu-social-carousel-track");
+        if (!tabs.length || !slides.length || !(track instanceof HTMLElement)) {
+          return;
+        }
+
+        const slideKeys = slides.map((slide) => slide.getAttribute("data-social-plan-slide"));
+        const interval = 3000;
+        let currentIndex = 0;
+        let timer = null;
+
+        const setActive = (key) => {
+          const nextIndex = slideKeys.indexOf(key);
+          if (nextIndex < 0) {
+            return;
+          }
+          currentIndex = nextIndex;
+          tabs.forEach((tab) => {
+            const isActive = tab.getAttribute("data-social-plan-tab") === key;
+            tab.classList.toggle("is-active", isActive);
+            tab.setAttribute("aria-selected", isActive ? "true" : "false");
+          });
+          slides.forEach((slide) => {
+            slide.classList.toggle("is-active", slide.getAttribute("data-social-plan-slide") === key);
+          });
+          track.style.transform = "translateX(-" + nextIndex * 100 + "%)";
+        };
+
+        const start = () => {
+          if (timer || slides.length < 2) {
+            return;
+          }
+          timer = window.setInterval(() => {
+            currentIndex = (currentIndex + 1) % slides.length;
+            setActive(slideKeys[currentIndex]);
+          }, interval);
+        };
+
+        const stop = () => {
+          if (!timer) {
+            return;
+          }
+          window.clearInterval(timer);
+          timer = null;
+        };
+
+        tabs.forEach((tab) => {
+          tab.addEventListener("click", () => {
+            const key = tab.getAttribute("data-social-plan-tab");
+            if (!key) {
+              return;
+            }
+            setActive(key);
+            stop();
+            start();
+          });
+        });
+
+        module.addEventListener("mouseenter", stop);
+        module.addEventListener("mouseleave", start);
+
+        const defaultTab = tabs.find((tab) => tab.classList.contains("is-active")) || tabs[0];
+        const defaultKey = defaultTab ? defaultTab.getAttribute("data-social-plan-tab") : null;
+        if (defaultKey) {
+          setActive(defaultKey);
+        }
+        start();
       });
 
       const zoomableImages = Array.from(document.querySelectorAll("img")).filter((image) => {
@@ -728,7 +833,7 @@ const zhihuDetailCase = {
       tone: "strong",
       children: [
         { href: "#strategy-1", label: "设计策略 1" },
-        { href: "#strategy-2-attempt-a", label: "设计策略 2" },
+        { href: "#strategy-2-attempt-a", label: "设计策略 2 （必读）" },
         { href: "#strategy-3", label: "设计策略 3" }
       ]
     },
@@ -1538,6 +1643,257 @@ function renderZhihuDetailCasePage(content, work) {
   });
 }
 
+function renderZhihuSocialDesignCasePage(content, work) {
+  const outlineItems = [
+    { href: "#social-overview", label: "知乎社交是如何发生的？" },
+    { href: "#social-profile", label: "个人页：打造人设，提升「人」的影响力" },
+    { href: "#social-diagnosis", label: "问题诊断", bullet: true },
+    { href: "#social-goal", label: "目标拆解", bullet: true },
+    { href: "#social-plan", label: "方案落地", bullet: true },
+    { href: "#social-result", label: "项目收益", bullet: true },
+    { href: "#social-zhilink", label: "ZhiLink：弱连接之外的场景补充" },
+    { href: "#social-circle", label: "知乎圈子：基于兴趣的社交连接" },
+    { href: "#social-ending", label: "结尾" }
+  ];
+
+  const body = `
+    ${renderSiteHeader(content, `/work/${work.slug}`)}
+
+    <main class="case-shell zhihu-social-shell">
+      <aside class="zhihu-social-rail reveal is-visible" aria-label="章节导航">
+        <div class="zhihu-social-outline">
+          ${outlineItems
+            .map((item) => `<a href="${escapeHtml(item.href)}" class="zhihu-social-outline-link${item.bullet ? " zhihu-social-outline-link--bullet" : ""}">${escapeHtml(item.label)}</a>`)
+            .join("")}
+        </div>
+      </aside>
+
+      <div class="zhihu-social-main">
+        <section class="zhihu-social-hero reveal is-visible" id="social-overview">
+          <div class="zhihu-social-hero-head">
+            <img class="zhihu-social-brand" src="/assets/zhicon_brand_zhihu_logo.svg" alt="知乎 Logo" />
+            <h1 class="zhihu-social-title">知乎社交设计</h1>
+          </div>
+
+          <div class="zhihu-social-meta">
+            <div>
+              <span>我的角色</span>
+              <strong>产品设计 Owner</strong>
+            </div>
+            <div>
+              <span>项目时间</span>
+              <strong>2025 年</strong>
+            </div>
+          </div>
+
+          <div class="zhihu-social-divider" aria-hidden="true"></div>
+          <h2 class="zhihu-social-subtitle">知乎社交是如何发生的？</h2>
+          <p class="zhihu-social-lead">在弱社交关系中，让连接发生</p>
+          <p class="zhihu-social-copy">知乎的连接建立在内容之上，用户先认同观点，再决定是否关注答主，因此天然是弱社交关系。<br/>在弱社交结构下，用户缺乏直接的关系驱动，<span class="zhihu-social-copy--strong">设计需要承担从内容到人的转化责任，使社交关系发生并强化。</span></p>
+          <div class="zhihu-social-overview-diagram" aria-label="弱社交关系下连接发生路径图">
+            <div class="zhihu-social-flow-diagram">
+              <div class="zhihu-social-flow-diagram-top">
+                <article class="zhihu-social-flow-card zhihu-social-flow-card--content">
+                  <h4>内容页</h4>
+                  <p>产生兴趣</p>
+                </article>
+                <article class="zhihu-social-flow-card zhihu-social-flow-card--profile">
+                  <h4>个人页</h4>
+                  <p>理解人</p>
+                </article>
+              </div>
+              <div class="zhihu-social-flow-diagram-rates" aria-hidden="true">
+                <div class="zhihu-social-flow-rate zhihu-social-flow-rate--content">
+                  <span class="zhihu-social-flow-rate-arrow">↓</span>
+                  <span class="zhihu-social-flow-rate-value">38.5%</span>
+                </div>
+                <div class="zhihu-social-flow-rate zhihu-social-flow-rate--profile">
+                  <span class="zhihu-social-flow-rate-arrow">↓</span>
+                  <span class="zhihu-social-flow-rate-value">40%</span>
+                </div>
+              </div>
+              <article class="zhihu-social-flow-card zhihu-social-flow-card--follow">
+                <h4>关注行为</h4>
+                <p>建立连接</p>
+              </article>
+              <p class="zhihu-social-flow-caption">用户先被内容吸引，再决定是否连接这个人</p>
+            </div>
+          </div>
+          <section class="zhihu-social-content-module">
+            <div class="zhihu-social-content-copy">
+              <h3>内容页</h3>
+              <p>在内容页建立连接，是整个社交链路中最关键的一环。<br/>围绕提升关注转化，我持续迭代互动 bar 设计，并在数据与体验上取得了稳定提升（该项目已单独作为案例展开）。</p>
+            </div>
+            <a class="zhihu-social-content-link" href="#" aria-label="知乎互动 bar 改版项目">
+              知乎互动 bar 改版项目
+              <img class="zhihu-social-content-link-icon" src="/assets/case-study/zhihu-social-link-icon.svg" alt="" aria-hidden="true" />
+            </a>
+          </section>
+          <div class="zhihu-social-image-placeholder">
+            <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/zhihu-social-interaction-bar-4x.png?v=20260504-1449" alt="知乎互动 bar 改版项目配图" loading="lazy" />
+          </div>
+          <section class="zhihu-social-content-module">
+            <div class="zhihu-social-content-copy">
+              <h3>个人页</h3>
+              <p>在知乎，用户的连接建立在内容之上：先认同观点，再决定是否关注这个人。<br/>因此，在进入个人页时，用户的核心目标不是继续消费内容，而是快速判断“这个人是谁，是否值得关注”</p>
+            </div>
+          </section>
+        </section>
+
+        <section class="zhihu-social-section reveal is-visible" id="social-profile">
+          <article class="zhihu-social-profile-module">
+            <p class="zhihu-social-profile-tag">1. 个人页</p>
+            <h2 class="zhihu-social-profile-title">个人页：建立人设，提升「人」的影响力</h2>
+            <p class="zhihu-social-profile-subtitle">个人页不仅展示信息，更需要形成清晰的人设表达，帮助用户在短时间内完成认知与决策。</p>
+            <figure class="zhihu-social-profile-image">
+              <img src="/assets/case-study/zhihu-social-profile-module.png?v=20260504-1153" alt="个人页改前改后模块图" loading="lazy" />
+            </figure>
+          </article>
+        </section>
+
+        <section class="zhihu-social-section reveal is-visible" id="social-diagnosis">
+          <div class="zhihu-social-diagnosis-head">
+            <p class="zhihu-social-diagnosis-label">01/问题诊断</p>
+            <h2 class="zhihu-social-diagnosis-title">关注决策链路在个人页发生断裂</h2>
+          </div>
+          <div class="zhihu-social-diagnosis-paths" aria-label="问题诊断路径对比">
+            <article class="zhihu-social-diagnosis-path zhihu-social-diagnosis-path--ideal">
+              <p class="zhihu-social-diagnosis-path-label zhihu-social-diagnosis-path-label--ideal">✓ 理想路径</p>
+              <div class="zhihu-social-diagnosis-path-flow">
+                <div class="zhihu-social-diagnosis-node">内容页</div>
+                <div class="zhihu-social-diagnosis-arrow" aria-hidden="true"></div>
+                <div class="zhihu-social-diagnosis-node">个人页</div>
+                <div class="zhihu-social-diagnosis-arrow" aria-hidden="true"></div>
+                <div class="zhihu-social-diagnosis-node">认知</div>
+                <div class="zhihu-social-diagnosis-arrow" aria-hidden="true"></div>
+                <div class="zhihu-social-diagnosis-node">信任</div>
+                <div class="zhihu-social-diagnosis-arrow" aria-hidden="true"></div>
+                <div class="zhihu-social-diagnosis-node zhihu-social-diagnosis-node--focus">关注</div>
+              </div>
+            </article>
+
+            <article class="zhihu-social-diagnosis-path zhihu-social-diagnosis-path--problem">
+              <p class="zhihu-social-diagnosis-path-label zhihu-social-diagnosis-path-label--problem">✕ 问题路径</p>
+              <div class="zhihu-social-diagnosis-path-flow">
+                <div class="zhihu-social-diagnosis-node zhihu-social-diagnosis-node--muted">内容页</div>
+                <div class="zhihu-social-diagnosis-arrow zhihu-social-diagnosis-arrow--muted" aria-hidden="true"></div>
+                <div class="zhihu-social-diagnosis-node zhihu-social-diagnosis-node--muted">个人页</div>
+                <div class="zhihu-social-diagnosis-arrow zhihu-social-diagnosis-arrow--muted" aria-hidden="true"></div>
+                <div class="zhihu-social-diagnosis-breakpoint">
+                  <p><strong>断点1：人设表达不足 · </strong><span>信息分散</span></p>
+                  <p><strong>断点2：优质内容未参与判断</strong></p>
+                  <p><strong>断点3：决策路径断裂 · </strong><span>按钮缺少承接</span></p>
+                </div>
+                <div class="zhihu-social-diagnosis-arrow zhihu-social-diagnosis-arrow--muted" aria-hidden="true"></div>
+                <div class="zhihu-social-diagnosis-node zhihu-social-diagnosis-node--muted">放弃关注</div>
+              </div>
+            </article>
+          </div>
+          <div class="zhihu-social-gradient-card zhihu-social-gradient-card--large zhihu-social-goal-image-box">
+            <img class="zhihu-social-goal-image" src="/assets/case-study/zhihu-social-goal-4x.png?v=20260504-1826" alt="问题路径问题点示意图" loading="lazy" />
+          </div>
+          <div class="zhihu-social-diagnosis-quote">
+            <span class="zhihu-social-diagnosis-quote-line" aria-hidden="true"></span>
+            <p class="zhihu-social-diagnosis-quote-text">
+              关注决策链路在个人页发生断裂，其中关键原因是人设表达不足，导致用户难以形成对“人”的快速认知。<br />
+              <span class="zhihu-social-diagnosis-quote-highlight">因此，将建立人设作为设计目标，降低用户的关注决策成本</span>
+            </p>
+          </div>
+        </section>
+
+        <section class="zhihu-social-section reveal is-visible" id="social-goal">
+          <div class="zhihu-social-diagnosis-head">
+            <p class="zhihu-social-diagnosis-label">02/目标拆解</p>
+            <h2 class="zhihu-social-diagnosis-title">建立人设，降低用户的关注决策成本</h2>
+          </div>
+          <div class="zhihu-social-gradient-card zhihu-social-gradient-card--large zhihu-social-goal-image-box">
+            <img class="zhihu-social-goal-image" src="/assets/case-study/zhihu-social-goal-target-4x.png?v=20260504-2147" alt="建立人设，降低用户关注决策成本配图" loading="lazy" />
+          </div>
+        </section>
+
+        <section class="zhihu-social-section reveal is-visible" id="social-plan">
+          <div class="zhihu-social-diagnosis-head">
+            <p class="zhihu-social-diagnosis-label">03/方案落地</p>
+            <h2 class="zhihu-social-diagnosis-title">客人态：围绕身份、价值与信任，重构关注决策表达</h2>
+          </div>
+          <p class="zhihu-social-diagnosis-copy">针对决策链路中的认知断点，从身份、价值与信任三个层面，重构个人页的信息表达方式。</p>
+          <div class="zhihu-social-plan-module" data-social-plan-module>
+            <div class="zhihu-social-carousel zhihu-social-carousel--plan" aria-label="方案落地轮播图">
+              <div class="zhihu-social-plan-switch-row">
+                <div class="zhihu-view-switch zhihu-social-plan-tabs" role="tablist" aria-label="方案落地视角切换">
+                  <button type="button" class="zhihu-social-plan-tab is-active" role="tab" aria-selected="true" data-social-plan-tab="identity">身份</button>
+                  <button type="button" class="zhihu-social-plan-tab" role="tab" aria-selected="false" data-social-plan-tab="value">价值</button>
+                  <button type="button" class="zhihu-social-plan-tab" role="tab" aria-selected="false" data-social-plan-tab="trust">信任</button>
+                </div>
+              </div>
+              <div class="zhihu-social-carousel-track">
+                <figure class="zhihu-social-carousel-slide is-active" data-social-plan-slide="identity">
+                  <img class="js-zoomable-image" data-zoom-group="social-plan-carousel" data-zoom-view="identity" data-zoom-order="0" src="/assets/case-study/zhihu-social-plan-1-4x.png?v=20260504-2258" alt="方案落地身份图" loading="eager" />
+                </figure>
+                <figure class="zhihu-social-carousel-slide" data-social-plan-slide="value">
+                  <img class="js-zoomable-image" data-zoom-group="social-plan-carousel" data-zoom-view="value" data-zoom-order="1" src="/assets/case-study/zhihu-social-plan-2-4x.png?v=20260504-2258" alt="方案落地价值图" loading="lazy" />
+                </figure>
+                <figure class="zhihu-social-carousel-slide" data-social-plan-slide="trust">
+                  <img class="js-zoomable-image" data-zoom-group="social-plan-carousel" data-zoom-view="trust" data-zoom-order="2" src="/assets/case-study/zhihu-social-plan-3-4x.png?v=20260504-2258" alt="方案落地信任图" loading="lazy" />
+                </figure>
+              </div>
+            </div>
+          </div>
+
+          <article class="zhihu-social-owner-module">
+            <h3 class="zhihu-social-owner-title">主人态：引导用户完善表达，建立清晰身份</h3>
+            <p class="zhihu-social-owner-subtitle">通过任务引导与信息结构设计，帮助用户补全关键资料，使其更容易被理解与关注</p>
+            <p class="zhihu-social-owner-caption">a、针对全新用户做 0～1 的强引导：</p>
+            <figure class="zhihu-social-owner-image">
+              <img src="/assets/case-study/zhihu-social-owner-module.png?v=20260504-1207" alt="主人态模块示意图" loading="lazy" />
+            </figure>
+            <p class="zhihu-social-owner-caption zhihu-social-owner-caption--secondary">b、简化编辑资料流程</p>
+            <figure class="zhihu-social-owner-image zhihu-social-owner-image--secondary">
+              <img src="/assets/case-study/zhihu-social-owner-module-b.png?v=20260504-1220" alt="主人态资料编辑流程模块图" loading="lazy" />
+            </figure>
+          </article>
+        </section>
+
+        <section class="zhihu-social-section reveal is-visible" id="social-result">
+          <div class="zhihu-social-diagnosis-head">
+            <p class="zhihu-social-diagnosis-label">04/项目收益</p>
+            <h2 class="zhihu-social-diagnosis-title">人设表达优化，显著提升关注决策效率：<span class="zhihu-social-diagnosis-highlight">关注CTR +12%</span></h2>
+          </div>
+        </section>
+
+        <section class="zhihu-social-section reveal is-visible" id="social-zhilink">
+          <h2>1. ZhiLink：弱连接之外的场景补充</h2>
+          <p>a、针对全新用户做 0～1 的强引导：</p>
+          <p>b、简化编辑资料流程</p>
+          <div class="zhihu-social-gradient-card zhihu-social-gradient-card--large"></div>
+        </section>
+
+        <section class="zhihu-social-section reveal is-visible" id="social-circle">
+          <h2>1. 知乎圈子：基于兴趣的社交连接</h2>
+          <p>- 挖掘更多社交关系</p>
+          <p>- 关注按钮强化， - 与社交关系放一起 促进用户做出行动决策</p>
+          <div class="zhihu-social-gradient-card zhihu-social-gradient-card--large"></div>
+        </section>
+
+        <section class="zhihu-social-section reveal is-visible" id="social-ending">
+          <h2>结尾</h2>
+        </section>
+      </div>
+    </main>
+
+    ${renderFooter(content, { caseNav: buildCaseFooterLinks(content, work.slug) })}
+  `;
+
+  return renderLayout({
+    title: `${work.title} | Case Study`,
+    description: work.caseStudy.lead || "知乎社交设计案例",
+    bodyClass: "case-study-page case-study-page--zhihu-social",
+    content,
+    body,
+    script: renderPublicScript()
+  });
+}
+
 function renderLayout({ title, description, bodyClass = "", content, body, script = "" }) {
   return `<!doctype html>
 <html lang="zh-CN">
@@ -1546,7 +1902,7 @@ function renderLayout({ title, description, bodyClass = "", content, body, scrip
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${escapeHtml(title)}</title>
     <meta name="description" content="${escapeHtml(description)}" />
-    <link rel="stylesheet" href="/styles.css?v=20260427-2233" />
+    <link rel="stylesheet" href="/styles.css?v=20260504-2315" />
   </head>
   <body class="${escapeHtml(bodyClass)}">
     ${content ? '<div class="cursor-dot" aria-hidden="true"></div>' : ""}
@@ -1735,7 +2091,97 @@ function renderWorkPage(content, work) {
   if (work.slug === "zhihu-detail-container-rebuild") {
     return renderZhihuDetailCasePage(content, work);
   }
+  if (work.slug === "interest-circle-community") {
+    return renderZhihuSocialDesignCasePage(content, work);
+  }
 
+  const caseSections = Array.isArray(work.caseStudy?.sections) ? work.caseStudy.sections : [];
+  const sectionAnchors = caseSections.map((section, index) => ({
+    id: `section-${index + 1}`,
+    navLabel: section.label || section.title || `章节 ${index + 1}`,
+    title: section.title || `章节 ${index + 1}`,
+    body: section.body || "待补充。"
+  }));
+
+  const body = `
+    ${renderSiteHeader(content, `/work/${work.slug}`)}
+
+    <main class="template-case-shell">
+      <aside class="template-case-rail reveal is-visible" aria-label="章节导航">
+        <div class="template-case-outline">
+          ${sectionAnchors
+            .map(
+              (item) =>
+                `<a class="template-case-outline-link" href="#${escapeHtml(item.id)}">${escapeHtml(item.navLabel)}</a>`
+            )
+            .join("")}
+        </div>
+      </aside>
+
+      <div class="template-case-main">
+        <section class="template-case-hero reveal is-visible">
+          <p class="eyebrow">${escapeHtml(work.caseStudy.eyebrow)}</p>
+          <h1 class="case-title">${escapeHtml(work.title)}</h1>
+          <p class="case-lead">${escapeHtml(work.caseStudy.lead)}</p>
+          <div class="case-meta">
+            <div>
+              <span>项目类型</span>
+              <strong>${escapeHtml(work.caseStudy.type)}</strong>
+            </div>
+            <div>
+              <span>项目时间</span>
+              <strong>${escapeHtml(work.caseStudy.year)}</strong>
+            </div>
+            <div>
+              <span>我的角色</span>
+              <strong>${escapeHtml(work.caseStudy.role)}</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="case-cover ${escapeHtml(work.tone)}${work.coverImage ? " case-cover--image" : ""} reveal is-visible">
+          ${
+            work.coverImage
+              ? `
+                <div class="case-cover-media">
+                  ${renderCoverMedia(work, { className: "case-cover-media-visual", loading: "eager", eagerVideo: true })}
+                </div>
+              `
+              : ""
+          }
+          <span>${escapeHtml(work.caseStudy.coverLabel || "封面占位图")}</span>
+        </section>
+
+        <section class="template-case-content">
+          ${sectionAnchors
+            .map(
+              (section) => `
+                <article class="template-case-block reveal is-visible" id="${escapeHtml(section.id)}">
+                  <p class="case-label">${escapeHtml(section.navLabel)}</p>
+                  <h2>${escapeHtml(section.title)}</h2>
+                  <p>${escapeHtml(section.body).replace(/\n/g, "<br />")}</p>
+                </article>
+              `
+            )
+            .join("")}
+        </section>
+      </div>
+    </main>
+
+    ${renderFooter(content, { caseNav: buildCaseFooterLinks(content, work.slug) })}
+  `;
+
+  return renderLayout({
+    title: `${work.title} | Case Study`,
+    description: work.caseStudy.lead,
+    bodyClass: "case-study-page case-study-page--template",
+    content,
+    body,
+    script: renderPublicScript()
+  });
+}
+
+function renderLegacyWorkPage(content, work) {
   const body = `
     ${renderSiteHeader(content, `/work/${work.slug}`)}
 
@@ -1788,7 +2234,7 @@ function renderWorkPage(content, work) {
       </section>
     </main>
 
-    ${renderFooter(content)}
+    ${renderFooter(content, { caseNav: buildCaseFooterLinks(content, work.slug) })}
   `;
 
   return renderLayout({
@@ -1799,6 +2245,41 @@ function renderWorkPage(content, work) {
     body,
     script: renderPublicScript()
   });
+}
+
+function buildCaseTemplateSections() {
+  return [
+    {
+      label: "01 项目背景",
+      title: "业务背景与问题定义",
+      body: "补充项目背景、现状问题与机会点。"
+    },
+    {
+      label: "02 项目目标",
+      title: "目标与范围收敛",
+      body: "补充阶段目标、成功指标和不做范围。"
+    },
+    {
+      label: "03 角色与方法",
+      title: "我的职责与推进方式",
+      body: "补充你在项目中的职责、协作方式与关键方法。"
+    },
+    {
+      label: "04 方案过程",
+      title: "核心方案与关键决策",
+      body: "补充方案探索、实验验证、方案收敛与关键取舍。"
+    },
+    {
+      label: "05 项目结果",
+      title: "结果数据与业务影响",
+      body: "补充关键结果、指标变化与业务价值。"
+    },
+    {
+      label: "06 复盘沉淀",
+      title: "方法沉淀与后续方向",
+      body: "补充项目复盘、经验总结与下一步规划。"
+    }
+  ];
 }
 
 function renderAdminPage(content) {
@@ -1924,7 +2405,10 @@ function renderAdminPage(content) {
           <p>这里维护作品卡片以及对应 case study 的完整内容。</p>
         </div>
         <div id="worksList" class="admin-stack"></div>
-        <button class="admin-secondary" id="addWork" type="button">新增作品</button>
+        <div class="admin-actions">
+          <button class="admin-secondary" id="addWorkTemplate" type="button">按母版新增案例</button>
+          <button class="admin-secondary" id="addWork" type="button">新增空白作品</button>
+        </div>
       </section>
     </main>
 
@@ -1933,6 +2417,7 @@ function renderAdminPage(content) {
       const toneOptions = ["tone-01", "tone-02", "tone-03", "tone-04", "tone-05", "tone-06", "tone-07", "tone-08"];
       const ratioOptions = ["ratio-wide", "ratio-portrait"];
       let currentContent = structuredClone(initialContent);
+      const templateSections = ${safeJson(buildCaseTemplateSections())};
 
       const siteFields = [
         "browserTitle",
@@ -2182,6 +2667,71 @@ function renderAdminPage(content) {
         };
       }
 
+      function createUniqueSlug(baseSlug) {
+        const usedSlugs = new Set(currentContent.works.map((item) => item.slug));
+        if (!usedSlugs.has(baseSlug)) {
+          return baseSlug;
+        }
+
+        let index = 2;
+        let nextSlug = baseSlug + "-" + index;
+        while (usedSlugs.has(nextSlug)) {
+          index += 1;
+          nextSlug = baseSlug + "-" + index;
+        }
+        return nextSlug;
+      }
+
+      function createEmptyWork() {
+        return {
+          slug: createUniqueSlug("new-work"),
+          title: "新的作品",
+          cardMeta: "作品说明",
+          badge: "案例占位",
+          coverImage: "",
+          coverMedia: "",
+          coverMediaType: "image",
+          coverMediaAnimated: false,
+          tone: "tone-01",
+          ratio: "ratio-wide",
+          caseStudy: {
+            eyebrow: "Case Study / 占位页",
+            lead: "请补充项目导语。",
+            type: "项目类型",
+            year: "2026",
+            role: "我的角色",
+            coverLabel: "封面占位图",
+            sections: [
+              { label: "01 背景", title: "背景待补充", body: "这里补背景。" }
+            ]
+          }
+        };
+      }
+
+      function createTemplateWork() {
+        return {
+          slug: createUniqueSlug("case-template"),
+          title: "案例标题（母版）",
+          cardMeta: "项目类型 · 时间",
+          badge: "母版",
+          coverImage: "",
+          coverMedia: "",
+          coverMediaType: "image",
+          coverMediaAnimated: false,
+          tone: "tone-01",
+          ratio: "ratio-wide",
+          caseStudy: {
+            eyebrow: "Case Study / 项目名",
+            lead: "一句话说明项目目标、场景和你负责的核心内容。",
+            type: "项目类型",
+            year: "2026",
+            role: "产品设计师",
+            coverLabel: "案例封面",
+            sections: templateSections.map((section) => ({ ...section }))
+          }
+        };
+      }
+
       async function reloadContent() {
         setStatus("正在重新载入...");
         const response = await fetch("/api/content");
@@ -2233,29 +2783,13 @@ function renderAdminPage(content) {
         }
 
         if (target.id === "addWork") {
-          currentContent.works.push({
-            slug: "new-work",
-            title: "新的作品",
-            cardMeta: "作品说明",
-            badge: "案例占位",
-            coverImage: "",
-            coverMedia: "",
-            coverMediaType: "image",
-            coverMediaAnimated: false,
-            tone: "tone-01",
-            ratio: "ratio-wide",
-            caseStudy: {
-              eyebrow: "Case Study / 占位页",
-              lead: "请补充项目导语。",
-              type: "项目类型",
-              year: "2026",
-              role: "我的角色",
-              coverLabel: "封面占位图",
-              sections: [
-                { label: "01 背景", title: "背景待补充", body: "这里补背景。" }
-              ]
-            }
-          });
+          currentContent.works.push(createEmptyWork());
+          renderWorks();
+          return;
+        }
+
+        if (target.id === "addWorkTemplate") {
+          currentContent.works.push(createTemplateWork());
           renderWorks();
           return;
         }
