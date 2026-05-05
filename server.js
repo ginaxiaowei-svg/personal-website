@@ -1,5 +1,5 @@
 import { createServer } from "node:http";
-import { promises as fs } from "node:fs";
+import { promises as fs, readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -7,6 +7,16 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const PORT = Number(process.env.PORT || 4321);
 const DATA_FILE = path.join(__dirname, "data", "site-content.json");
+const ZHILINK_CASE_FILE = path.join(__dirname, "data", "zhlinkCase.ts");
+
+function loadPlainModule(filePath) {
+  const source = readFileSync(filePath, "utf8");
+  const module = { exports: {} };
+  const wrappedSource = `${source}\n;return module.exports;`;
+  return Function("module", "exports", wrappedSource)(module, module.exports);
+}
+
+const zhlinkCase = loadPlainModule(ZHILINK_CASE_FILE);
 
 const mimeTypes = {
   ".css": "text/css; charset=utf-8",
@@ -170,7 +180,7 @@ function renderSiteHeader(content, currentPath = "/") {
 }
 
 function buildCaseFooterLinks(content, currentWorkSlug = "") {
-  const works = Array.isArray(content.works) ? content.works : [];
+  const works = getRenderableWorks(content);
   if (!works.length) {
     return {
       allWorksHref: "/",
@@ -184,8 +194,20 @@ function buildCaseFooterLinks(content, currentWorkSlug = "") {
 
   return {
     allWorksHref: "/",
-    nextWorkHref: nextWork ? `/work/${nextWork.slug}` : "/works"
+    nextWorkHref: nextWork ? resolveWorkHref(nextWork) : "/works"
   };
+}
+
+function resolveWorkHref(work) {
+  if (work?.slug === "zhilink-digital-card") {
+    return "/work/interest-circle-community#social-zhilink";
+  }
+  return `/work/${work.slug}`;
+}
+
+function getRenderableWorks(content) {
+  const works = Array.isArray(content.works) ? content.works : [];
+  return works.filter((work) => work.slug !== "zhilink-digital-card");
 }
 
 function renderFooter(content, options = {}) {
@@ -261,9 +283,7 @@ function renderPublicScript() {
     <script>
       const cursor = document.querySelector(".cursor-dot");
       const reveals = document.querySelectorAll(".reveal");
-      const outlines = Array.from(
-        document.querySelectorAll(".zhihu-case-outline, .zhihu-social-outline, .template-case-outline")
-      );
+      const outlines = Array.from(document.querySelectorAll("[data-outline-nav]"));
 
       if (cursor && window.matchMedia("(pointer:fine)").matches) {
         window.addEventListener("mousemove", (event) => {
@@ -290,8 +310,8 @@ function renderPublicScript() {
       reveals.forEach((section) => observer.observe(section));
 
       outlines.forEach((outline) => {
-        const line = outline.querySelector(".zhihu-case-outline-line");
-        const indicator = outline.querySelector(".zhihu-case-outline-indicator");
+        const line = outline.querySelector("[data-outline-line]");
+        const indicator = outline.querySelector("[data-outline-indicator]");
         const links = Array.from(outline.querySelectorAll('a[href^="#"]'));
         const sectionItems = links
           .map((link) => {
@@ -809,6 +829,32 @@ function renderPublicScript() {
             stepZoomImage(1);
           }
         });
+
+        const applyZhiLinkImageDensityLimit = () => {
+          const section = document.querySelector("#social-zhilink");
+          if (!section) {
+            return;
+          }
+          const dpr = Math.max(1, window.devicePixelRatio || 1);
+          const images = Array.from(section.querySelectorAll("img.zhihu-social-goal-image, .zhihu-social-profile-image img"));
+          images.forEach((img) => {
+            const naturalWidth = img.naturalWidth || 0;
+            if (!naturalWidth) {
+              return;
+            }
+            const limit = Math.floor(naturalWidth / dpr);
+            if (limit <= 0) {
+              return;
+            }
+            img.style.maxWidth = limit + "px";
+            img.style.width = "100%";
+            img.style.marginLeft = "auto";
+            img.style.marginRight = "auto";
+          });
+        };
+
+        applyZhiLinkImageDensityLimit();
+        window.addEventListener("resize", applyZhiLinkImageDensityLimit);
       }
     </script>
   `;
@@ -1390,9 +1436,9 @@ function renderZhihuDetailCasePage(content, work) {
 
     <main class="case-shell zhihu-case-shell">
       <aside class="zhihu-case-rail reveal is-visible" aria-label="章节导航">
-        <div class="zhihu-case-outline">
-          <span class="zhihu-case-outline-line" aria-hidden="true">
-            <span class="zhihu-case-outline-indicator"></span>
+        <div class="zhihu-case-outline case-outline" data-outline-nav>
+          <span class="zhihu-case-outline-line case-outline-line" data-outline-line aria-hidden="true">
+            <span class="zhihu-case-outline-indicator case-outline-indicator" data-outline-indicator></span>
           </span>
           <div class="zhihu-case-outline-content">
             ${navMarkup}
@@ -1661,10 +1707,15 @@ function renderZhihuSocialDesignCasePage(content, work) {
 
     <main class="case-shell zhihu-social-shell">
       <aside class="zhihu-social-rail reveal is-visible" aria-label="章节导航">
-        <div class="zhihu-social-outline">
-          ${outlineItems
-            .map((item) => `<a href="${escapeHtml(item.href)}" class="zhihu-social-outline-link${item.bullet ? " zhihu-social-outline-link--bullet" : ""}">${escapeHtml(item.label)}</a>`)
-            .join("")}
+        <div class="zhihu-social-outline case-outline" data-outline-nav>
+          <span class="zhihu-case-outline-line case-outline-line" data-outline-line aria-hidden="true">
+            <span class="zhihu-case-outline-indicator case-outline-indicator" data-outline-indicator></span>
+          </span>
+          <div class="zhihu-social-outline-content">
+            ${outlineItems
+              .map((item) => `<a href="${escapeHtml(item.href)}" class="zhihu-social-outline-link${item.bullet ? " zhihu-social-outline-link--bullet" : ""}">${escapeHtml(item.label)}</a>`)
+              .join("")}
+          </div>
         </div>
       </aside>
 
@@ -1752,10 +1803,10 @@ function renderZhihuSocialDesignCasePage(content, work) {
         </section>
 
         <section class="zhihu-social-section reveal is-visible" id="social-diagnosis">
-          <div class="zhihu-social-diagnosis-head">
-            <p class="zhihu-social-diagnosis-label">01/问题诊断</p>
-            <h2 class="zhihu-social-diagnosis-title">关注决策链路在个人页发生断裂</h2>
-          </div>
+          ${SecondaryTitleBlock({
+            label: "01/问题诊断",
+            title: "关注决策链路在个人页发生断裂"
+          })}
           <div class="zhihu-social-diagnosis-paths" aria-label="问题诊断路径对比">
             <article class="zhihu-social-diagnosis-path zhihu-social-diagnosis-path--ideal">
               <p class="zhihu-social-diagnosis-path-label zhihu-social-diagnosis-path-label--ideal">✓ 理想路径</p>
@@ -1802,21 +1853,21 @@ function renderZhihuSocialDesignCasePage(content, work) {
         </section>
 
         <section class="zhihu-social-section reveal is-visible" id="social-goal">
-          <div class="zhihu-social-diagnosis-head">
-            <p class="zhihu-social-diagnosis-label">02/目标拆解</p>
-            <h2 class="zhihu-social-diagnosis-title">建立人设，降低用户的关注决策成本</h2>
-          </div>
+          ${SecondaryTitleBlock({
+            label: "02/目标拆解",
+            title: "建立人设，降低用户的关注决策成本"
+          })}
           <div class="zhihu-social-gradient-card zhihu-social-gradient-card--large zhihu-social-goal-image-box">
             <img class="zhihu-social-goal-image" src="/assets/case-study/zhihu-social-goal-target-4x.png?v=20260504-2147" alt="建立人设，降低用户关注决策成本配图" loading="lazy" />
           </div>
         </section>
 
         <section class="zhihu-social-section reveal is-visible" id="social-plan">
-          <div class="zhihu-social-diagnosis-head">
-            <p class="zhihu-social-diagnosis-label">03/方案落地</p>
-            <h2 class="zhihu-social-diagnosis-title">客人态：围绕身份、价值与信任，重构关注决策表达</h2>
-          </div>
-          <p class="zhihu-social-diagnosis-copy">针对决策链路中的认知断点，从身份、价值与信任三个层面，重构个人页的信息表达方式。</p>
+          ${SecondaryTitleBlock({
+            label: "03/方案落地",
+            title: "客人态：围绕身份、价值与信任，重构关注决策表达",
+            desc: "针对决策链路中的认知断点，从身份、价值与信任三个层面，重构个人页的信息表达方式。"
+          })}
           <div class="zhihu-social-plan-module" data-social-plan-module>
             <div class="zhihu-social-carousel zhihu-social-carousel--plan" aria-label="方案落地轮播图">
               <div class="zhihu-social-plan-switch-row">
@@ -1855,24 +1906,210 @@ function renderZhihuSocialDesignCasePage(content, work) {
         </section>
 
         <section class="zhihu-social-section reveal is-visible" id="social-result">
-          <div class="zhihu-social-diagnosis-head">
-            <p class="zhihu-social-diagnosis-label">04/项目收益</p>
-            <h2 class="zhihu-social-diagnosis-title">人设表达优化，显著提升关注决策效率：<span class="zhihu-social-diagnosis-highlight">关注CTR +12%</span></h2>
-          </div>
+          ${SecondaryTitleBlock({
+            label: "04/项目收益",
+            title: "人设表达优化，显著提升关注决策效率：<span class=\"zhihu-social-diagnosis-highlight\">关注CTR +12%</span>",
+            titleIsHtml: true
+          })}
         </section>
 
         <section class="zhihu-social-section reveal is-visible" id="social-zhilink">
-          <h2>1. ZhiLink：弱连接之外的场景补充</h2>
-          <p>a、针对全新用户做 0～1 的强引导：</p>
-          <p>b、简化编辑资料流程</p>
-          <div class="zhihu-social-gradient-card zhihu-social-gradient-card--large"></div>
+          <div class="zhihu-social-divider zhihu-social-divider--spacious" aria-hidden="true"></div>
+          <article class="zhihu-social-profile-module">
+            <p class="zhihu-social-profile-tag">2. ${escapeHtml(zhlinkCase.hero.title.split("：")[0] || "ZhiLink")}</p>
+            <h2 class="zhihu-social-profile-title">${escapeHtml(zhlinkCase.hero.title)}</h2>
+            <p class="zhihu-social-profile-subtitle">${escapeHtml(zhlinkCase.hero.desc)}</p>
+            ${ImageBlock(zhlinkCase.hero.image, "ZhiLink 插图")}
+            ${SecondaryTitleBlock({
+              label: zhlinkCase.hero.goalLabel || "",
+              title: Array.isArray(zhlinkCase.hero.summary) ? zhlinkCase.hero.summary[0] || "" : "",
+              desc: Array.isArray(zhlinkCase.hero.summary) ? zhlinkCase.hero.summary[1] || "" : "",
+              sectionClass: "zhihu-social-diagnosis-head--after-image"
+            })}
+            ${InfoCards(zhlinkCase.infoCards)}
+            ${zhlinkCase.hero?.coreFlow
+              ? SecondaryTitleBlock({
+                  label: zhlinkCase.hero.coreFlow.label || "",
+                  title: zhlinkCase.hero.coreFlow.title || "",
+                  sectionClass: "zhihu-social-diagnosis-head--after-image"
+                })
+              : ""}
+            ${Array.isArray(zhlinkCase.sections) && zhlinkCase.sections[0]?.title
+              ? `<h3 class="zhilink-third-title">${escapeHtml(zhlinkCase.sections[0].title)}</h3>`
+              : ""}
+            ${Array.isArray(zhlinkCase.sections) && Array.isArray(zhlinkCase.sections[0]?.introLines)
+              ? `
+                <div class="zhilink-third-copy">
+                  ${zhlinkCase.sections[0].introLines[0] ? `<p>${escapeHtml(zhlinkCase.sections[0].introLines[0])}</p>` : ""}
+                  ${zhlinkCase.sections[0].introLines[1] ? `<p class="zhilink-third-copy-emphasis">${escapeHtml(zhlinkCase.sections[0].introLines[1])}</p>` : ""}
+                  ${zhlinkCase.sections[0].introLines[2] ? `<p>${escapeHtml(zhlinkCase.sections[0].introLines[2])}</p>` : ""}
+                </div>
+              `
+              : ""}
+            ${Array.isArray(zhlinkCase.sections) && zhlinkCase.sections[0]?.module
+              ? `
+                <article class="zhihu-social-owner-module">
+                  ${zhlinkCase.sections[0].module.title ? `<h3 class="zhihu-social-owner-title">${escapeHtml(zhlinkCase.sections[0].module.title)}</h3>` : ""}
+                  ${zhlinkCase.sections[0].module.subtitle ? `<p class="zhihu-social-owner-subtitle">${escapeHtml(zhlinkCase.sections[0].module.subtitle)}</p>` : ""}
+                  <p class="zhihu-social-owner-caption">${escapeHtml(zhlinkCase.sections[0].module.caption || "")}</p>
+                  ${(() => {
+                    const primaryImages = Array.isArray(zhlinkCase.sections[0].module.images)
+                      ? zhlinkCase.sections[0].module.images
+                      : zhlinkCase.sections[0].module.image
+                        ? [zhlinkCase.sections[0].module.image]
+                        : [];
+                    if (!primaryImages.length) {
+                      return "";
+                    }
+                    return `
+                      <div class="zhihu-social-gradient-card zhihu-social-gradient-card--large zhihu-social-goal-image-box">
+                        <div class="zhilink-module-image-stack">
+                          ${primaryImages
+                            .map(
+                              (src, index) =>
+                                `<img class="zhihu-social-goal-image" src="${escapeHtml(src || "")}" alt="方案 a 交互示意图 ${index + 1}" loading="lazy" />`
+                            )
+                            .join("")}
+                        </div>
+                      </div>
+                    `;
+                  })()}
+                  <p class="zhihu-social-owner-caption zhihu-social-owner-caption--secondary">${escapeHtml(zhlinkCase.sections[0].module.secondaryCaption || "")}</p>
+                  ${(Array.isArray(zhlinkCase.sections[0].module.secondaryImages)
+                    ? zhlinkCase.sections[0].module.secondaryImages
+                    : zhlinkCase.sections[0].module.secondaryImage
+                      ? [zhlinkCase.sections[0].module.secondaryImage]
+                      : []
+                  )
+                    .map(
+                      (src, index) => `
+                        <div class="zhihu-social-gradient-card zhihu-social-gradient-card--large zhihu-social-goal-image-box${index > 0 ? " zhilink-module-image-container--stacked" : ""}">
+                          <img class="zhihu-social-goal-image" src="${escapeHtml(src || "")}" alt="方案 b 交互示意图 ${index + 1}" loading="lazy" />
+                        </div>
+                      `
+                    )
+                    .join("")}
+                  ${zhlinkCase.sections[0].module.decisionNote
+                    ? `
+                        <div class="zhihu-social-diagnosis-quote">
+                          <span class="zhihu-social-diagnosis-quote-line" aria-hidden="true"></span>
+                          <p class="zhihu-social-diagnosis-quote-text">
+                            <strong>${escapeHtml(zhlinkCase.sections[0].module.decisionNote.title || "")}</strong><br />
+                            ${escapeHtml(zhlinkCase.sections[0].module.decisionNote.body || "")}
+                            ${escapeHtml(zhlinkCase.sections[0].module.decisionNote.summary || "")}
+                          </p>
+                        </div>
+                      `
+                    : ""}
+                </article>
+              `
+              : ""}
+            ${Array.isArray(zhlinkCase.sections) && zhlinkCase.sections[1]
+              ? `
+                  <h3 class="zhilink-third-title">${escapeHtml(zhlinkCase.sections[1].title || "")}</h3>
+                  ${zhlinkCase.sections[1].content
+                    ? `<div class="zhilink-third-copy"><p>${escapeHtml(zhlinkCase.sections[1].content)}</p></div>`
+                    : ""}
+                  ${zhlinkCase.sections[1].image
+                    ? `
+                        <div class="zhihu-social-gradient-card zhihu-social-gradient-card--large zhihu-social-goal-image-box">
+                          <img class="zhihu-social-goal-image" src="${escapeHtml(zhlinkCase.sections[1].image)}" alt="精美展示模块示意图" loading="lazy" />
+                        </div>
+                      `
+                    : ""}
+                `
+              : ""}
+            ${Array.isArray(zhlinkCase.sections) && zhlinkCase.sections[2]
+              ? `
+                  <h3 class="zhilink-third-title">${escapeHtml(zhlinkCase.sections[2].title || "")}</h3>
+                  ${zhlinkCase.sections[2].content
+                    ? `<div class="zhilink-third-copy"><p>${escapeHtml(zhlinkCase.sections[2].content)}</p></div>`
+                    : ""}
+                  <div class="zhihu-social-gradient-card zhihu-social-gradient-card--large zhihu-social-goal-image-box zhilink-image-box--full-bleed">
+                    ${zhlinkCase.sections[2].image ? `<img class="zhihu-social-goal-image zhilink-image--full-bleed" src="${escapeHtml(zhlinkCase.sections[2].image)}" alt="乐意分享模块示意图" loading="lazy" />` : ""}
+                  </div>
+                `
+              : ""}
+            ${zhlinkCase.resultSection
+              ? SecondaryTitleBlock({
+                  label: zhlinkCase.resultSection.label || "",
+                  title: zhlinkCase.resultSection.title || "",
+                  sectionClass: "zhihu-social-diagnosis-head--after-image"
+                })
+              : ""}
+            ${Array.isArray(zhlinkCase.resultSection?.cards) && zhlinkCase.resultSection.cards.length
+              ? `
+                  <div class="zhilink-result-grid">
+                    ${zhlinkCase.resultSection.cards
+                      .map(
+                        (item) => {
+                          const rawValue = item.value || "";
+                          const valueMatch = rawValue.match(/^(.+?)(（.+）)$/);
+                          const valueMain = valueMatch ? valueMatch[1] : rawValue;
+                          const valueNote = valueMatch ? valueMatch[2] : "";
+                          return `
+                            <article class="zhilink-result-card">
+                              <p class="zhilink-result-card-label">${escapeHtml(item.label || "")}</p>
+                              <div class="zhilink-result-card-value-row">
+                                <strong class="zhilink-result-card-value">${escapeHtml(valueMain)}</strong>
+                                ${valueNote ? `<span class="zhilink-result-card-note">${escapeHtml(valueNote)}</span>` : ""}
+                              </div>
+                            </article>
+                          `;
+                        }
+                      )
+                      .join("")}
+                  </div>
+                `
+              : ""}
+            ${zhlinkCase.resultSection?.note
+              ? `
+                  <div class="zhihu-social-diagnosis-quote">
+                    <span class="zhihu-social-diagnosis-quote-line" aria-hidden="true"></span>
+                    <p class="zhihu-social-diagnosis-quote-text">
+                      ${Array.isArray(zhlinkCase.resultSection.note.lines)
+                        ? zhlinkCase.resultSection.note.lines.map((line) => `${escapeHtml(line)}<br />`).join("")
+                        : ""}
+                      <br />
+                      ${escapeHtml(zhlinkCase.resultSection.note.summary || "")}
+                    </p>
+                  </div>
+                `
+              : ""}
+          </article>
         </section>
 
         <section class="zhihu-social-section reveal is-visible" id="social-circle">
-          <h2>1. 知乎圈子：基于兴趣的社交连接</h2>
-          <p>- 挖掘更多社交关系</p>
-          <p>- 关注按钮强化， - 与社交关系放一起 促进用户做出行动决策</p>
-          <div class="zhihu-social-gradient-card zhihu-social-gradient-card--large"></div>
+          <div class="zhihu-social-divider zhihu-social-divider--spacious" aria-hidden="true"></div>
+          <p class="zhihu-social-profile-tag">3. 知乎圈子</p>
+          <h2>知乎圈子：基于兴趣的社交连接</h2>
+          <p>在以「内容」为基础的建立的弱连接之外，提供一个基于「兴趣」的聚合场景，构建知乎“半私域场”，让用户能够持续互动，并形成更稳定的连接关系，提升用户活跃与留存</p>
+          <div class="zhihu-social-gradient-card zhihu-social-gradient-card--large zhihu-social-goal-image-box zhilink-image-box--full-bleed">
+            <img class="zhihu-social-goal-image zhilink-image--full-bleed" src="/assets/case-study/zhihu-circle-showcase-01-20260505.png?v=20260505-2230" alt="知乎圈子模块示意图" loading="lazy" />
+          </div>
+          ${zhlinkCase.circleDefinition
+            ? SecondaryTitleBlock({
+                label: zhlinkCase.circleDefinition.label || "",
+                title: zhlinkCase.circleDefinition.title || "",
+                sectionClass: "zhihu-social-diagnosis-head--after-image"
+              })
+            : ""}
+          ${Array.isArray(zhlinkCase.circleDefinition?.paragraphs) && zhlinkCase.circleDefinition.paragraphs.length
+            ? `
+                <div class="zhilink-third-copy">
+                  ${zhlinkCase.circleDefinition.paragraphs
+                    .map((text) => {
+                      const safeText = escapeHtml(text || "");
+                      const mutedText = safeText.replace(/（[^）]+）/g, (match) => `<span class="zhihu-tech-note">${match}</span>`);
+                      return `<p>${mutedText}</p>`;
+                    })
+                    .join("")}
+                </div>
+              `
+            : ""}
+          <div class="zhihu-social-gradient-card zhihu-social-gradient-card--large zhihu-social-goal-image-box">
+            <img class="zhihu-social-goal-image" src="/assets/case-study/zhihu-circle-showcase-02-20260505.png?v=20260505-2230" alt="知乎圈子补充示意图" loading="lazy" />
+          </div>
         </section>
 
         <section class="zhihu-social-section reveal is-visible" id="social-ending">
@@ -1894,6 +2131,206 @@ function renderZhihuSocialDesignCasePage(content, work) {
   });
 }
 
+function SecondaryTitleBlock({ label = "", title = "", desc = "", sectionClass = "", titleIsHtml = false }) {
+  const headingClass = `zhihu-social-diagnosis-head${sectionClass ? ` ${sectionClass}` : ""}`;
+  const resolvedTitle = titleIsHtml ? title : escapeHtml(title);
+  return `
+    <div class="${headingClass}">
+      ${label ? `<p class="zhihu-social-diagnosis-label">${escapeHtml(label)}</p>` : ""}
+      <h2 class="zhihu-social-diagnosis-title">${resolvedTitle}</h2>
+      ${desc ? `<p class="zhihu-social-diagnosis-copy">${escapeHtml(desc)}</p>` : ""}
+    </div>
+  `;
+}
+
+function ImageBlock(image, ariaLabel = "案例图片容器预留位") {
+  if (!image || typeof image !== "object" || !image.src) {
+    return `<div class="zhilink-empty-image-container" aria-label="${escapeHtml(ariaLabel)}"></div>`;
+  }
+
+  const frameClass = image.dark ? "zhilink-image-frame zhilink-image-frame--dark" : "zhilink-image-frame";
+  return `
+    <figure class="${frameClass}">
+      <img class="zhilink-image" src="${escapeHtml(image.src)}" alt="${escapeHtml(image.alt || "案例配图")}" loading="lazy" />
+    </figure>
+  `;
+}
+
+function HeroSection(hero = {}) {
+  const summaryList = Array.isArray(hero.summary) ? hero.summary : [];
+  const imageConfig =
+    hero.image && typeof hero.image === "object"
+      ? hero.image
+      : null;
+
+  return `
+    <section class="zhilink-case-hero reveal is-visible" id="zhilink-overview">
+      <p class="zhilink-case-tag">${escapeHtml(hero.tag || "")}</p>
+      <h1 class="zhihu-social-title zhilink-case-title">${escapeHtml(hero.title || "")}</h1>
+      <p class="zhilink-case-lead">${escapeHtml(hero.desc || "")}</p>
+      ${ImageBlock(imageConfig, "ZhiLink 图片容器预留位")}
+      ${SecondaryTitleBlock({
+        label: hero.goalLabel || "",
+        title: summaryList[0] || "",
+        desc: summaryList[1] || "",
+        sectionClass: "zhihu-social-diagnosis-head--after-image"
+      })}
+    </section>
+  `;
+}
+
+function InfoCards(cards = []) {
+  if (!cards.length) {
+    return "";
+  }
+
+  return `
+    <div class="zhilink-info-cards">
+      ${cards
+        .map(
+          (item) => `
+            <article class="zhilink-info-card">
+              <span class="case-label">${escapeHtml(item.title || "")}</span>
+              <p>${escapeHtml(item.desc || "")}</p>
+            </article>
+          `
+        )
+        .join("")}
+    </div>
+  `;
+}
+
+function SectionBlock(section = {}) {
+  const images = Array.isArray(section.images) ? section.images : [];
+  return `
+    <section class="zhihu-social-section zhilink-case-section reveal is-visible" id="${escapeHtml(section.id || "")}">
+      ${SecondaryTitleBlock({
+        title: section.title || "",
+        desc: section.content || ""
+      })}
+      ${images
+        .map((image, index) =>
+          ImageBlock(
+            image && typeof image === "object" ? image : null,
+            `${escapeHtml(section.title || "章节")} 图片容器预留位 ${index + 1}`
+          )
+        )
+        .join("")}
+    </section>
+  `;
+}
+
+function DataCards(data = [], title = "") {
+  if (!data.length) {
+    return "";
+  }
+
+  return `
+    <section class="zhihu-social-section zhilink-case-section reveal is-visible" id="zhilink-metrics">
+      ${SecondaryTitleBlock({ title })}
+      <div class="zhilink-data-grid">
+        ${data
+          .map(
+            (item) => `
+              <article class="zhilink-data-card">
+                <p class="zhilink-data-label">${escapeHtml(item.label || "")}</p>
+                <strong>${escapeHtml(item.value || "")}</strong>
+              </article>
+            `
+          )
+          .join("")}
+      </div>
+    </section>
+  `;
+}
+
+function ConclusionBlock(conclusion = "") {
+  return `
+    <section class="zhihu-social-section zhilink-case-section reveal is-visible" id="zhilink-closing">
+      <p class="zhilink-closing-text">${escapeHtml(conclusion)}</p>
+    </section>
+  `;
+}
+
+function CaseTemplate({ outlineItems = [], hero = {}, infoCards = [], sections = [], data = [], dataTitle = "", conclusion = "" }) {
+  return `
+    <main class="case-shell zhihu-social-shell zhilink-case-shell">
+      <aside class="zhihu-social-rail reveal is-visible" aria-label="章节导航">
+        <div class="zhihu-social-outline case-outline" data-outline-nav>
+          <span class="zhihu-case-outline-line case-outline-line" data-outline-line aria-hidden="true">
+            <span class="zhihu-case-outline-indicator case-outline-indicator" data-outline-indicator></span>
+          </span>
+          <div class="zhihu-social-outline-content">
+            ${outlineItems
+              .map((item) => `<a href="${escapeHtml(item.href)}" class="zhihu-social-outline-link${item.bullet ? " zhihu-social-outline-link--bullet" : ""}">${escapeHtml(item.label)}</a>`)
+              .join("")}
+          </div>
+        </div>
+      </aside>
+
+      <div class="zhihu-social-main zhilink-case-main">
+        ${HeroSection(hero)}
+        ${InfoCards(infoCards)}
+        ${sections.map((section) => SectionBlock(section)).join("")}
+        ${DataCards(data, dataTitle)}
+        ${ConclusionBlock(conclusion)}
+      </div>
+    </main>
+  `;
+}
+
+function renderZhihuZhiLinkCasePage(content, work) {
+  const sectionItems = Array.isArray(zhlinkCase.sections) ? zhlinkCase.sections : [];
+  const outlineItems = [
+    { href: "#zhilink-overview", label: "第二部分：ZhiLink" },
+    { href: "/work/interest-circle-community#social-profile", label: "第一部分：个人页（已存在）", bullet: true },
+    ...sectionItems.map((section) => ({
+      href: `#${section.id}`,
+      label: section.title,
+      bullet: true
+    })),
+    { href: "#zhilink-metrics", label: "04 项目结果", bullet: true },
+    { href: "#zhilink-closing", label: "结尾", bullet: true }
+  ];
+
+  const caseSections = sectionItems.map((section) => ({
+    id: section.id,
+    title: section.title,
+    content: section.content,
+    images: Array.isArray(section.images)
+      ? section.images.map((item, index) =>
+          typeof item === "object" && item
+            ? item
+            : { alt: `${section.title} 图片 ${index + 1}` }
+        )
+      : []
+  }));
+
+  const body = `
+    ${renderSiteHeader(content, `/work/${work.slug}`)}
+    ${CaseTemplate({
+      outlineItems,
+      hero: zhlinkCase.hero,
+      infoCards: zhlinkCase.infoCards,
+      sections: caseSections,
+      data: zhlinkCase.data,
+      dataTitle: zhlinkCase.dataTitle,
+      conclusion: zhlinkCase.conclusion
+    })}
+
+    ${renderFooter(content, { caseNav: buildCaseFooterLinks(content, work.slug) })}
+  `;
+
+  return renderLayout({
+    title: `${work.title} | Case Study`,
+    description: work.caseStudy.lead || "ZhiLink：弱连接之外的场景补充",
+    bodyClass: "case-study-page case-study-page--zhihu-social",
+    content,
+    body,
+    script: renderPublicScript()
+  });
+}
+
 function renderLayout({ title, description, bodyClass = "", content, body, script = "" }) {
   return `<!doctype html>
 <html lang="zh-CN">
@@ -1902,7 +2339,7 @@ function renderLayout({ title, description, bodyClass = "", content, body, scrip
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${escapeHtml(title)}</title>
     <meta name="description" content="${escapeHtml(description)}" />
-    <link rel="stylesheet" href="/styles.css?v=20260504-2315" />
+    <link rel="stylesheet" href="/styles.css?v=20260505-2136" />
   </head>
   <body class="${escapeHtml(bodyClass)}">
     ${content ? '<div class="cursor-dot" aria-hidden="true"></div>' : ""}
@@ -1913,6 +2350,7 @@ function renderLayout({ title, description, bodyClass = "", content, body, scrip
 }
 
 function renderHomePage(content) {
+  const renderableWorks = getRenderableWorks(content);
   const body = `
     ${renderSiteHeader(content, "/")}
 
@@ -1949,10 +2387,10 @@ function renderHomePage(content) {
           <p>${escapeHtml(content.site.workSectionLabel)}</p>
         </div>
         <div class="project-grid">
-          ${content.works
+          ${renderableWorks
             .map(
               (work) => `
-                <a class="project-card" href="/work/${escapeHtml(work.slug)}">
+                <a class="project-card" href="${escapeHtml(resolveWorkHref(work))}">
                   <div class="project-thumb ${escapeHtml(work.tone)} ${escapeHtml(work.ratio)}${work.coverImage ? " project-thumb--image" : ""}">
                     ${renderCoverMedia(work, { className: "project-thumb-media", loading: "lazy" })}
                     <span>${escapeHtml(work.badge || "案例占位")}</span>
@@ -1983,6 +2421,7 @@ function renderHomePage(content) {
 }
 
 function renderWorksPage(content) {
+  const renderableWorks = getRenderableWorks(content);
   const body = `
     ${renderSiteHeader(content, "/works")}
 
@@ -1992,10 +2431,10 @@ function renderWorksPage(content) {
           <p>${escapeHtml(content.site.workSectionLabel)}</p>
         </div>
         <div class="project-grid">
-          ${content.works
+          ${renderableWorks
             .map(
               (work) => `
-                <a class="project-card" href="/work/${escapeHtml(work.slug)}">
+                <a class="project-card" href="${escapeHtml(resolveWorkHref(work))}">
                   <div class="project-thumb ${escapeHtml(work.tone)} ${escapeHtml(work.ratio)}${work.coverImage ? " project-thumb--image" : ""}">
                     ${renderCoverMedia(work, { className: "project-thumb-media", loading: "lazy" })}
                     <span>${escapeHtml(work.badge || "案例占位")}</span>
@@ -2094,7 +2533,6 @@ function renderWorkPage(content, work) {
   if (work.slug === "interest-circle-community") {
     return renderZhihuSocialDesignCasePage(content, work);
   }
-
   const caseSections = Array.isArray(work.caseStudy?.sections) ? work.caseStudy.sections : [];
   const sectionAnchors = caseSections.map((section, index) => ({
     id: `section-${index + 1}`,
@@ -2108,7 +2546,7 @@ function renderWorkPage(content, work) {
 
     <main class="template-case-shell">
       <aside class="template-case-rail reveal is-visible" aria-label="章节导航">
-        <div class="template-case-outline">
+        <div class="template-case-outline" data-outline-nav>
           ${sectionAnchors
             .map(
               (item) =>
@@ -2939,6 +3377,10 @@ const server = createServer(async (request, response) => {
     const workMatch = pathname.match(/^\/work\/([^/]+?)(?:\.html)?\/?$/);
     if (workMatch && isReadRequest) {
       const slug = workMatch[1];
+      if (slug === "zhilink-digital-card") {
+        redirect(response, "/work/interest-circle-community#social-zhilink");
+        return;
+      }
       const work = content.works.find((item) => item.slug === slug);
 
       if (!work) {

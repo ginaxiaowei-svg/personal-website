@@ -1192,37 +1192,68 @@ h1 span {
 }
 
 .zhihu-social-outline {
-  display: grid;
-  gap: 12px;
+  position: relative;
   padding-left: 14px;
-  border-left: 2px solid rgba(50, 64, 79, 0.18);
+}
+
+.zhihu-social-outline-content {
+  display: grid;
+  gap: var(--space-12);
+}
+
+.case-outline-line {
+  width: 2px;
+  border-radius: 999px;
+  background: rgba(50, 64, 79, 0.18);
+}
+
+.zhihu-social-outline .case-outline-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.case-outline-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1.5px;
+  height: 22px;
+  border-radius: 999px;
+  background: #32404f;
+  opacity: 0;
+  transition:
+    transform 220ms var(--ease),
+    height 220ms var(--ease),
+    opacity 160ms var(--ease);
 }
 
 .zhihu-social-outline-link {
-  color: rgba(50, 64, 79, 0.58);
-  font-size: 13px;
-  line-height: 1.45;
-  transition: color 180ms var(--ease);
+  display: block;
+  color: #32404f;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  opacity: 0.5;
+  transition:
+    color 180ms var(--ease),
+    opacity 180ms var(--ease);
 }
 
 .zhihu-social-outline-link:hover {
   color: #32404f;
+  opacity: 1;
 }
 
 .zhihu-social-outline-link--bullet {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
   padding-left: 16px;
+  font-weight: 400;
 }
 
 .zhihu-social-outline-link--bullet::before {
-  content: "";
-  width: 5px;
-  height: 5px;
-  border-radius: 999px;
-  background: rgba(50, 64, 79, 0.55);
-  flex: 0 0 5px;
+  content: none;
 }
 
 .zhihu-social-main {
@@ -1232,30 +1263,31 @@ h1 span {
 }
 
 .zhihu-social-hero {
-  padding-top: 60px;
-  padding-bottom: 60px;
+  padding-top: 0;
+  padding-bottom: 40px;
   border-bottom: 1px solid rgba(50, 64, 79, 0.1);
 }
 
 .zhihu-social-hero-head {
-  display: flex;
-  align-items: center;
-  gap: 18px;
+  display: block;
 }
 
 .zhihu-social-brand {
-  width: 56px;
-  height: 56px;
+  display: block;
+  width: 92px;
+  height: 92px;
   border-radius: 10px;
+  object-fit: cover;
 }
 
 .zhihu-social-title {
   margin: 0;
+  margin-top: 28px;
   color: #32404f;
   font-family: "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", serif;
-  font-size: 40px;
+  font-size: 52px;
   font-weight: 500;
-  line-height: 1.25;
+  line-height: 1.3;
 }
 
 .zhihu-social-meta {
@@ -1287,6 +1319,14 @@ h1 span {
 
 .zhihu-social-divider--profile-break {
   margin: 40px 0;
+}
+
+.zhihu-social-divider--spacious {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: rgba(50, 64, 79, 0.1);
+  margin: 60px 0;
 }
 
 #social-overview > .zhihu-social-divider {
@@ -1613,6 +1653,10 @@ h1 span {
   gap: var(--space-12);
 }
 
+.zhihu-social-diagnosis-head--after-image {
+  margin-top: 60px;
+}
+
 .zhihu-social-diagnosis-label {
   margin: 0;
   color: #32404f;
@@ -1837,18 +1881,126 @@ h1 span {
   height: auto;
 }
 
+#social-zhilink .zhilink-image-box {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#social-zhilink .zhilink-image-box--712 {
+  width: 100%;
+  max-width: 752px;
+}
+
+#social-zhilink .zhilink-image-box--768 {
+  width: 100%;
+  max-width: 808px;
+}
+
+#social-zhilink .zhilink-image-box--769 {
+  width: 100%;
+  max-width: 809px;
+}
+
+#social-zhilink .zhihu-social-goal-image-box {
+  margin: 20px 0 0;
+}
+
+#social-zhilink .zhilink-data-grid {
+  margin-top: 30px;
+}
+
+#social-zhilink .zhilink-result-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 50px;
+  row-gap: 21px;
+  margin-top: 30px;
+}
+
+#social-zhilink .zhilink-result-card {
+  min-height: 117.5px;
+  padding: 16px 21px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid rgba(50, 64, 79, 0.08);
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, rgb(249, 250, 251) 0.39689%, rgb(255, 255, 255) 103.43%),
+    linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 100%);
+}
+
+#social-zhilink .zhilink-result-card-label {
+  margin: 0;
+  color: #4a5068;
+  font-family: "Inter", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 12.25px;
+  font-weight: 500;
+  line-height: 17.5px;
+}
+
+#social-zhilink .zhilink-result-card-value-row {
+  display: flex;
+  align-items: baseline;
+  margin-top: 6px;
+}
+
+#social-zhilink .zhilink-result-card-value {
+  color: #12b981;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 28px;
+}
+
+#social-zhilink .zhilink-result-card-note {
+  margin-left: 0;
+  color: #4a5068;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 28px;
+}
+
+.zhilink-image-box--full-bleed {
+  padding: 0;
+  align-items: stretch;
+}
+
+.zhilink-image--full-bleed {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#social-zhilink .zhihu-social-owner-caption--secondary {
+  margin-top: 40px;
+}
+
+.zhilink-module-image-stack {
+  display: grid;
+  gap: 40px;
+  width: 100%;
+}
+
+.zhilink-module-image-container--stacked {
+  margin-top: 0 !important;
+  margin-bottom: 20px;
+}
+
 .zhihu-social-diagnosis-quote {
   margin-top: 30px;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   gap: 8px;
 }
 
 .zhihu-social-diagnosis-quote-line {
   width: 2px;
-  height: 48px;
+  height: auto;
   background: #32404f;
   flex: 0 0 2px;
+  align-self: stretch;
 }
 
 .zhihu-social-diagnosis-quote-text {
@@ -1980,6 +2132,7 @@ h1 span {
 
 .zhihu-social-carousel--plan {
   margin-top: 20px;
+  padding-bottom: 40px;
   border: 1px solid rgba(50, 64, 79, 0.08);
   border-radius: 16px;
   background: linear-gradient(180deg, #f9fafb 0%, #ffffff 100%);
@@ -2056,7 +2209,7 @@ h1 span {
 }
 
 .zhihu-social-owner-module .zhihu-social-owner-caption {
-  margin: 20px 0 12px;
+  margin: 0 0 12px;
   color: #32404f;
   font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   font-size: 14px;
@@ -2065,7 +2218,7 @@ h1 span {
 }
 
 .zhihu-social-owner-module .zhihu-social-owner-caption--secondary {
-  margin: 20px 0 12px;
+  margin: 40px 0 12px;
 }
 
 .zhihu-social-owner-image {
@@ -2081,10 +2234,302 @@ h1 span {
   margin-top: 0;
 }
 
+.zhihu-social-owner-image--stacked {
+  margin-top: 12px;
+}
+
 .zhihu-social-owner-image img {
   display: block;
   width: 100%;
   height: auto;
+}
+
+.zhilink-case-shell {
+  padding-top: 52px;
+}
+
+.zhilink-case-main {
+  width: 100%;
+}
+
+.zhilink-case-hero {
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--line);
+}
+
+.zhilink-case-tag {
+  width: fit-content;
+  margin: 0 0 var(--space-20);
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.zhilink-case-title {
+  margin-top: 0;
+}
+
+.zhilink-case-lead,
+.zhilink-case-summary,
+.zhilink-case-section p {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.zhilink-case-lead {
+  margin-top: 18px;
+}
+
+.zhilink-image-frame {
+  margin: var(--space-20) 0 0;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--panel);
+  overflow: hidden;
+}
+
+.zhilink-image-frame--soft {
+  background: var(--panel);
+}
+
+.zhilink-image-frame--dark {
+  background: var(--text);
+}
+
+.zhilink-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.zhilink-empty-image-container {
+  margin: var(--space-20) 0 0;
+  width: 100%;
+  min-height: 420px;
+  border: 1px solid rgba(50, 64, 79, 0.09);
+  border-radius: 22px;
+  background: linear-gradient(180deg, #f2f3f5 0%, #f7f8fa 100%);
+  box-sizing: border-box;
+}
+
+#social-zhilink .zhilink-empty-image-container {
+  max-width: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.zhilink-video-poster-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 220px));
+  justify-content: center;
+  align-items: start;
+  gap: 12px;
+  padding: 12px;
+}
+
+.zhilink-video-poster-grid .zhilink-image {
+  width: 100%;
+  max-width: 220px;
+  margin: 0 auto;
+}
+
+.zhilink-case-summary {
+  margin-top: var(--space-20);
+}
+
+.zhilink-info-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-12);
+  margin-top: var(--space-20);
+}
+
+.zhilink-info-card {
+  position: relative;
+  min-height: 94px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 21px;
+  border: 1px solid rgba(50, 64, 79, 0.12);
+  border-radius: 8px;
+  background: linear-gradient(159deg, #eff6ff 0%, #ffffff 100%);
+}
+
+.zhilink-info-card:nth-child(1) {
+  border-color: rgba(124, 93, 252, 0.28);
+  background: linear-gradient(159deg, #faf5ff 0%, #ffffff 100%);
+}
+
+.zhilink-info-card:nth-child(2) {
+  border-color: rgba(190, 219, 255, 0.5);
+  background: linear-gradient(159deg, #eff6ff 0%, #ffffff 100%);
+}
+
+.zhilink-info-card:nth-child(3) {
+  border-color: rgba(185, 248, 207, 0.5);
+  background: linear-gradient(159deg, #f0fdf4 0%, #ffffff 100%);
+}
+
+.zhilink-info-card .case-label {
+  position: absolute;
+  top: 9px;
+  left: 9px;
+  margin: 0;
+  color: #32404f;
+  opacity: 0.5;
+  font-size: 12px;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.zhilink-info-card p {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: 14px;
+  line-height: 1.05;
+  letter-spacing: -0.0168em;
+  font-weight: 600;
+  text-align: center;
+}
+
+.zhilink-section-core-title {
+  margin: 40px 0 0;
+  color: var(--color-text-primary);
+  font-family: var(--serif-title);
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.zhilink-case-section {
+  margin-top: 40px;
+}
+
+.zhilink-third-title {
+  margin: 40px 0 0;
+  color: #32404f;
+  opacity: 0.8;
+  font-family: "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", serif;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.zhilink-third-copy {
+  display: grid;
+  gap: 0;
+  margin-top: 12px;
+}
+
+.zhilink-third-copy p,
+.zhilink-third-copy p + p {
+  margin: 0;
+  color: #32404f;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+.zhilink-third-copy-emphasis {
+  margin-top: 0;
+  opacity: 0.8;
+  font-family: "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", serif !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  line-height: 1.5 !important;
+}
+
+.zhilink-case-section > h2 {
+  margin: 0 0 12px;
+  color: var(--color-text-primary);
+  font-family: var(--serif-title);
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.zhilink-section-intro {
+  margin-bottom: 8px;
+}
+
+.zhilink-solution {
+  margin-top: 24px;
+}
+
+.zhilink-solution h3,
+.zhilink-decision-card h3 {
+  margin: 0 0 10px;
+  color: var(--color-text-primary);
+  font-family: var(--serif-title);
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.zhilink-solution p {
+  margin-top: var(--space-12);
+}
+
+.zhilink-decision-card {
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--panel);
+}
+
+.zhilink-decision-card p {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.zhilink-data-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-12);
+  margin-top: var(--space-20);
+}
+
+.zhilink-data-card {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+}
+
+.zhilink-data-label {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.zhilink-data-card strong {
+  color: var(--color-brand);
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.zhilink-closing-text {
+  margin: 0;
+  padding-left: 14px;
+  border-left: 2px solid var(--color-text-primary);
+  color: var(--color-text-primary);
+  font-size: 14px;
+  line-height: 1.7;
 }
 
 .zhihu-social-gradient-card--horizontal {
@@ -2117,27 +2562,9 @@ h1 span {
   min-height: 230px;
 }
 
-.zhihu-case-outline-line {
+.zhihu-case-outline .case-outline-line {
   position: relative;
-  width: 2px;
   align-self: stretch;
-  border-radius: 999px;
-  background: rgba(50, 64, 79, 0.2);
-}
-
-.zhihu-case-outline-indicator {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 1.5px;
-  height: 22px;
-  border-radius: 999px;
-  background: #32404f;
-  opacity: 0;
-  transition:
-    transform 220ms var(--ease),
-    height 220ms var(--ease),
-    opacity 160ms var(--ease);
 }
 
 .zhihu-case-outline-content {
@@ -4042,6 +4469,24 @@ body.case-study-page.case-study-page--zhihu > main.case-shell.zhihu-case-shell >
   .zhihu-test-wall-phones,
   .zhihu-test-wall-ui-grid {
     grid-template-columns: 1fr;
+  }
+
+  .zhilink-info-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .zhilink-data-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #social-zhilink .zhilink-result-grid {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+  }
+
+  .zhilink-video-poster-grid {
+    grid-template-columns: 1fr;
+    justify-items: center;
   }
 }
 
