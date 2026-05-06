@@ -1698,8 +1698,14 @@ function renderZhihuSocialDesignCasePage(content, work) {
     { href: "#social-plan", label: "方案落地", bullet: true },
     { href: "#social-result", label: "项目收益", bullet: true },
     { href: "#social-zhilink", label: "ZhiLink：弱连接之外的场景补充" },
+    { href: "#social-zhilink-goal", label: "目标定义", bullet: true },
+    { href: "#social-zhilink-flow", label: "核心流程", bullet: true },
+    { href: "#social-zhilink-result", label: "项目结果", bullet: true },
     { href: "#social-circle", label: "知乎圈子：基于兴趣的社交连接" },
-    { href: "#social-ending", label: "结尾" }
+    { href: "#social-circle-definition", label: "产品定义", bullet: true },
+    { href: "#social-circle-flow", label: "完整链路", bullet: true },
+    { href: "#social-circle-key-design", label: "关键设计", bullet: true },
+    { href: "#social-circle-result", label: "取得成果", bullet: true }
   ];
 
   const body = `
@@ -1924,14 +1930,16 @@ function renderZhihuSocialDesignCasePage(content, work) {
               label: zhlinkCase.hero.goalLabel || "",
               title: Array.isArray(zhlinkCase.hero.summary) ? zhlinkCase.hero.summary[0] || "" : "",
               desc: Array.isArray(zhlinkCase.hero.summary) ? zhlinkCase.hero.summary[1] || "" : "",
-              sectionClass: "zhihu-social-diagnosis-head--after-image"
+              sectionClass: "zhihu-social-diagnosis-head--after-image",
+              sectionId: "social-zhilink-goal"
             })}
             ${InfoCards(zhlinkCase.infoCards)}
             ${zhlinkCase.hero?.coreFlow
               ? SecondaryTitleBlock({
                   label: zhlinkCase.hero.coreFlow.label || "",
                   title: zhlinkCase.hero.coreFlow.title || "",
-                  sectionClass: "zhihu-social-diagnosis-head--after-image"
+                  sectionClass: "zhihu-social-diagnosis-head--after-image",
+                  sectionId: "social-zhilink-flow"
                 })
               : ""}
             ${Array.isArray(zhlinkCase.sections) && zhlinkCase.sections[0]?.title
@@ -2034,7 +2042,8 @@ function renderZhihuSocialDesignCasePage(content, work) {
               ? SecondaryTitleBlock({
                   label: zhlinkCase.resultSection.label || "",
                   title: zhlinkCase.resultSection.title || "",
-                  sectionClass: "zhihu-social-diagnosis-head--after-image"
+                  sectionClass: "zhihu-social-diagnosis-head--after-image",
+                  sectionId: "social-zhilink-result"
                 })
               : ""}
             ${renderZhilinkResultGrid(zhlinkCase.resultSection?.cards)}
@@ -2067,7 +2076,8 @@ function renderZhihuSocialDesignCasePage(content, work) {
             ? SecondaryTitleBlock({
                 label: zhlinkCase.circleDefinition.label || "",
                 title: zhlinkCase.circleDefinition.title || "",
-                sectionClass: "zhihu-social-diagnosis-head--after-image"
+                sectionClass: "zhihu-social-diagnosis-head--after-image",
+                sectionId: "social-circle-definition"
               })
             : ""}
           ${Array.isArray(zhlinkCase.circleDefinition?.paragraphs) && zhlinkCase.circleDefinition.paragraphs.length
@@ -2091,18 +2101,19 @@ function renderZhihuSocialDesignCasePage(content, work) {
                 label: zhlinkCase.circleFlowSection.label || "",
                 title: zhlinkCase.circleFlowSection.title || "",
                 desc: zhlinkCase.circleFlowSection.desc || "",
-                sectionClass: "zhihu-social-diagnosis-head--after-image"
+                sectionClass: "zhihu-social-diagnosis-head--after-image",
+                sectionId: "social-circle-flow"
               })
             : ""}
           <div class="zhihu-social-gradient-card zhihu-social-gradient-card--large zhihu-social-goal-image-box">
-            <img class="zhihu-social-goal-image zhilink-image--568" src="/assets/case-study/zhihu-circle-chain-showcase-01-20260506.png?v=20260506-2325" alt="圈子完整链路示意图" loading="lazy" />
+            <img class="zhihu-social-goal-image zhilink-image--568" src="/assets/case-study/zhihu-circle-chain-showcase-01-20260506.png?v=20260507-0003" alt="圈子完整链路示意图" loading="lazy" />
           </div>
           ${zhlinkCase.circleInnerSection
             ? `
                 <h3 class="zhilink-third-title zhilink-third-title--muted" style="font-size: 20px;">${escapeHtml(zhlinkCase.circleInnerSection.title || "")}</h3>
                 ${zhlinkCase.circleInnerSection.content ? `<div class="zhilink-third-copy"><p>${escapeHtml(zhlinkCase.circleInnerSection.content)}</p></div>` : ""}
                 <div class="zhihu-social-gradient-card zhihu-social-gradient-card--large zhihu-social-goal-image-box">
-                  ${zhlinkCase.circleInnerSection.image ? `<img class="zhihu-social-goal-image" src="${escapeHtml(zhlinkCase.circleInnerSection.image)}" alt="圈子向内构建兴趣场示意图" loading="lazy" />` : ""}
+                  ${zhlinkCase.circleInnerSection.image ? `<img class="zhihu-social-goal-image zhilink-image--668" src="${escapeHtml(zhlinkCase.circleInnerSection.image)}" alt="圈子向内构建兴趣场示意图" loading="lazy" />` : ""}
                 </div>
               `
             : ""}
@@ -2129,7 +2140,8 @@ function renderZhihuSocialDesignCasePage(content, work) {
                 label: zhlinkCase.circleKeyDesignSection.label || "",
                 title: zhlinkCase.circleKeyDesignSection.title || "",
                 desc: zhlinkCase.circleKeyDesignSection.desc || "",
-                sectionClass: "zhihu-social-diagnosis-head--after-image"
+                sectionClass: "zhihu-social-diagnosis-head--after-image",
+                sectionId: "social-circle-key-design"
               })
             : ""}
           ${zhlinkCase.circleKeyDesignSection?.image
@@ -2152,7 +2164,8 @@ function renderZhihuSocialDesignCasePage(content, work) {
             ? SecondaryTitleBlock({
                 label: zhlinkCase.circleResultSection.label || "",
                 title: zhlinkCase.circleResultSection.title || "",
-                sectionClass: "zhihu-social-diagnosis-head--after-image"
+                sectionClass: "zhihu-social-diagnosis-head--after-image",
+                sectionId: "social-circle-result"
               })
             : ""}
           ${Array.isArray(zhlinkCase.circleResultModules) && zhlinkCase.circleResultModules.length
@@ -2240,11 +2253,12 @@ function renderZhihuSocialDesignCasePage(content, work) {
   });
 }
 
-function SecondaryTitleBlock({ label = "", title = "", desc = "", sectionClass = "", titleIsHtml = false }) {
-  const headingClass = `zhihu-social-diagnosis-head${sectionClass ? ` ${sectionClass}` : ""}`;
+function SecondaryTitleBlock({ label = "", title = "", desc = "", sectionClass = "", titleIsHtml = false, sectionId = "" }) {
+  const headingClass = `zhihu-social-diagnosis-head${sectionClass ? ` ${sectionClass}` : ""}${sectionId ? " zhihu-social-anchor-target" : ""}`;
   const resolvedTitle = titleIsHtml ? title : escapeHtml(title);
+  const resolvedId = sectionId ? ` id="${escapeHtml(sectionId)}"` : "";
   return `
-    <div class="${headingClass}">
+    <div class="${headingClass}"${resolvedId}>
       ${label ? `<p class="zhihu-social-diagnosis-label">${escapeHtml(label)}</p>` : ""}
       <h2 class="zhihu-social-diagnosis-title">${resolvedTitle}</h2>
       ${desc ? `<p class="zhihu-social-diagnosis-copy">${escapeHtml(desc)}</p>` : ""}
@@ -2479,7 +2493,7 @@ function renderLayout({ title, description, bodyClass = "", content, body, scrip
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${escapeHtml(title)}</title>
     <meta name="description" content="${escapeHtml(description)}" />
-    <link rel="stylesheet" href="/styles.css?v=20260506-2319" />
+    <link rel="stylesheet" href="/styles.css?v=20260506-2336" />
   </head>
   <body class="${escapeHtml(bodyClass)}">
     ${content ? '<div class="cursor-dot" aria-hidden="true"></div>' : ""}

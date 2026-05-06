@@ -1653,6 +1653,10 @@ h1 span {
   gap: var(--space-12);
 }
 
+.zhihu-social-anchor-target {
+  scroll-margin-top: 140px;
+}
+
 .zhihu-social-diagnosis-head--after-image {
   margin-top: 60px;
 }
