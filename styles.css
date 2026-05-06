@@ -1945,7 +1945,7 @@ h1 span {
   color: #4a5068;
   font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 17.5px;
 }
 
@@ -1986,7 +1986,7 @@ h1 span {
   margin: 0;
   padding-left: 22px;
   display: grid;
-  gap: 4px;
+  gap: 0;
 }
 
 #social-zhilink .zhilink-result-summary-list li,
@@ -2348,7 +2348,7 @@ h1 span {
 }
 
 .zhihu-social-owner-module .zhihu-social-owner-caption {
-  margin: 0 0 12px;
+  margin: 0 0 20px;
   color: #32404f;
   font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   font-size: 14px;
@@ -2357,7 +2357,7 @@ h1 span {
 }
 
 .zhihu-social-owner-module .zhihu-social-owner-caption--secondary {
-  margin: 40px 0 12px;
+  margin: 40px 0 20px;
 }
 
 .zhihu-social-owner-image {
