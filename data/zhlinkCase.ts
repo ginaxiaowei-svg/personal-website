@@ -100,6 +100,84 @@ const zhlinkCase = {
       "所以连接不再单依附于某一条内容，而是依附于一个兴趣场。"
     ]
   },
+  circleFlowSection: {
+    label: "02/完整链路",
+    title: "圈子并不是一个独立功能，而是一套完整的运转系统",
+    desc: "圈子在站内的结构位置："
+  },
+  circleInnerSection: {
+    title: "向内：构建兴趣场",
+    content:
+      "通过发现—消费—发布闭环，组织连续内容消费，并前置互动与发布入口，降低参与门槛，，并通过头部和运营模块强化“这是一个场”的感知。",
+    image: "/assets/case-study/zhihu-circle-inner-loop-showcase-01-20260506.png?v=20260506-0837"
+  },
+  circleOuterUpSection: {
+    title: "向外：承接全站流量 & 向上：反哺内容分发",
+    content: "在推荐流、详情页与搜索中外显圈子入口，并通过内容挂载圈子标签建立导流路径，同时接入推荐分发，实现内容回流与曝光放大。",
+    image: "/assets/case-study/zhihu-circle-outer-up-showcase-01-20260506.png?v=20260506-0842"
+  },
+  circleDownSection: {
+    title: "向下：沉淀用户关系",
+    content: "通过关注流、圈子 Tab 与个人页多入口承接回访路径，强化持续访问与参与，沉淀稳定的兴趣关系。",
+    image: "/assets/case-study/zhihu-circle-downstream-showcase-01-20260506.png?v=20260506-0842"
+  },
+  circleKeyDesignSection: {
+    label: "03/关键设计",
+    title: "圈子主页：搭建可扩展的双层容器架构",
+    desc: "圈子产品强依赖运营介入，且后期需要承载商业增长模块，因此在 0-1 搭建框架时，我将圈子主页拆为「内容层 + 服务层」的双层结构，为未来运营能力做结构预埋",
+    image: "/assets/case-study/077.png?v=20260506-1726"
+  },
+  circleKeyDesignVisualSection: {
+    title: "构建兴趣场的视觉与氛围",
+    content: "以主题色建立场景识别，结合等级体系强化身份与激励机制，提升用户在圈子内的认同感",
+    image: "/assets/case-study/zhihu-circle-key-design-visual-showcase-01-20260506.png?v=20260506-0912"
+  },
+  circleResultSection: {
+    label: "04/取得成果",
+    title: "圈子的收益"
+  },
+  circleResultModules: [
+    {
+      title: "1. 内容消费：用户浏览深度提升，内容结构支持持续消费",
+      gridVariant: "compact",
+      cards: [
+        { label: "圈友消费消费 uv", value: "10112" },
+        { label: "圈友消费人均 cardshow", value: "14.02" },
+        { label: "圈友消费次日留存", value: "21.5%" }
+      ]
+    },
+    {
+      title: "2. 内容供给：圈子开始承接一定比例的优质内容，内容生产逐步稳定",
+      cards: [
+        { label: "A2+ 想法占比", value: "9.3%" },
+        { label: "发帖用户占比", value: "27.8%" }
+      ]
+    },
+    {
+      title: "3. 内容流通：圈子内容逐步进入推荐体系，并开始参与平台内容流通",
+      cards: [
+        { label: "推荐页，圈子想法曝光 cardshow", value: "稳步增长趋势" },
+        { label: "推荐页，圈子想法 CTR", value: "5%" }
+      ]
+    },
+    {
+      title: "4. 对大盘的贡献：",
+      summary: {
+        intro: "圈子在「内容供给」与「用户参与」两个层面均有提升",
+        bullets: ["一方面提高了内容供给占比", "另一方面提升了用户活跃与互动率"],
+        conclusion: "从而对整体内容消费规模与用户留存形成正向拉动"
+      }
+    }
+  ],
+  circleConnectWaysSection: {
+    title: "三种方式，让连接发生",
+    desc: "知乎的社交不是一次关注按钮的点击，而是在不同方式中逐步建立的过程",
+    cards: [
+      "个人页\n让人更容易被理解和关注",
+      "ZhiLink（数字名片）\n让人轻松表达和传播",
+      "圈子\n让用户基于兴趣建立更多连接"
+    ]
+  },
   dataTitle: "用户主动分享，带动外部触达增长",
   conclusion:
     "从数据反馈看，用户不仅完成了个人展示搭建，还愿意主动分享。这说明该表达方式被认可，并能把知乎创作者带入更多外部场景，扩大触达范围并放大连接发生的机会。"
