@@ -125,7 +125,7 @@ const zhlinkCase = {
     label: "03/关键设计",
     title: "圈子主页：搭建可扩展的双层容器架构",
     desc: "圈子产品强依赖运营介入，且后期需要承载商业增长模块，因此在 0-1 搭建框架时，我将圈子主页拆为「内容层 + 服务层」的双层结构，为未来运营能力做结构预埋",
-    image: "/assets/case-study/077.png?v=20260506-1726"
+    image: "/assets/case-study/zhihu-circle-key-design-structure-showcase-01-20260506.png?v=20260506-2258"
   },
   circleKeyDesignVisualSection: {
     title: "构建兴趣场的视觉与氛围",

@@ -1906,6 +1906,15 @@ h1 span {
   margin: 20px 0 0;
 }
 
+#social-zhilink .zhihu-social-owner-module > .zhihu-social-goal-image-box {
+  margin-top: 0;
+}
+
+#social-zhilink .zhihu-social-owner-module > .zhihu-social-goal-image-box:nth-of-type(2) {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
 #social-zhilink .zhilink-data-grid {
   margin-top: 30px;
 }
@@ -2112,10 +2121,6 @@ h1 span {
   height: auto;
 }
 
-#social-zhilink .zhihu-social-owner-caption--secondary {
-  margin-top: 40px;
-}
-
 .zhilink-module-image-stack {
   display: grid;
   gap: 40px;
@@ -2128,7 +2133,7 @@ h1 span {
 }
 
 .zhihu-social-diagnosis-quote {
-  margin-top: 30px;
+  margin-top: 20px;
   display: flex;
   align-items: stretch;
   gap: 8px;
@@ -2328,6 +2333,10 @@ h1 span {
   max-width: 100%;
 }
 
+#social-zhilink .zhihu-social-owner-module {
+  margin-top: 0;
+}
+
 .zhihu-social-owner-title {
   margin: 0 0 12px;
   color: #32404f;
@@ -2338,7 +2347,7 @@ h1 span {
 }
 
 .zhihu-social-owner-subtitle {
-  margin: 0;
+  margin: 0 0 30px;
   color: #32404f;
   opacity: 0.5;
   font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
@@ -2348,12 +2357,16 @@ h1 span {
 }
 
 .zhihu-social-owner-module .zhihu-social-owner-caption {
-  margin: 0 0 20px;
+  margin: 40px 0 20px;
   color: #32404f;
   font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   font-size: 14px;
   font-weight: 500;
   line-height: 1.5;
+}
+
+#social-profile .zhihu-social-owner-subtitle {
+  margin-bottom: 20px;
 }
 
 .zhihu-social-owner-module .zhihu-social-owner-caption--secondary {

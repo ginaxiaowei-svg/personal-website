@@ -1793,7 +1793,6 @@ function renderZhihuSocialDesignCasePage(content, work) {
 
         <section class="zhihu-social-section reveal is-visible" id="social-profile">
           <article class="zhihu-social-profile-module">
-            <div class="zhihu-social-divider zhihu-social-divider--spacious" aria-hidden="true"></div>
             <p class="zhihu-social-profile-tag">1. 个人页</p>
             <h2 class="zhihu-social-profile-title">个人页：建立人设，提升「人」的影响力</h2>
             <p class="zhihu-social-profile-subtitle">个人页不仅展示信息，更需要形成清晰的人设表达，帮助用户在短时间内完成认知与决策。</p>
@@ -1895,11 +1894,11 @@ function renderZhihuSocialDesignCasePage(content, work) {
           <article class="zhihu-social-owner-module">
             <h3 class="zhihu-social-owner-title">主人态：引导用户完善表达，建立清晰身份</h3>
             <p class="zhihu-social-owner-subtitle">通过任务引导与信息结构设计，帮助用户补全关键资料，使其更容易被理解与关注</p>
-            <p class="zhihu-social-owner-caption">a、针对全新用户做 0～1 的强引导：</p>
+            ${OwnerCaption("a、针对全新用户做 0～1 的强引导：")}
             <figure class="zhihu-social-owner-image">
               <img src="/assets/case-study/zhihu-social-owner-module.png?v=20260504-1207" alt="主人态模块示意图" loading="lazy" />
             </figure>
-            <p class="zhihu-social-owner-caption zhihu-social-owner-caption--secondary">b、简化编辑资料流程</p>
+            ${OwnerCaption("b、简化编辑资料流程", { secondary: true })}
             <figure class="zhihu-social-owner-image zhihu-social-owner-image--secondary">
               <img src="/assets/case-study/zhihu-social-owner-module-b.png?v=20260504-1220" alt="主人态资料编辑流程模块图" loading="lazy" />
             </figure>
@@ -1919,7 +1918,7 @@ function renderZhihuSocialDesignCasePage(content, work) {
           <article class="zhihu-social-profile-module">
             <p class="zhihu-social-profile-tag">2. ${escapeHtml(zhlinkCase.hero.title.split("：")[0] || "ZhiLink")}</p>
             <h2 class="zhihu-social-profile-title">${escapeHtml(zhlinkCase.hero.title)}</h2>
-            <p class="zhihu-social-profile-subtitle">${escapeHtml(zhlinkCase.hero.desc)}</p>
+            <p class="zhihu-social-profile-subtitle" style="margin-bottom: 0;">${escapeHtml(zhlinkCase.hero.desc)}</p>
             ${ImageBlock(zhlinkCase.hero.image, "ZhiLink 插图")}
             ${SecondaryTitleBlock({
               label: zhlinkCase.hero.goalLabel || "",
@@ -1952,7 +1951,7 @@ function renderZhihuSocialDesignCasePage(content, work) {
                 <article class="zhihu-social-owner-module">
                   ${zhlinkCase.sections[0].module.title ? `<h3 class="zhihu-social-owner-title">${escapeHtml(zhlinkCase.sections[0].module.title)}</h3>` : ""}
                   ${zhlinkCase.sections[0].module.subtitle ? `<p class="zhihu-social-owner-subtitle">${escapeHtml(zhlinkCase.sections[0].module.subtitle)}</p>` : ""}
-                  <p class="zhihu-social-owner-caption">${escapeHtml(zhlinkCase.sections[0].module.caption || "")}</p>
+                  ${OwnerCaption(zhlinkCase.sections[0].module.caption || "")}
                   ${(() => {
                     const primaryImages = Array.isArray(zhlinkCase.sections[0].module.images)
                       ? zhlinkCase.sections[0].module.images
@@ -1975,7 +1974,7 @@ function renderZhihuSocialDesignCasePage(content, work) {
                       </div>
                     `;
                   })()}
-                  <p class="zhihu-social-owner-caption zhihu-social-owner-caption--secondary">${escapeHtml(zhlinkCase.sections[0].module.secondaryCaption || "")}</p>
+                  ${OwnerCaption(zhlinkCase.sections[0].module.secondaryCaption || "", { secondary: true })}
                   ${(Array.isArray(zhlinkCase.sections[0].module.secondaryImages)
                     ? zhlinkCase.sections[0].module.secondaryImages
                     : zhlinkCase.sections[0].module.secondaryImage
@@ -2096,7 +2095,7 @@ function renderZhihuSocialDesignCasePage(content, work) {
               })
             : ""}
           <div class="zhihu-social-gradient-card zhihu-social-gradient-card--large zhihu-social-goal-image-box">
-            <img class="zhihu-social-goal-image zhilink-image--568" src="/assets/case-study/zhihu-circle-chain-showcase-01-20260506.png?v=20260506-0833" alt="圈子完整链路示意图" loading="lazy" />
+            <img class="zhihu-social-goal-image zhilink-image--568" src="/assets/case-study/zhihu-circle-chain-showcase-01-20260506.png?v=20260506-2325" alt="圈子完整链路示意图" loading="lazy" />
           </div>
           ${zhlinkCase.circleInnerSection
             ? `
@@ -2251,6 +2250,11 @@ function SecondaryTitleBlock({ label = "", title = "", desc = "", sectionClass =
       ${desc ? `<p class="zhihu-social-diagnosis-copy">${escapeHtml(desc)}</p>` : ""}
     </div>
   `;
+}
+
+function OwnerCaption(text = "", { secondary = false } = {}) {
+  if (!text) return "";
+  return `<p class="zhihu-social-owner-caption${secondary ? " zhihu-social-owner-caption--secondary" : ""}">${escapeHtml(text)}</p>`;
 }
 
 function renderZhilinkResultGrid(cards = [], gridVariant = "") {
@@ -2475,7 +2479,7 @@ function renderLayout({ title, description, bodyClass = "", content, body, scrip
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${escapeHtml(title)}</title>
     <meta name="description" content="${escapeHtml(description)}" />
-    <link rel="stylesheet" href="/styles.css?v=20260506-2242" />
+    <link rel="stylesheet" href="/styles.css?v=20260506-2319" />
   </head>
   <body class="${escapeHtml(bodyClass)}">
     ${content ? '<div class="cursor-dot" aria-hidden="true"></div>' : ""}
