@@ -1717,23 +1717,32 @@ function renderZhihuDetailCasePage(content, work) {
 }
 
 function renderZhihuSocialDesignCasePage(content, work) {
-  const outlineItems = [
-    { href: "#social-overview", label: "知乎社交是如何发生的？" },
-    { href: "#social-profile", label: "个人页：打造人设，提升「人」的影响力" },
-    { href: "#social-diagnosis", label: "问题诊断", bullet: true },
-    { href: "#social-goal", label: "目标拆解", bullet: true },
-    { href: "#social-plan", label: "方案落地", bullet: true },
-    { href: "#social-result", label: "项目收益", bullet: true },
-    { href: "#social-zhilink", label: "ZhiLink：弱连接之外的场景补充" },
-    { href: "#social-zhilink-goal", label: "目标定义", bullet: true },
-    { href: "#social-zhilink-flow", label: "核心流程", bullet: true },
-    { href: "#social-zhilink-result", label: "项目结果", bullet: true },
-    { href: "#social-circle", label: "知乎圈子：基于兴趣的社交连接" },
-    { href: "#social-circle-definition", label: "产品定义", bullet: true },
-    { href: "#social-circle-flow", label: "完整链路", bullet: true },
-    { href: "#social-circle-key-design", label: "关键设计", bullet: true },
-    { href: "#social-circle-result", label: "取得成果", bullet: true }
-  ];
+  const isInteractionBarRevampPage = work.slug === "zhihu-interaction-bar-revamp-2026";
+  const overviewLabel = isInteractionBarRevampPage ? "设计概述" : "知乎社交是如何发生的？";
+  const outlineItems = isInteractionBarRevampPage
+    ? [
+      { href: "#social-overview", label: "设计概述" },
+      { href: "#interaction-essence", label: "互动的本质" },
+      { href: "#interaction-problem", label: "定义问题" },
+      { href: "#interaction-plan", label: "方案尝试" }
+    ]
+    : [
+      { href: "#social-overview", label: overviewLabel },
+      { href: "#social-profile", label: "个人页：打造人设，提升「人」的影响力" },
+      { href: "#social-diagnosis", label: "问题诊断", bullet: true },
+      { href: "#social-goal", label: "目标拆解", bullet: true },
+      { href: "#social-plan", label: "方案落地", bullet: true },
+      { href: "#social-result", label: "项目收益", bullet: true },
+      { href: "#social-zhilink", label: "ZhiLink：弱连接之外的场景补充" },
+      { href: "#social-zhilink-goal", label: "目标定义", bullet: true },
+      { href: "#social-zhilink-flow", label: "核心流程", bullet: true },
+      { href: "#social-zhilink-result", label: "项目结果", bullet: true },
+      { href: "#social-circle", label: "知乎圈子：基于兴趣的社交连接" },
+      { href: "#social-circle-definition", label: "产品定义", bullet: true },
+      { href: "#social-circle-flow", label: "完整链路", bullet: true },
+      { href: "#social-circle-key-design", label: "关键设计", bullet: true },
+      { href: "#social-circle-result", label: "取得成果", bullet: true }
+    ];
 
   const body = `
     ${renderSiteHeader(content, `/work/${work.slug}`)}
@@ -1756,7 +1765,7 @@ function renderZhihuSocialDesignCasePage(content, work) {
         <section class="zhihu-social-hero reveal is-visible" id="social-overview">
           <div class="zhihu-social-hero-head">
             <img class="zhihu-social-brand" src="/assets/zhicon_brand_zhihu_logo.svg" alt="知乎 Logo" />
-            <h1 class="zhihu-social-title">知乎社交设计</h1>
+            <h1 class="zhihu-social-title">${escapeHtml(work.title)}</h1>
           </div>
 
           <div class="zhihu-social-meta">
@@ -1766,64 +1775,334 @@ function renderZhihuSocialDesignCasePage(content, work) {
             </div>
             <div>
               <span>项目时间</span>
-              <strong>2025 年</strong>
+              <strong>2024 年</strong>
             </div>
           </div>
 
           <div class="zhihu-social-divider" aria-hidden="true"></div>
-          <h2 class="zhihu-social-subtitle">知乎社交是如何发生的？</h2>
-          <p class="zhihu-social-lead">在弱社交关系中，让连接发生</p>
-          <p class="zhihu-social-copy">知乎的连接建立在内容之上，用户先认同观点，再决定是否关注答主，因此天然是弱社交关系。<br/>在弱社交结构下，用户缺乏直接的关系驱动，<span class="zhihu-social-copy--strong">设计需要承担从内容到人的转化责任，使社交关系发生并强化。</span></p>
-          <div class="zhihu-social-overview-diagram" aria-label="弱社交关系下连接发生路径图">
-            <div class="zhihu-social-flow-diagram">
-              <div class="zhihu-social-flow-diagram-top">
-                <article class="zhihu-social-flow-card zhihu-social-flow-card--content">
-                  <h4>内容页</h4>
-                  <p>产生兴趣</p>
-                </article>
-                <article class="zhihu-social-flow-card zhihu-social-flow-card--profile">
-                  <h4>个人页</h4>
-                  <p>理解人</p>
-                </article>
-              </div>
-              <div class="zhihu-social-flow-diagram-rates" aria-hidden="true">
-                <div class="zhihu-social-flow-rate zhihu-social-flow-rate--content">
-                  <span class="zhihu-social-flow-rate-arrow">↓</span>
-                  <span class="zhihu-social-flow-rate-value">38.5%</span>
+          <h2 class="zhihu-social-subtitle">${escapeHtml(overviewLabel)}</h2>
+          ${
+            isInteractionBarRevampPage
+              ? `<h2 class="zhihu-social-diagnosis-title">在「提升互动率」与「用户表达」之间的设计决策</h2>`
+              : `<p class="zhihu-social-lead">在「提升互动率」与「用户表达」之间的设计决策</p>`
+          }
+          ${
+            isInteractionBarRevampPage
+              ? `
+                <div class="interaction-revamp-tag-row" aria-label="项目标签">
+                  <span class="interaction-revamp-tag interaction-revamp-tag--green">目标：提升互动率、统一互动结构</span>
+                  <span class="interaction-revamp-tag interaction-revamp-tag--blue">场景：知乎回答 / 文章 / 想法详情页</span>
                 </div>
-                <div class="zhihu-social-flow-rate zhihu-social-flow-rate--profile">
-                  <span class="zhihu-social-flow-rate-arrow">↓</span>
-                  <span class="zhihu-social-flow-rate-value">40%</span>
+                <p class="zhihu-social-copy">在提升整体互动率、支撑多内容形态统一分发的目标下，我重新梳理了知乎互动结构，通过多轮设计探索与实验，在增长目标与社区表达文化之间通过设计做出决策，并将互动能力沉淀为可复用的组件体系。</p>
+              `
+              : `<p class="zhihu-social-copy">知乎的连接建立在内容之上，用户先认同观点，再决定是否关注答主，因此天然是弱社交关系。<br/>在弱社交结构下，用户缺乏直接的关系驱动，<span class="zhihu-social-copy--strong">设计需要承担从内容到人的转化责任，使社交关系发生并强化。</span></p>`
+          }
+          ${
+            isInteractionBarRevampPage
+              ? `
+                <div class="zhihu-social-image-placeholder interaction-revamp-compare-board--spaced">
+                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/zhihu-social-interaction-bar-4x.png?v=20260504-1449" alt="互动 bar 改版前后对比图" loading="lazy" />
                 </div>
-              </div>
-              <article class="zhihu-social-flow-card zhihu-social-flow-card--follow">
-                <h4>关注行为</h4>
-                <p>建立连接</p>
-              </article>
-              <p class="zhihu-social-flow-caption">用户先被内容吸引，再决定是否连接这个人</p>
-            </div>
-          </div>
-          <section class="zhihu-social-content-module">
-            <div class="zhihu-social-content-copy">
-              <h3>内容页</h3>
-              <p>在内容页建立连接，是整个社交链路中最关键的一环。<br/>围绕提升关注转化，我持续迭代互动 bar 设计，并在数据与体验上取得了稳定提升（该项目已单独作为案例展开）。</p>
-            </div>
-            <a class="zhihu-social-content-link" href="#" aria-label="知乎互动 bar 改版项目">
-              知乎互动 bar 改版项目
-              <img class="zhihu-social-content-link-icon" src="/assets/case-study/zhihu-social-link-icon.svg" alt="" aria-hidden="true" />
-            </a>
-          </section>
-          <div class="zhihu-social-image-placeholder">
-            <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/zhihu-social-interaction-bar-4x.png?v=20260504-1449" alt="知乎互动 bar 改版项目配图" loading="lazy" />
-          </div>
-          <section class="zhihu-social-content-module">
-            <div class="zhihu-social-content-copy">
-              <h3>个人页</h3>
-              <p>在知乎，用户的连接建立在内容之上：先认同观点，再决定是否关注这个人。<br/>因此，在进入个人页时，用户的核心目标不是继续消费内容，而是快速判断“这个人是谁，是否值得关注”</p>
-            </div>
-          </section>
+                <div class="zhihu-social-diagnosis-head interaction-revamp-subtitle-block" id="interaction-essence">
+                  <p class="zhihu-social-diagnosis-label">互动的本质</p>
+                  <h2 class="zhihu-social-diagnosis-title">不仅是点击行为，而是内容的一部分</h2>
+                </div>
+                <h3 class="zhilink-third-title">互动 bar 的作用</h3>
+                <div class="zhilink-third-copy">
+                  <p>互动设计，本质是在定义用户如何参与内容</p>
+                </div>
+                <figure class="interaction-revamp-third-image">
+                  <img src="https://www.figma.com/api/mcp/asset/b1a8a043-bfff-428e-bac6-70a5c1c5ee84" alt="互动 bar 作用 4x 示意图" loading="lazy" />
+                </figure>
+                <h3 class="zhilink-third-title">改版目标</h3>
+                <div class="zhilink-third-copy">
+                  <p>互动设计，本质是在定义用户如何参与内容</p>
+                </div>
+                <div class="interaction-revamp-goal-cards" aria-label="改版目标卡片">
+                  <article class="interaction-revamp-goal-card interaction-revamp-goal-card--first">
+                    <p class="interaction-revamp-goal-label">目标1</p>
+                    <p class="interaction-revamp-goal-main">提升整体互动率</p>
+                    <p class="interaction-revamp-goal-sub">以“赞同”为核心</p>
+                  </article>
+                  <article class="interaction-revamp-goal-card interaction-revamp-goal-card--second">
+                    <p class="interaction-revamp-goal-label">目标2</p>
+                    <p class="interaction-revamp-goal-main">统一互动方式</p>
+                    <p class="interaction-revamp-goal-sub">短容器流将混推：想法 / 回答 / 文章</p>
+                  </article>
+                </div>
+                <div class="zhihu-social-image-placeholder interaction-revamp-goal-image">
+                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/1.png?v=20260507-1854" alt="改版目标配图 1" loading="lazy" />
+                </div>
+                <div class="zhihu-social-diagnosis-head zhihu-social-diagnosis-head--after-image" id="interaction-problem">
+                  <p class="zhihu-social-diagnosis-label">定义问题</p>
+                  <h2 class="zhihu-social-diagnosis-title">用户表达有门槛</h2>
+                </div>
+                <div class="zhihu-social-image-placeholder interaction-revamp-image-plain">
+                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/2.png" alt="定义问题配图 2" loading="lazy" />
+                </div>
+                <div class="zhihu-social-diagnosis-head zhihu-social-diagnosis-head--after-image" id="interaction-plan">
+                  <p class="zhihu-social-diagnosis-label">方案尝试</p>
+                  <h2 class="zhihu-social-diagnosis-title">从降低门槛到重新定义互动表达方式</h2>
+                </div>
+                <h3 class="zhilink-third-title">方向 1 ：互动类型多，是否减少互动类型</h3>
+                <div class="zhilink-third-copy">
+                  <p>赞同与喜欢在“表达支持”上存在重叠，尝试是否可以取其一 or 合并，反对收起</p>
+                </div>
+                <div class="zhihu-social-image-placeholder interaction-revamp-image-plain">
+                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/3.png" alt="方向1方案配图 3" loading="lazy" />
+                </div>
+                <div class="zhihu-social-image-placeholder interaction-revamp-image-plain">
+                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/4.png" alt="方向1方案配图 4" loading="lazy" />
+                </div>
+                <div class="zhihu-social-image-placeholder interaction-revamp-image-plain">
+                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/5.png" alt="方向1方案配图 5" loading="lazy" />
+                </div>
+                <section class="interaction-revamp-decision-module" aria-label="方案决策分析模块">
+                  <h3 class="interaction-revamp-decision-title">设计方案决策</h3>
+                  <div class="interaction-revamp-decision-table" aria-label="方案决策分析表格">
+                    <div class="interaction-revamp-decision-table-header">
+                      <span>方案</span>
+                      <span>使用门槛</span>
+                      <span>内容适配性-回答/文章</span>
+                      <span>内容适配性-想法</span>
+                      <span>核心问题</span>
+                    </div>
+                    <div class="interaction-revamp-decision-table-body">
+                      <div class="interaction-revamp-decision-table-row">
+                        <div class="interaction-revamp-decision-table-cell interaction-revamp-decision-table-cell--plan">
+                          <span class="interaction-revamp-decision-plan-badge">A</span>
+                          <span>以「赞同」为主互动</span>
+                        </div>
+                        <div class="interaction-revamp-decision-table-cell">中：用户更谨慎</div>
+                        <div class="interaction-revamp-decision-table-cell">中：适合观点表达</div>
+                        <div class="interaction-revamp-decision-table-cell">低：对轻内容偏重</div>
+                        <div class="interaction-revamp-decision-table-cell interaction-revamp-decision-table-cell--warning">
+                          <p>表达门槛较高</p>
+                          <p>对轻内容场景不友好</p>
+                        </div>
+                      </div>
+                      <div class="interaction-revamp-decision-table-row">
+                        <div class="interaction-revamp-decision-table-cell interaction-revamp-decision-table-cell--plan">
+                          <span class="interaction-revamp-decision-plan-badge">B</span>
+                          <span>以「喜欢」为主互动</span>
+                        </div>
+                        <div class="interaction-revamp-decision-table-cell">低：点击成本低</div>
+                        <div class="interaction-revamp-decision-table-cell">低：难承载观点表达</div>
+                        <div class="interaction-revamp-decision-table-cell">高：适合轻表达</div>
+                        <div class="interaction-revamp-decision-table-cell interaction-revamp-decision-table-cell--warning">表达能力不足，无法统一</div>
+                      </div>
+                      <div class="interaction-revamp-decision-table-row">
+                        <div class="interaction-revamp-decision-table-cell interaction-revamp-decision-table-cell--plan">
+                          <span class="interaction-revamp-decision-plan-badge">C</span>
+                          <span>以「赞同+喜欢」为主互动</span>
+                        </div>
+                        <div class="interaction-revamp-decision-table-cell">高：需重新理解</div>
+                        <div class="interaction-revamp-decision-table-cell">低：语义不清</div>
+                        <div class="interaction-revamp-decision-table-cell">低：认知复杂</div>
+                        <div class="interaction-revamp-decision-table-cell interaction-revamp-decision-table-cell--warning">表达边界模糊，增加理解成本</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="interaction-revamp-decision-note">
+                    <span class="interaction-revamp-decision-note-line" aria-hidden="true"></span>
+                    <div class="interaction-revamp-decision-note-text">
+                      <p class="interaction-revamp-decision-note-heading">在多目标冲突下做决策</p>
+                      <p>在这一阶段我发现，不同内容类型确实存在更适合的表达方式：「赞同」更适合回答/文章，「喜欢」更适合想法。<br />但如果继续维持这种差异，在未来统一分发的场景下，用户将始终面对不一致的表达方式。</p>
+                      <p class="interaction-revamp-decision-note-heading interaction-revamp-decision-note-heading--conclusion">结论与下一步：</p>
+                      <p>局部最优 ≠ 整体最优<br />因此我选择优先保证表达方式的一致性，而不是每个内容类型的局部最优。<br />下一步尝试在表达一致性的前提下，进一步降低使用门槛。</p>
+                    </div>
+                  </div>
+                </section>
+                <h3 class="zhilink-third-title">方向 2 ：降低使用门槛</h3>
+                <div class="zhilink-third-copy">
+                  <p>赞同与喜欢在“表达支持”上存在重叠，尝试是否可以取其一 or 合并，反对收起</p>
+                </div>
+                <div class="zhihu-social-image-placeholder interaction-revamp-image-pair">
+                  <div class="interaction-revamp-image-pair-grid">
+                    <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/6.png" alt="方向2方案配图 6" loading="lazy" />
+                    <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/7.png" alt="方向2方案配图 7" loading="lazy" />
+                  </div>
+                </div>
+                <div class="zhihu-social-image-placeholder interaction-revamp-image-plain">
+                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/8.png" alt="方向2方案配图 8" loading="lazy" />
+                </div>
+                <section class="interaction-revamp-decision-module" aria-label="方案决策分析模块">
+                  <h3 class="interaction-revamp-decision-title">设计方案决策</h3>
+                  <div class="interaction-revamp-decision-note">
+                    <span class="interaction-revamp-decision-note-line" aria-hidden="true"></span>
+                    <div class="interaction-revamp-decision-note-text interaction-revamp-decision-note-text--analysis">
+                      <p class="interaction-revamp-decision-note-heading">方案决策</p>
+                      <p>A1 通过「赞/踩」替代「赞同/反对」，并收拢喜欢等次要互动，降低主区选择成本，但在想法场景中“反对”不适配，同时关注入口仍存在误触问题，本质仍是局部优化。</p>
+                      <p>A2 则从整体表达方式出发重构互动结构：收拢次要互动、强化主互动入口，并统一不同内容的表达路径，在降低决策成本的同时，带动了赞同、关注与分享的整体提升。</p>
+                      <p class="interaction-revamp-decision-note-heading interaction-revamp-decision-note-heading--conclusion">结论与下一步：</p>
+                      <ul class="interaction-revamp-decision-list">
+                        <li>最终选择 A2，并明确：以「赞同」为核心表达，构建主次分层的表达方式。</li>
+                        <li>B1 & B2 不冲突，一起小流量实验。</li>
+                        <li>同时开启实验验证「赞/踩 👍👎」的心理门槛低于「赞同/反对 △▽」。</li>
+                      </ul>
+                    </div>
+                  </div>
+                </section>
+                <div class="zhihu-social-diagnosis-head zhihu-social-diagnosis-head--after-image">
+                  <p class="zhihu-social-diagnosis-label">数据结论：在统一表达的前提下，「赞/踩」优于「赞同/反对」</p>
+                  <h2 class="zhihu-social-diagnosis-title">带来更高的核心表达增长，且未损失整体互动效率</h2>
+                </div>
+                <div class="zhihu-social-image-placeholder interaction-revamp-image-plain">
+                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/9.png" alt="数据结论配图 9" loading="lazy" />
+                </div>
+                <section class="interaction-revamp-data-module" aria-label="详细指标对比表">
+                  <header class="interaction-revamp-data-header">
+                    <h3>详细指标对比表</h3>
+                    <p>完整的互动指标变化率数据</p>
+                  </header>
+
+                  <div class="interaction-revamp-data-table-wrap">
+                    <table class="interaction-revamp-data-table">
+                      <thead>
+                        <tr>
+                          <th>指标</th>
+                          <th>实验 A</th>
+                          <th>实验 B</th>
+                          <th>差异</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="interaction-revamp-data-key">赞同量</td>
+                          <td><span class="is-pos">+6.36%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-up.svg" alt="" aria-hidden="true" /></td>
+                          <td><span class="is-pos">+13.12%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-up.svg" alt="" aria-hidden="true" /></td>
+                          <td class="is-pos">+6.76pp</td>
+                        </tr>
+                        <tr>
+                          <td class="interaction-revamp-data-key">收藏量</td>
+                          <td><span class="is-pos">+5.87%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-up.svg" alt="" aria-hidden="true" /></td>
+                          <td><span class="is-pos">+4.42%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-up.svg" alt="" aria-hidden="true" /></td>
+                          <td class="is-neg">-1.45pp</td>
+                        </tr>
+                        <tr>
+                          <td class="interaction-revamp-data-key">分享量</td>
+                          <td><span class="is-pos">+6.50%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-up.svg" alt="" aria-hidden="true" /></td>
+                          <td><span class="is-pos">+7.53%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-up.svg" alt="" aria-hidden="true" /></td>
+                          <td class="is-pos">+1.03pp</td>
+                        </tr>
+                        <tr>
+                          <td class="interaction-revamp-data-key">评论量</td>
+                          <td><span class="is-pos">+0.21%</span> <span class="interaction-revamp-data-badge interaction-revamp-data-badge--n">n</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-up.svg" alt="" aria-hidden="true" /></td>
+                          <td><span class="is-pos">+3.96%</span> <span class="interaction-revamp-data-badge interaction-revamp-data-badge--n">n</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-up.svg" alt="" aria-hidden="true" /></td>
+                          <td class="is-pos">+3.75pp</td>
+                        </tr>
+                        <tr>
+                          <td class="interaction-revamp-data-key">喜欢量</td>
+                          <td><span class="is-neg">-90.00%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-down.svg" alt="" aria-hidden="true" /></td>
+                          <td><span class="is-neg">-90.00%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-down.svg" alt="" aria-hidden="true" /></td>
+                          <td class="is-muted">+0.00pp</td>
+                        </tr>
+                        <tr>
+                          <td class="interaction-revamp-data-key">总互动量</td>
+                          <td><span class="is-neg">-5.10%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-down.svg" alt="" aria-hidden="true" /></td>
+                          <td><span class="is-neg">-1.60%</span> <span class="interaction-revamp-data-badge interaction-revamp-data-badge--n">n</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-down.svg" alt="" aria-hidden="true" /></td>
+                          <td class="is-pos">+3.50pp</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div class="interaction-revamp-data-subtitle">「赞/赞同」数据的用户频次分布</div>
+
+                  <div class="interaction-revamp-data-table-wrap">
+                    <table class="interaction-revamp-data-table interaction-revamp-data-table--users">
+                      <thead>
+                        <tr>
+                          <th>用户类型</th>
+                          <th>实验 A</th>
+                          <th>实验 B</th>
+                          <th>差异</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="interaction-revamp-data-key">F3 用户</td>
+                          <td class="is-pos">+3.7%</td>
+                          <td class="is-pos">+2.4%</td>
+                          <td class="is-neg">-1.3pp</td>
+                        </tr>
+                        <tr>
+                          <td class="interaction-revamp-data-key">F2 用户</td>
+                          <td class="is-pos">+8.1%</td>
+                          <td class="is-pos">+7.5%</td>
+                          <td class="is-muted">-0.6pp</td>
+                        </tr>
+                        <tr>
+                          <td class="interaction-revamp-data-key">F1 用户</td>
+                          <td class="is-pos">+8.6%</td>
+                          <td class="is-pos">+12.0%</td>
+                          <td class="is-pos">+3.4pp</td>
+                        </tr>
+                        <tr>
+                          <td class="interaction-revamp-data-key">新用户</td>
+                          <td class="is-pos">+4.3%</td>
+                          <td class="is-pos">+19.4%</td>
+                          <td class="is-pos">+15.1pp</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </section>
+              `
+              : `
+                <div class="zhihu-social-overview-diagram" aria-label="弱社交关系下连接发生路径图">
+                  <div class="zhihu-social-flow-diagram">
+                    <div class="zhihu-social-flow-diagram-top">
+                      <article class="zhihu-social-flow-card zhihu-social-flow-card--content">
+                        <h4>内容页</h4>
+                        <p>产生兴趣</p>
+                      </article>
+                      <article class="zhihu-social-flow-card zhihu-social-flow-card--profile">
+                        <h4>个人页</h4>
+                        <p>理解人</p>
+                      </article>
+                    </div>
+                    <div class="zhihu-social-flow-diagram-rates" aria-hidden="true">
+                      <div class="zhihu-social-flow-rate zhihu-social-flow-rate--content">
+                        <span class="zhihu-social-flow-rate-arrow">↓</span>
+                        <span class="zhihu-social-flow-rate-value">38.5%</span>
+                      </div>
+                      <div class="zhihu-social-flow-rate zhihu-social-flow-rate--profile">
+                        <span class="zhihu-social-flow-rate-arrow">↓</span>
+                        <span class="zhihu-social-flow-rate-value">40%</span>
+                      </div>
+                    </div>
+                    <article class="zhihu-social-flow-card zhihu-social-flow-card--follow">
+                      <h4>关注行为</h4>
+                      <p>建立连接</p>
+                    </article>
+                    <p class="zhihu-social-flow-caption">用户先被内容吸引，再决定是否连接这个人</p>
+                  </div>
+                </div>
+                <section class="zhihu-social-content-module">
+                  <div class="zhihu-social-content-copy">
+                    <h3>内容页</h3>
+                    <p>在内容页建立连接，是整个社交链路中最关键的一环。<br/>围绕提升关注转化，我持续迭代互动 bar 设计，并在数据与体验上取得了稳定提升（该项目已单独作为案例展开）。</p>
+                  </div>
+                  <a class="zhihu-social-content-link" href="#" aria-label="知乎互动 bar 改版项目">
+                    知乎互动 bar 改版项目
+                    <img class="zhihu-social-content-link-icon" src="/assets/case-study/zhihu-social-link-icon.svg" alt="" aria-hidden="true" />
+                  </a>
+                </section>
+                <div class="zhihu-social-image-placeholder">
+                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/zhihu-social-interaction-bar-4x.png?v=20260504-1449" alt="知乎互动 bar 改版项目配图" loading="lazy" />
+                </div>
+                <section class="zhihu-social-content-module">
+                  <div class="zhihu-social-content-copy">
+                    <h3>个人页</h3>
+                    <p>在知乎，用户的连接建立在内容之上：先认同观点，再决定是否关注这个人。<br/>因此，在进入个人页时，用户的核心目标不是继续消费内容，而是快速判断“这个人是谁，是否值得关注”</p>
+                  </div>
+                </section>
+              `
+          }
         </section>
 
+        ${isInteractionBarRevampPage ? "" : `
         <section class="zhihu-social-section reveal is-visible" id="social-profile">
           <article class="zhihu-social-profile-module">
             <p class="zhihu-social-profile-tag">1. 个人页</p>
@@ -1945,7 +2224,9 @@ function renderZhihuSocialDesignCasePage(content, work) {
             titleIsHtml: true
           })}
         </section>
+        `}
 
+        ${isInteractionBarRevampPage ? "" : `
         <section class="zhihu-social-section reveal is-visible" id="social-zhilink">
           <div class="zhihu-social-divider zhihu-social-divider--spacious" aria-hidden="true"></div>
           <article class="zhihu-social-profile-module">
@@ -2263,6 +2544,7 @@ function renderZhihuSocialDesignCasePage(content, work) {
               `
             : ""}
         </section>
+        `}
 
       </div>
     </main>
@@ -2273,7 +2555,7 @@ function renderZhihuSocialDesignCasePage(content, work) {
   return renderLayout({
     title: `${work.title} | Case Study`,
     description: work.caseStudy.lead || "知乎社交设计案例",
-    bodyClass: "case-study-page case-study-page--zhihu-social",
+    bodyClass: `case-study-page case-study-page--zhihu-social${isInteractionBarRevampPage ? " case-study-page--interaction-revamp-lite" : ""}`,
     content,
     body,
     script: renderPublicScript()
@@ -2512,6 +2794,148 @@ function renderZhihuZhiLinkCasePage(content, work) {
   });
 }
 
+function renderZhihuInteractionBarRevampCasePage(content, work) {
+  const outlineItems = [
+    { href: "#interaction-overview", label: "知乎社交是如何发生的？" },
+    { href: "#interaction-compare", label: "改版前后对比" },
+    { href: "#interaction-section-1", label: "章节 01（待填写）", bullet: true },
+    { href: "#interaction-section-2", label: "章节 02（待填写）", bullet: true },
+    { href: "#interaction-section-3", label: "章节 03（待填写）", bullet: true }
+  ];
+
+  const placeholderSections = [
+    { id: "interaction-section-1", label: "章节 01", title: "请填写一级标题", body: "这里预留正文内容，按你的新案例结构直接替换即可。" },
+    { id: "interaction-section-2", label: "章节 02", title: "请填写二级标题", body: "这里预留正文内容，按你的新案例结构直接替换即可。" },
+    { id: "interaction-section-3", label: "章节 03", title: "请填写三级标题", body: "这里预留正文内容，按你的新案例结构直接替换即可。" }
+  ];
+
+  const body = `
+    ${renderSiteHeader(content, `/work/${work.slug}`)}
+
+    <main class="case-shell zhihu-social-shell interaction-revamp-shell">
+      <aside class="zhihu-social-rail reveal is-visible" aria-label="章节导航">
+        <div class="zhihu-social-outline case-outline" data-outline-nav>
+          <span class="zhihu-case-outline-line case-outline-line" data-outline-line aria-hidden="true">
+            <span class="zhihu-case-outline-indicator case-outline-indicator" data-outline-indicator></span>
+          </span>
+          <div class="zhihu-social-outline-content">
+            ${outlineItems
+              .map((item) => `<a href="${escapeHtml(item.href)}" class="zhihu-social-outline-link${item.bullet ? " zhihu-social-outline-link--bullet" : ""}">${escapeHtml(item.label)}</a>`)
+              .join("")}
+          </div>
+        </div>
+      </aside>
+
+      <div class="zhihu-social-main interaction-revamp-main">
+        <section class="zhihu-social-hero reveal is-visible" id="interaction-overview">
+          <div class="interaction-revamp-intro">
+            <div class="interaction-revamp-headline">
+              <img class="interaction-revamp-brand" src="/assets/zhicon_brand_zhihu_logo.svg" alt="知乎 Logo" />
+              <h1 class="interaction-revamp-title">知乎互动 bar 改版</h1>
+            </div>
+
+            <div class="interaction-revamp-meta">
+              <div class="interaction-revamp-meta-item interaction-revamp-meta-item--role">
+                <span>我的角色</span>
+                <strong>产品设计 Owner</strong>
+              </div>
+              <div class="interaction-revamp-meta-item">
+                <span>项目时间</span>
+                <strong>2025 年</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="zhihu-social-divider" aria-hidden="true"></div>
+          <p class="zhihu-social-subtitle">${escapeHtml(overviewLabel)}</p>
+          <p class="zhihu-social-lead">在「提升互动率」与「用户表达」之间的设计决策</p>
+          <p class="zhihu-social-copy">
+            知乎的互动建立在内容表达之上，用户先认同观点，再决定是否通过互动参与讨论，因此互动结构需要同时服务增长目标与表达体验。<br />
+            在多内容形态持续扩展下，<span class="zhihu-social-copy--strong">设计需要承担统一互动结构与降低表达门槛的责任，让互动更自然地发生。</span>
+          </p>
+        </section>
+
+        <section class="zhihu-social-section interaction-revamp-section reveal is-visible" id="interaction-compare">
+          <div class="interaction-revamp-compare-board" aria-label="改版前后对比容器">
+            <div class="interaction-revamp-compare-grid">
+              <article class="interaction-revamp-device-card">
+                <div class="interaction-revamp-device">
+                  <div class="interaction-revamp-device-top"></div>
+                  <div class="interaction-revamp-device-lines">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span class="interaction-revamp-device-line-short"></span>
+                  </div>
+                  <div class="interaction-revamp-device-image"></div>
+                </div>
+                <div class="interaction-revamp-action-bar interaction-revamp-action-bar--before">
+                  <span class="interaction-revamp-vote">▲ 赞同 888</span>
+                  <span>♡ 508</span>
+                  <span>☆ 4508</span>
+                  <span>◔ 450</span>
+                  <span class="interaction-revamp-avatar">+ 关注</span>
+                </div>
+              </article>
+
+              <article class="interaction-revamp-device-card">
+                <div class="interaction-revamp-device">
+                  <div class="interaction-revamp-device-top"></div>
+                  <div class="interaction-revamp-device-lines">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span class="interaction-revamp-device-line-short"></span>
+                  </div>
+                  <div class="interaction-revamp-device-image"></div>
+                </div>
+                <div class="interaction-revamp-action-bar interaction-revamp-action-bar--after">
+                  <span class="interaction-revamp-avatar">未远不远 + 关注</span>
+                  <span>△</span>
+                  <span>▽</span>
+                  <span>☆ 4508</span>
+                  <span>◔ 450</span>
+                  <span>⋮</span>
+                </div>
+              </article>
+            </div>
+
+            <div class="interaction-revamp-compare-labels">
+              <p>改前</p>
+              <p>改后</p>
+            </div>
+          </div>
+        </section>
+
+        ${placeholderSections
+          .map(
+            (section) => `
+              <section class="zhihu-social-section interaction-revamp-section reveal is-visible" id="${escapeHtml(section.id)}">
+                <div class="zhihu-social-diagnosis-head">
+                  <p class="zhihu-social-diagnosis-label">${escapeHtml(section.label)}</p>
+                  <h2 class="zhihu-social-diagnosis-title">${escapeHtml(section.title)}</h2>
+                  <p class="zhihu-social-diagnosis-copy">${escapeHtml(section.body)}</p>
+                </div>
+              </section>
+            `
+          )
+          .join("")}
+      </div>
+    </main>
+
+    ${renderFooter(content, { caseNav: buildCaseFooterLinks(content, work.slug) })}
+  `;
+
+  return renderLayout({
+    title: `${work.title} | Case Study`,
+    description: work.caseStudy.lead || "知乎互动 bar 改版案例页",
+    bodyClass: "case-study-page case-study-page--zhihu-social case-study-page--interaction-revamp",
+    content,
+    body,
+    script: renderPublicScript()
+  });
+}
+
 function renderLayout({ title, description, bodyClass = "", content, body, script = "" }) {
   return `<!doctype html>
 <html lang="zh-CN">
@@ -2520,7 +2944,7 @@ function renderLayout({ title, description, bodyClass = "", content, body, scrip
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${escapeHtml(title)}</title>
     <meta name="description" content="${escapeHtml(description)}" />
-    <link rel="stylesheet" href="/styles.css?v=20260506-2336" />
+    <link rel="stylesheet" href="/styles.css?v=20260507-2319" />
   </head>
   <body class="${escapeHtml(bodyClass)}">
     ${content ? '<div class="cursor-dot" aria-hidden="true"></div>' : ""}
@@ -2712,6 +3136,9 @@ function renderWorkPage(content, work) {
     return renderZhihuDetailCasePage(content, work);
   }
   if (work.slug === "interest-circle-community") {
+    return renderZhihuSocialDesignCasePage(content, work);
+  }
+  if (work.slug === "zhihu-interaction-bar-revamp-2026") {
     return renderZhihuSocialDesignCasePage(content, work);
   }
   const caseSections = Array.isArray(work.caseStudy?.sections) ? work.caseStudy.sections : [];

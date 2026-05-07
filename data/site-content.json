@@ -139,6 +139,27 @@
       }
     },
     {
+      "slug": "zhihu-interaction-bar-revamp-2026",
+      "title": "知乎互动 bar 改版",
+      "cardMeta": "知乎 · 社区互动 · 案例详情 2026",
+      "badge": "核心项目",
+      "coverImage": "/assets/rachel-covers/alexa.png",
+      "coverMedia": "/assets/rachel-covers/alexa.mp4",
+      "coverMediaType": "video",
+      "coverMediaAnimated": false,
+      "tone": "tone-02",
+      "ratio": "ratio-wide",
+      "caseStudy": {
+        "eyebrow": "Case Study / 知乎",
+        "lead": "围绕互动表达效率与社区表达完整性，本项目延续既有模块规范，采用统一的左侧导航、标题层级、正文节奏与图片容器规则，搭建可复用的互动 bar 案例页面。",
+        "type": "互动表达改版设计",
+        "year": "2026",
+        "role": "产品设计师",
+        "coverLabel": "知乎互动 bar 改版封面",
+        "sections": []
+      }
+    },
+    {
       "slug": "zhihu-profile-rebuild",
       "title": "个人页重构：人设与关注转化",
       "cardMeta": "知乎 · 社交关系 · 2021 - 至今",
