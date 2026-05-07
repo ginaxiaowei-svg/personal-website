@@ -326,6 +326,7 @@ function renderPublicScript() {
             return { link, section, href };
           })
           .filter(Boolean);
+        const itemByHref = new Map(sectionItems.map((item) => [item.href, item]));
 
         if (!sectionItems.length) {
           return;
@@ -376,9 +377,35 @@ function renderPublicScript() {
           });
         };
 
+        let scrollCorrectionTimer = null;
+        const resolveSectionTop = (section) => Math.max(0, window.scrollY + section.getBoundingClientRect().top - 140);
+        const scrollToSection = (section) => {
+          if (scrollCorrectionTimer) {
+            window.clearTimeout(scrollCorrectionTimer);
+            scrollCorrectionTimer = null;
+          }
+          // Click should land immediately at target.
+          window.scrollTo({ top: resolveSectionTop(section), behavior: "auto" });
+          // One-shot correction to counter layout shifts from lazy content.
+          scrollCorrectionTimer = window.setTimeout(() => {
+            window.scrollTo({ top: resolveSectionTop(section), behavior: "auto" });
+            scrollCorrectionTimer = null;
+          }, 180);
+        };
+
         links.forEach((link) => {
-          link.addEventListener("click", () => {
+          link.addEventListener("click", (event) => {
+            const href = link.getAttribute("href");
+            const item = href ? itemByHref.get(href) : null;
+            if (!item) {
+              return;
+            }
+            event.preventDefault();
             setActiveLink(link);
+            scrollToSection(item.section);
+            if (window.history && typeof window.history.replaceState === "function") {
+              window.history.replaceState(null, "", href);
+            }
           });
         });
 
