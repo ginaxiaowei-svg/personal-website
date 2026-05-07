@@ -130,7 +130,7 @@ const zhlinkCase = {
   circleKeyDesignVisualSection: {
     title: "构建兴趣场的视觉与氛围",
     content: "以主题色建立场景识别，结合等级体系强化身份与激励机制，提升用户在圈子内的认同感",
-    image: "/assets/case-study/zhihu-circle-key-design-visual-showcase-01-20260506.png?v=20260506-0912"
+    image: "/assets/case-study/07.png?v=20260507-1111"
   },
   circleResultSection: {
     label: "04/取得成果",
