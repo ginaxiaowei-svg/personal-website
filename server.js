@@ -2278,7 +2278,7 @@ function renderZhihuSocialDesignCasePage(content, work) {
                 <section class="interaction-revamp-module-split interaction-revamp-module-split--bc">
                   <h3>C-布局与适配</h3>
                 </section>
-                <div class="zhihu-social-image-placeholder interaction-revamp-image-plain">
+                <div class="zhihu-social-image-placeholder interaction-revamp-image-plain interaction-revamp-image-plain--80">
                   <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/15.png" alt="布局与适配配图 15" loading="lazy" />
                 </div>
                 <p class="interaction-revamp-pdf-note">查看完整组件文档请点击 👉 <a class="interaction-revamp-pdf-note-link" href="#" aria-label="查看完整组件文档 PDF">PDF 文档</a></p>
