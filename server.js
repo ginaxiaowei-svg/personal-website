@@ -1857,7 +1857,7 @@ function renderZhihuSocialDesignCasePage(content, work) {
                 <div class="zhihu-social-image-placeholder interaction-revamp-image-plain">
                   <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/5.png" alt="方向1方案配图 5" loading="lazy" />
                 </div>
-                <section class="interaction-revamp-decision-module" aria-label="方案决策分析模块">
+                <section class="interaction-revamp-decision-module interaction-revamp-decision-module--analysis" aria-label="方案决策分析模块">
                   <h3 class="interaction-revamp-decision-title">设计方案决策</h3>
                   <div class="interaction-revamp-decision-table" aria-label="方案决策分析表格">
                     <div class="interaction-revamp-decision-table-header">
@@ -1927,7 +1927,6 @@ function renderZhihuSocialDesignCasePage(content, work) {
                   <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/8.png" alt="方向2方案配图 8" loading="lazy" />
                 </div>
                 <section class="interaction-revamp-decision-module" aria-label="方案决策分析模块">
-                  <h3 class="interaction-revamp-decision-title">设计方案决策</h3>
                   <div class="interaction-revamp-decision-note">
                     <span class="interaction-revamp-decision-note-line" aria-hidden="true"></span>
                     <div class="interaction-revamp-decision-note-text interaction-revamp-decision-note-text--analysis">
@@ -1969,38 +1968,38 @@ function renderZhihuSocialDesignCasePage(content, work) {
                       <tbody>
                         <tr>
                           <td class="interaction-revamp-data-key">赞同量</td>
-                          <td><span class="is-pos">+6.36%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-up.svg" alt="" aria-hidden="true" /></td>
-                          <td><span class="is-pos">+13.12%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-up.svg" alt="" aria-hidden="true" /></td>
+                          <td><span class="is-pos">+6.36%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-up.svg?v=20260508-1055" alt="" aria-hidden="true" /></td>
+                          <td><span class="is-pos">+13.12%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-up.svg?v=20260508-1055" alt="" aria-hidden="true" /></td>
                           <td class="is-pos">+6.76pp</td>
                         </tr>
                         <tr>
                           <td class="interaction-revamp-data-key">收藏量</td>
-                          <td><span class="is-pos">+5.87%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-up.svg" alt="" aria-hidden="true" /></td>
-                          <td><span class="is-pos">+4.42%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-up.svg" alt="" aria-hidden="true" /></td>
+                          <td><span class="is-pos">+5.87%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-up.svg?v=20260508-1055" alt="" aria-hidden="true" /></td>
+                          <td><span class="is-pos">+4.42%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-up.svg?v=20260508-1055" alt="" aria-hidden="true" /></td>
                           <td class="is-neg">-1.45pp</td>
                         </tr>
                         <tr>
                           <td class="interaction-revamp-data-key">分享量</td>
-                          <td><span class="is-pos">+6.50%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-up.svg" alt="" aria-hidden="true" /></td>
-                          <td><span class="is-pos">+7.53%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-up.svg" alt="" aria-hidden="true" /></td>
+                          <td><span class="is-pos">+6.50%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-up.svg?v=20260508-1055" alt="" aria-hidden="true" /></td>
+                          <td><span class="is-pos">+7.53%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-up.svg?v=20260508-1055" alt="" aria-hidden="true" /></td>
                           <td class="is-pos">+1.03pp</td>
                         </tr>
                         <tr>
                           <td class="interaction-revamp-data-key">评论量</td>
-                          <td><span class="is-pos">+0.21%</span> <span class="interaction-revamp-data-badge interaction-revamp-data-badge--n">n</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-up.svg" alt="" aria-hidden="true" /></td>
-                          <td><span class="is-pos">+3.96%</span> <span class="interaction-revamp-data-badge interaction-revamp-data-badge--n">n</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-up.svg" alt="" aria-hidden="true" /></td>
+                          <td><span class="is-pos">+0.21%</span> <span class="interaction-revamp-data-badge interaction-revamp-data-badge--n">n</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-up.svg?v=20260508-1055" alt="" aria-hidden="true" /></td>
+                          <td><span class="is-pos">+3.96%</span> <span class="interaction-revamp-data-badge interaction-revamp-data-badge--n">n</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-up.svg?v=20260508-1055" alt="" aria-hidden="true" /></td>
                           <td class="is-pos">+3.75pp</td>
                         </tr>
                         <tr>
                           <td class="interaction-revamp-data-key">喜欢量</td>
-                          <td><span class="is-neg">-90.00%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-down.svg" alt="" aria-hidden="true" /></td>
-                          <td><span class="is-neg">-90.00%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-down.svg" alt="" aria-hidden="true" /></td>
+                          <td><span class="is-neg">-90.00%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-down.svg?v=20260508-1055" alt="" aria-hidden="true" /></td>
+                          <td><span class="is-neg">-90.00%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-down.svg?v=20260508-1055" alt="" aria-hidden="true" /></td>
                           <td class="is-muted">+0.00pp</td>
                         </tr>
                         <tr>
                           <td class="interaction-revamp-data-key">总互动量</td>
-                          <td><span class="is-neg">-5.10%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-down.svg" alt="" aria-hidden="true" /></td>
-                          <td><span class="is-neg">-1.60%</span> <span class="interaction-revamp-data-badge interaction-revamp-data-badge--n">n</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-down.svg" alt="" aria-hidden="true" /></td>
+                          <td><span class="is-neg">-5.10%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-down.svg?v=20260508-1055" alt="" aria-hidden="true" /></td>
+                          <td><span class="is-neg">-1.60%</span> <span class="interaction-revamp-data-badge interaction-revamp-data-badge--n">n</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-down.svg?v=20260508-1055" alt="" aria-hidden="true" /></td>
                           <td class="is-pos">+3.50pp</td>
                         </tr>
                       </tbody>
@@ -2046,6 +2045,164 @@ function renderZhihuSocialDesignCasePage(content, work) {
                         </tr>
                       </tbody>
                     </table>
+                  </div>
+                </section>
+                <section class="interaction-revamp-kpi-module" aria-label="实验指标摘要模块">
+                  <div class="interaction-revamp-kpi-column">
+                    <article class="interaction-revamp-kpi-card">
+                      <div class="interaction-revamp-kpi-content">
+                        <p class="interaction-revamp-kpi-title">实验 A - 赞同量增长</p>
+                        <p class="interaction-revamp-kpi-value interaction-revamp-kpi-value--pos">+13.12%</p>
+                        <p class="interaction-revamp-kpi-meta">统计显著</p>
+                      </div>
+                      <span class="interaction-revamp-kpi-icon-wrap interaction-revamp-kpi-icon-wrap--blue">
+                        <img class="interaction-revamp-kpi-icon interaction-revamp-kpi-icon--lg" src="https://www.figma.com/api/mcp/asset/5e7d69c7-b96c-4f57-8dc5-1a234ff72d73" alt="" aria-hidden="true" />
+                      </span>
+                    </article>
+
+                    <article class="interaction-revamp-kpi-card">
+                      <div class="interaction-revamp-kpi-content">
+                        <p class="interaction-revamp-kpi-title">实验 A - 总互动量</p>
+                        <p class="interaction-revamp-kpi-value interaction-revamp-kpi-value--neg">-1.60%</p>
+                        <p class="interaction-revamp-kpi-meta">不显著</p>
+                      </div>
+                      <span class="interaction-revamp-kpi-icon-wrap interaction-revamp-kpi-icon-wrap--yellow">
+                        <img class="interaction-revamp-kpi-icon" src="https://www.figma.com/api/mcp/asset/f9386a77-49fb-4a94-9890-82b8e0597da8" alt="" aria-hidden="true" />
+                      </span>
+                    </article>
+
+                    <article class="interaction-revamp-kpi-card">
+                      <div class="interaction-revamp-kpi-content">
+                        <p class="interaction-revamp-kpi-title">实验 A - 折算赞同变化</p>
+                        <p class="interaction-revamp-kpi-value interaction-revamp-kpi-value--pos">+14.2万</p>
+                        <p class="interaction-revamp-kpi-meta">全量后赞同量</p>
+                      </div>
+                      <span class="interaction-revamp-kpi-icon-wrap interaction-revamp-kpi-icon-wrap--green">
+                        <img class="interaction-revamp-kpi-icon" src="https://www.figma.com/api/mcp/asset/fe06f935-3f76-475e-a7cc-d56c29e88571" alt="" aria-hidden="true" />
+                      </span>
+                    </article>
+                  </div>
+
+                  <div class="interaction-revamp-kpi-column">
+                    <article class="interaction-revamp-kpi-card">
+                      <div class="interaction-revamp-kpi-content">
+                        <p class="interaction-revamp-kpi-title">实验 B-赞同量增长</p>
+                        <p class="interaction-revamp-kpi-value interaction-revamp-kpi-value--pos">+6.36%</p>
+                        <p class="interaction-revamp-kpi-meta">统计显著</p>
+                      </div>
+                      <span class="interaction-revamp-kpi-icon-wrap interaction-revamp-kpi-icon-wrap--blue">
+                        <img class="interaction-revamp-kpi-icon interaction-revamp-kpi-icon--lg" src="https://www.figma.com/api/mcp/asset/2866859b-a925-48b2-b0e6-e16cc2db6059" alt="" aria-hidden="true" />
+                      </span>
+                    </article>
+
+                    <article class="interaction-revamp-kpi-card">
+                      <div class="interaction-revamp-kpi-content">
+                        <p class="interaction-revamp-kpi-title">实验 B - 总互动量</p>
+                        <p class="interaction-revamp-kpi-value interaction-revamp-kpi-value--neg">-5.10%</p>
+                        <p class="interaction-revamp-kpi-meta">统计显著</p>
+                      </div>
+                      <span class="interaction-revamp-kpi-icon-wrap interaction-revamp-kpi-icon-wrap--purple">
+                        <img class="interaction-revamp-kpi-icon" src="https://www.figma.com/api/mcp/asset/42c88524-9992-49ca-afec-0f2b70cd01b4" alt="" aria-hidden="true" />
+                      </span>
+                    </article>
+
+                    <article class="interaction-revamp-kpi-card">
+                      <div class="interaction-revamp-kpi-content">
+                        <p class="interaction-revamp-kpi-title">实验 B - 折算赞同变化</p>
+                        <p class="interaction-revamp-kpi-value interaction-revamp-kpi-value--neg">-15万</p>
+                        <p class="interaction-revamp-kpi-meta">全量后赞同量</p>
+                      </div>
+                      <span class="interaction-revamp-kpi-icon-wrap interaction-revamp-kpi-icon-wrap--red">
+                        <img class="interaction-revamp-kpi-icon" src="https://www.figma.com/api/mcp/asset/ad2f7156-ccdf-4750-999d-6c882d2ed7b2" alt="" aria-hidden="true" />
+                      </span>
+                    </article>
+                  </div>
+                </section>
+                <section class="interaction-revamp-decision-module interaction-revamp-decision-module--data-validation" aria-label="设计方案分析模块">
+                  <h3 class="interaction-revamp-decision-title interaction-revamp-decision-title--semibold">方案决策</h3>
+                  <div class="interaction-revamp-decision-note">
+                    <span class="interaction-revamp-decision-note-line" aria-hidden="true"></span>
+                    <div class="interaction-revamp-decision-note-text">
+                      <p class="interaction-revamp-decision-note-heading interaction-revamp-decision-note-heading--dark">数据结论</p>
+                      <ul class="interaction-revamp-decision-list interaction-revamp-decision-list--data-validation">
+                        <li>「赞/踩」显著提升表达量，折算后赞同量 <strong>+14.2w（vs 赞同/反对 -15w）</strong></li>
+                        <li>新用户与低频用户增长更明显</li>
+                        <li>分享、评论等互动同步提升</li>
+                      </ul>
+                      <p class="interaction-revamp-decision-note-heading interaction-revamp-decision-note-heading--serif">数据验证降低表达门槛，可以有效提升用户的表达参与度</p>
+                      <p class="interaction-revamp-decision-note-heading interaction-revamp-decision-note-heading--dark">下一步</p>
+                      <p class="interaction-revamp-decision-note-copy interaction-revamp-decision-note-copy--small">实验扩量继续观察</p>
+                    </div>
+                  </div>
+                </section>
+                <div class="zhihu-social-diagnosis-head zhihu-social-diagnosis-head--after-image" id="interaction-validation">
+                  <p class="zhihu-social-diagnosis-label">用户验证</p>
+                  <h2 class="zhihu-social-diagnosis-title">扩量观测</h2>
+                </div>
+                <div class="zhihu-social-image-placeholder interaction-revamp-image-plain interaction-revamp-validation-image">
+                  <p class="interaction-revamp-validation-caption">当前扩量方案</p>
+                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/10.png" alt="用户验证配图 10" loading="lazy" />
+                </div>
+                <section class="interaction-revamp-feedback-module" aria-label="用户反馈总结模块">
+                  <p>我们累计收到 170条反馈</p>
+                  <p>用户明确表示：找不到反对按钮，赞≠赞同</p>
+                </section>
+                <section class="interaction-revamp-voice-module" aria-label="用户原声反馈模块">
+                  <article class="interaction-revamp-voice-column">
+                    <div class="interaction-revamp-voice-copy">
+                      <h3>用户原声—正向反馈</h3>
+                      <ul>
+                        <li>创作者并不反对改版本身，他们更关注的是：这次调整能否真正帮助内容涨粉、涨赞和提升传播效率。</li>
+                        <li>相比样式变化，他们更认可那些能提升关注转化、集中高价值互动、并降低用户表达顾虑的设计。</li>
+                      </ul>
+                    </div>
+                    <div class="interaction-revamp-voice-image">
+                      <img class="interaction-revamp-voice-image-img" src="/assets/case-study/11.png" alt="用户原声正向反馈配图 11" loading="lazy" />
+                    </div>
+                  </article>
+                  <article class="interaction-revamp-voice-column">
+                    <div class="interaction-revamp-voice-copy">
+                      <h3>用户原声—负向反馈</h3>
+                      <ul>
+                        <li>赞同不是赞，是理解和认同，是一种更深的表达，现在这种感觉没了，赞同的“含金量”被稀释了。</li>
+                        <li>用户开始质疑平台在限制表达。</li>
+                        <li>赞同与反对被拆分，表达结构被破坏。</li>
+                      </ul>
+                    </div>
+                    <div class="interaction-revamp-voice-image">
+                      <img class="interaction-revamp-voice-image-img" src="/assets/case-study/12.png" alt="用户原声负向反馈配图 12" loading="lazy" />
+                    </div>
+                  </article>
+                </section>
+                <section class="interaction-revamp-negative-data-module" aria-label="用户负反馈数据模块">
+                  <div class="interaction-revamp-negative-data-copy">
+                    <h3>用户负反馈数据</h3>
+                    <ul>
+                      <li>负反馈用户画像特征：互动率高、活跃频率高、创建账号时间长</li>
+                      <li>被影响的不是普通用户，而是<strong>最依赖表达能力的核心用户</strong></li>
+                    </ul>
+                  </div>
+                  <div class="interaction-revamp-negative-data-cards">
+                    <article class="interaction-revamp-negative-data-card">
+                      <p class="interaction-revamp-negative-data-label">170 条反馈中提到反对按钮</p>
+                      <p class="interaction-revamp-negative-data-value interaction-revamp-negative-data-value--pos">26.1%</p>
+                      <p class="interaction-revamp-negative-data-meta">占比</p>
+                    </article>
+                    <article class="interaction-revamp-negative-data-card">
+                      <p class="interaction-revamp-negative-data-label">F3 频次</p>
+                      <p class="interaction-revamp-negative-data-value">79.22%</p>
+                      <p class="interaction-revamp-negative-data-meta">占比</p>
+                    </article>
+                    <article class="interaction-revamp-negative-data-card">
+                      <p class="interaction-revamp-negative-data-label">创建账号2年以上</p>
+                      <p class="interaction-revamp-negative-data-value">93.42%</p>
+                      <p class="interaction-revamp-negative-data-meta">占比</p>
+                    </article>
+                    <article class="interaction-revamp-negative-data-card">
+                      <p class="interaction-revamp-negative-data-label">这些用户的互动率是大盘的</p>
+                      <p class="interaction-revamp-negative-data-value">14 <span>倍</span></p>
+                      <p class="interaction-revamp-negative-data-meta">喜欢率是大盘的 10倍</p>
+                    </article>
                   </div>
                 </section>
               `
@@ -2944,7 +3101,7 @@ function renderLayout({ title, description, bodyClass = "", content, body, scrip
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${escapeHtml(title)}</title>
     <meta name="description" content="${escapeHtml(description)}" />
-    <link rel="stylesheet" href="/styles.css?v=20260507-2319" />
+    <link rel="stylesheet" href="/styles.css?v=20260508-1457" />
   </head>
   <body class="${escapeHtml(bodyClass)}">
     ${content ? '<div class="cursor-dot" aria-hidden="true"></div>' : ""}

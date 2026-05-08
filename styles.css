@@ -5538,6 +5538,199 @@ body.case-study-page.case-study-page--zhihu > main.case-shell.zhihu-case-shell >
   max-width: 100%;
 }
 
+.interaction-revamp-validation-caption {
+  margin: 0;
+  color: #32404f;
+  font-family: "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", serif;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.interaction-revamp-validation-image {
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.interaction-revamp-validation-image .interaction-revamp-validation-caption {
+  width: 100%;
+  text-align: center;
+  opacity: 0.8;
+}
+
+.interaction-revamp-feedback-module {
+  margin-top: 20px;
+  padding: 100px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+
+.interaction-revamp-feedback-module p {
+  margin: 0;
+  color: #4a5068;
+  font-family: "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", serif;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.interaction-revamp-voice-module {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 34px;
+}
+
+.interaction-revamp-voice-column {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.interaction-revamp-voice-copy {
+  color: #32404f;
+  display: grid;
+  gap: 14px;
+}
+
+.interaction-revamp-voice-copy h3 {
+  margin: 0;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.interaction-revamp-voice-copy ul {
+  margin: 0;
+  padding-left: 16px;
+  display: grid;
+  gap: 10px;
+}
+
+.interaction-revamp-voice-copy li {
+  margin: 0;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.interaction-revamp-voice-module > .interaction-revamp-voice-column:nth-of-type(2) > .interaction-revamp-voice-copy > ul > li:nth-of-type(2) {
+  font-weight: 500;
+}
+
+.interaction-revamp-negative-data-module {
+  margin-top: 40px;
+  display: grid;
+  gap: 19px;
+}
+
+.interaction-revamp-negative-data-copy {
+  max-width: 340px;
+  display: grid;
+  gap: 6px;
+}
+
+.interaction-revamp-negative-data-copy h3 {
+  margin: 0;
+  color: #32404f;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.interaction-revamp-negative-data-copy ul {
+  margin: 0;
+  padding-left: 16px;
+  display: grid;
+  gap: 6px;
+}
+
+.interaction-revamp-negative-data-copy li {
+  margin: 0;
+  color: #32404f;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.interaction-revamp-negative-data-copy li strong {
+  font-weight: 600;
+}
+
+.interaction-revamp-negative-data-cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 11px;
+}
+
+.interaction-revamp-negative-data-card {
+  min-height: 73px;
+  border: 1px solid rgba(50, 64, 79, 0.1);
+  border-radius: 5px;
+  background-image: linear-gradient(180deg, #f9fafb 0.4%, #ffffff 103.43%), linear-gradient(90deg, #ffffff 0%, #ffffff 100%);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.interaction-revamp-negative-data-label {
+  margin: 0;
+  color: #9196a1;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.interaction-revamp-negative-data-value {
+  margin: 0;
+  color: #32404f;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+}
+
+.interaction-revamp-negative-data-value--pos {
+  color: #32404f;
+}
+
+.interaction-revamp-negative-data-value span {
+  font-size: 17px;
+}
+
+.interaction-revamp-negative-data-meta {
+  margin: 0;
+  color: #9196a1;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.interaction-revamp-voice-image {
+  width: 100%;
+}
+
+.interaction-revamp-voice-image-img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  border-radius: 0;
+  box-shadow: none;
+}
+
 .interaction-revamp-image-pair {
   margin-top: 40px;
   padding: 40px;
@@ -5628,11 +5821,12 @@ body.case-study-page.case-study-page--zhihu > main.case-shell.zhihu-case-shell >
   align-items: center;
   justify-content: center;
   width: 16px;
-  height: 16px;
-  border-radius: 3.5px;
+  height: 17.5px;
+  border-radius: 4px;
   background: #e6f0fd;
   color: #036ee8;
-  font-size: 11px;
+  font-size: 14px;
+  font-weight: 400;
   line-height: 1;
   vertical-align: middle;
 }
@@ -5674,6 +5868,111 @@ body.case-study-page.case-study-page--zhihu > main.case-shell.zhihu-case-shell >
   line-height: 1.5;
 }
 
+.interaction-revamp-kpi-module {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid rgba(50, 64, 79, 0.08);
+  border-radius: 12px;
+  background-image: linear-gradient(0deg, #ffffff 21.537%, #f9fafb 78.463%), linear-gradient(90deg, #ffffff 0%, #ffffff 100%);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 30px;
+}
+
+.interaction-revamp-kpi-column {
+  display: grid;
+  gap: 21px;
+}
+
+.interaction-revamp-kpi-card {
+  min-height: 118px;
+  padding: 22px;
+  border: 1px solid rgba(50, 64, 79, 0.1);
+  border-radius: 12px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.interaction-revamp-kpi-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.interaction-revamp-kpi-title {
+  margin: 0;
+  color: #4a5068;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.interaction-revamp-kpi-value {
+  margin: 7px 0 0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 2;
+}
+
+.interaction-revamp-kpi-value--pos {
+  color: #12b981;
+}
+
+.interaction-revamp-kpi-value--neg {
+  color: #f05159;
+}
+
+.interaction-revamp-kpi-meta {
+  margin: 0;
+  color: #737373;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.interaction-revamp-kpi-icon-wrap {
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.interaction-revamp-kpi-icon-wrap--blue {
+  background: #e6f0fd;
+}
+
+.interaction-revamp-kpi-icon-wrap--yellow {
+  background: #fffbec;
+}
+
+.interaction-revamp-kpi-icon-wrap--green {
+  background: #ecfef6;
+}
+
+.interaction-revamp-kpi-icon-wrap--purple {
+  background: #f1edff;
+}
+
+.interaction-revamp-kpi-icon-wrap--red {
+  background: #ffe2e2;
+}
+
+.interaction-revamp-kpi-icon {
+  width: 21px;
+  height: 21px;
+  object-fit: contain;
+}
+
+.interaction-revamp-kpi-icon--lg {
+  width: 24px;
+  height: 24px;
+}
+
 .interaction-revamp-decision-module {
   margin-top: 20px;
   padding: 20px 18px;
@@ -5685,7 +5984,7 @@ body.case-study-page.case-study-page--zhihu > main.case-shell.zhihu-case-shell >
   margin: 0;
   color: #7c5dfc;
   font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
   line-height: 1.4;
 }
@@ -5772,10 +6071,14 @@ body.case-study-page.case-study-page--zhihu > main.case-shell.zhihu-case-shell >
 }
 
 .interaction-revamp-decision-note {
-  margin-top: 20px;
+  margin-top: 30px;
   display: flex;
   align-items: flex-start;
   gap: 9px;
+}
+
+.interaction-revamp-decision-module--analysis .interaction-revamp-decision-note {
+  margin-top: 20px;
 }
 
 .interaction-revamp-decision-note-line {
@@ -5826,6 +6129,71 @@ body.case-study-page.case-study-page--zhihu > main.case-shell.zhihu-case-shell >
 .interaction-revamp-decision-note-text .interaction-revamp-decision-note-heading--conclusion {
   margin-top: 18px;
   font-size: 14px;
+}
+
+.interaction-revamp-decision-note-text .interaction-revamp-decision-note-heading--serif {
+  font-family: "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", serif;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.interaction-revamp-decision-title--semibold {
+  font-weight: 500;
+}
+
+.interaction-revamp-decision-module--data-validation {
+  padding: 24px 22px;
+}
+
+.interaction-revamp-decision-module--data-validation .interaction-revamp-decision-note {
+  margin-top: 20px;
+}
+
+.interaction-revamp-decision-module--data-validation .interaction-revamp-decision-note-line {
+  width: 1.4px;
+}
+
+.interaction-revamp-decision-module--data-validation .interaction-revamp-decision-note-text {
+  gap: 6px;
+}
+
+.interaction-revamp-decision-module--data-validation .interaction-revamp-decision-note-heading--dark {
+  color: #1a1f37;
+  font-weight: 400;
+}
+
+.interaction-revamp-decision-module--data-validation .interaction-revamp-decision-note-text > p.interaction-revamp-decision-note-heading--dark:nth-of-type(1) {
+  color: #7c5dfc;
+}
+
+.interaction-revamp-decision-module--data-validation .interaction-revamp-decision-note-text > p.interaction-revamp-decision-note-heading--dark:nth-of-type(3) {
+  color: #7c5dfc;
+}
+
+.interaction-revamp-decision-module--data-validation .interaction-revamp-decision-note-heading--serif {
+  color: #7c5dfc;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.interaction-revamp-decision-module--data-validation .interaction-revamp-decision-note-heading--serif + .interaction-revamp-decision-note-heading--dark {
+  margin-top: 20px;
+}
+
+.interaction-revamp-decision-list--data-validation {
+  gap: 5px;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.interaction-revamp-decision-list--data-validation strong {
+  color: #4a5068;
+  font-weight: 600;
+}
+
+.interaction-revamp-decision-module--data-validation .interaction-revamp-decision-note-text .interaction-revamp-decision-note-copy--small {
+  font-size: 11px;
+  line-height: 1.45;
 }
 
 .interaction-revamp-decision-note-text--analysis p:nth-of-type(2),
