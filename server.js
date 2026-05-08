@@ -1815,9 +1815,17 @@ function renderZhihuSocialDesignCasePage(content, work) {
                 <div class="zhilink-third-copy">
                   <p>互动设计，本质是在定义用户如何参与内容</p>
                 </div>
-                <figure class="interaction-revamp-third-image">
-                  <img src="https://www.figma.com/api/mcp/asset/b1a8a043-bfff-428e-bac6-70a5c1c5ee84" alt="互动 bar 作用 4x 示意图" loading="lazy" />
-                </figure>
+                <div class="interaction-revamp-role-cards" aria-label="互动 bar 的作用">
+                  <article class="interaction-revamp-role-card">
+                    <p class="interaction-revamp-role-label">表达观点</p>
+                  </article>
+                  <article class="interaction-revamp-role-card">
+                    <p class="interaction-revamp-role-label">影响内容排序</p>
+                  </article>
+                  <article class="interaction-revamp-role-card">
+                    <p class="interaction-revamp-role-label">构成讨论关系（赞同 / 反对）</p>
+                  </article>
+                </div>
                 <h3 class="zhilink-third-title">改版目标</h3>
                 <div class="zhilink-third-copy">
                   <p>互动设计，本质是在定义用户如何参与内容</p>
@@ -1923,12 +1931,12 @@ function renderZhihuSocialDesignCasePage(content, work) {
                 </div>
                 <div class="zhihu-social-image-placeholder interaction-revamp-image-pair">
                   <div class="interaction-revamp-image-pair-grid">
-                    <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/6.png" alt="方向2方案配图 6" loading="lazy" />
-                    <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/7.png" alt="方向2方案配图 7" loading="lazy" />
+                    <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/hudong6.png?v=20260508-2221" alt="方向2方案配图 6" loading="lazy" />
+                    <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/hudong7.png?v=20260508-2221" alt="方向2方案配图 7" loading="lazy" />
                   </div>
                 </div>
                 <div class="zhihu-social-image-placeholder interaction-revamp-image-plain">
-                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/8.png" alt="方向2方案配图 8" loading="lazy" />
+                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/hudong8.png?v=20260508-2254" alt="方向2方案配图 8" loading="lazy" />
                 </div>
                 <section class="interaction-revamp-decision-module" aria-label="方案决策分析模块">
                   <div class="interaction-revamp-decision-note">
@@ -1950,7 +1958,7 @@ function renderZhihuSocialDesignCasePage(content, work) {
                   <p class="zhihu-social-diagnosis-label">数据表现</p>
                   <h2 class="zhihu-social-diagnosis-title">在统一表达的前提下，「赞/踩」优于「赞同/反对」</h2>
                 </div>
-                <div class="zhihu-social-image-placeholder interaction-revamp-image-plain">
+                <div class="zhihu-social-image-placeholder interaction-revamp-image-plain interaction-revamp-image-plain--80">
                   <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/9.png" alt="数据结论配图 9" loading="lazy" />
                 </div>
                 <section class="interaction-revamp-data-module" aria-label="详细指标对比表">
@@ -3204,7 +3212,7 @@ function renderLayout({ title, description, bodyClass = "", content, body, scrip
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${escapeHtml(title)}</title>
     <meta name="description" content="${escapeHtml(description)}" />
-    <link rel="stylesheet" href="/styles.css?v=20260508-1928" />
+    <link rel="stylesheet" href="/styles.css?v=20260508-2330" />
   </head>
   <body class="${escapeHtml(bodyClass)}">
     ${content ? '<div class="cursor-dot" aria-hidden="true"></div>' : ""}
