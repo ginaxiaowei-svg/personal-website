@@ -2599,7 +2599,8 @@ h1 span {
 .zhilink-third-copy p,
 .zhilink-third-copy p + p {
   margin: 0;
-  color: #32404fcc;
+  color: #32404f;
+  opacity: 0.8;
   font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   font-size: 14px;
   font-weight: 400;
@@ -5538,6 +5539,31 @@ body.case-study-page.case-study-page--zhihu > main.case-shell.zhihu-case-shell >
   max-width: 100%;
 }
 
+.interaction-revamp-image-plain--with-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.interaction-revamp-image-copy {
+  width: 100%;
+  display: grid;
+  gap: 4px;
+  justify-items: center;
+}
+
+.interaction-revamp-image-copy p {
+  margin: 0;
+  color: #32404f;
+  font-family: "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", serif;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: center;
+  opacity: 0.8;
+}
+
 .interaction-revamp-validation-caption {
   margin: 0;
   color: #32404f;
@@ -5632,7 +5658,7 @@ body.case-study-page.case-study-page--zhihu > main.case-shell.zhihu-case-shell >
 }
 
 .interaction-revamp-negative-data-copy {
-  max-width: 340px;
+  width: 100%;
   display: grid;
   gap: 6px;
 }
@@ -5673,7 +5699,6 @@ body.case-study-page.case-study-page--zhihu > main.case-shell.zhihu-case-shell >
 }
 
 .interaction-revamp-negative-data-card {
-  min-height: 73px;
   border: 1px solid rgba(50, 64, 79, 0.1);
   border-radius: 5px;
   background-image: linear-gradient(180deg, #f9fafb 0.4%, #ffffff 103.43%), linear-gradient(90deg, #ffffff 0%, #ffffff 100%);
@@ -5693,7 +5718,7 @@ body.case-study-page.case-study-page--zhihu > main.case-shell.zhihu-case-shell >
 }
 
 .interaction-revamp-negative-data-value {
-  margin: 0;
+  margin: 10px 0 0;
   color: #32404f;
   font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   font-size: 24px;
@@ -5729,6 +5754,75 @@ body.case-study-page.case-study-page--zhihu > main.case-shell.zhihu-case-shell >
   max-width: 100%;
   border-radius: 0;
   box-shadow: none;
+}
+
+.interaction-revamp-module-split {
+  margin-top: 30px;
+  display: grid;
+  gap: 12px;
+}
+
+.interaction-revamp-module-split h3 {
+  margin: 0;
+  color: #32404fcc;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.interaction-revamp-module-split ul {
+  margin: 0;
+  padding-left: 21px;
+  display: grid;
+  gap: 8px;
+}
+
+.interaction-revamp-module-split li {
+  margin: 0;
+  color: #32404fcc;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.interaction-revamp-module-split-copy {
+  width: 100%;
+}
+
+.interaction-revamp-module-split-copy p {
+  margin: 0;
+  color: #32404fcc;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.interaction-revamp-module-split-copy ul {
+  margin-top: 2px;
+}
+
+.interaction-revamp-pdf-note {
+  margin: 20px 0 0;
+  color: #4A5068;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 15px;
+}
+
+.interaction-revamp-pdf-note-link {
+  color: #1b6edc;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+.interaction-revamp-pdf-note-link:hover {
+  color: #155fc3;
 }
 
 .interaction-revamp-image-pair {
@@ -6133,7 +6227,7 @@ body.case-study-page.case-study-page--zhihu > main.case-shell.zhihu-case-shell >
 
 .interaction-revamp-decision-note-text .interaction-revamp-decision-note-heading--serif {
   font-family: "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", serif;
-  font-size: 14px;
+  font-size: 14px !important;
   font-weight: 500;
 }
 
@@ -6166,13 +6260,18 @@ body.case-study-page.case-study-page--zhihu > main.case-shell.zhihu-case-shell >
   color: #7c5dfc;
 }
 
+.interaction-revamp-decision-module--data-validation .interaction-revamp-decision-note-text > p.interaction-revamp-decision-note-heading--dark:nth-of-type(2) {
+  color: #7c5dfc;
+  font-size: 14px;
+}
+
 .interaction-revamp-decision-module--data-validation .interaction-revamp-decision-note-text > p.interaction-revamp-decision-note-heading--dark:nth-of-type(3) {
   color: #7c5dfc;
 }
 
 .interaction-revamp-decision-module--data-validation .interaction-revamp-decision-note-heading--serif {
   color: #7c5dfc;
-  font-size: 14px;
+  font-size: 14px !important;
   font-weight: 500;
 }
 
@@ -6194,6 +6293,90 @@ body.case-study-page.case-study-page--zhihu > main.case-shell.zhihu-case-shell >
 .interaction-revamp-decision-module--data-validation .interaction-revamp-decision-note-text .interaction-revamp-decision-note-copy--small {
   font-size: 11px;
   line-height: 1.45;
+}
+
+.interaction-revamp-decision-module--final-data .interaction-revamp-decision-note {
+  gap: 9px;
+}
+
+.interaction-revamp-decision-module--final-data .interaction-revamp-decision-note-line {
+  width: 1.356px;
+}
+
+.interaction-revamp-decision-module--final-data .interaction-revamp-decision-note-text {
+  gap: 14px;
+}
+
+.interaction-revamp-decision-module--final-data .interaction-revamp-decision-note-heading--dark {
+  color: #7c5dfc;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.interaction-revamp-decision-module--final-data .interaction-revamp-decision-list--data-validation {
+  gap: 5px;
+  color: #4a5068;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.interaction-revamp-decision-module--final-data .interaction-revamp-decision-note-copy--small {
+  color: #4a5068;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.interaction-revamp-decision-module--final-data .interaction-revamp-decision-note-heading--serif {
+  color: #7c5dfc;
+  font-family: "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.interaction-revamp-final-proof-line {
+  font-size: 14px !important;
+}
+
+.interaction-revamp-decision-module--final-data .interaction-revamp-decision-note-text > p.interaction-revamp-decision-note-heading--dark:nth-of-type(2) {
+  margin-top: 20px;
+}
+
+.interaction-revamp-decision-module--final-data .interaction-revamp-final-conclusion-heading {
+  margin-top: 20px !important;
+}
+
+.interaction-revamp-decision-module--contribution {
+  margin-top: 20px;
+}
+
+.interaction-revamp-decision-module--contribution .interaction-revamp-decision-note {
+  margin-top: 0;
+}
+
+.interaction-revamp-decision-note-text--contribution {
+  gap: 14px;
+}
+
+.interaction-revamp-contribution-block {
+  display: grid;
+  gap: 6px;
+}
+
+.interaction-revamp-contribution-subtitle {
+  margin: 0;
+  color: #4a5068;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.interaction-revamp-contribution-list {
+  gap: 4px;
+  font-size: 14px;
+  line-height: 1.4;
 }
 
 .interaction-revamp-decision-note-text--analysis p:nth-of-type(2),

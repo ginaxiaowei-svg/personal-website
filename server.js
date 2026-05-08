@@ -1724,7 +1724,11 @@ function renderZhihuSocialDesignCasePage(content, work) {
       { href: "#social-overview", label: "设计概述" },
       { href: "#interaction-essence", label: "互动的本质" },
       { href: "#interaction-problem", label: "定义问题" },
-      { href: "#interaction-plan", label: "方案尝试" }
+      { href: "#interaction-plan", label: "方案尝试" },
+      { href: "#interaction-data-conclusion", label: "数据结论" },
+      { href: "#interaction-validation", label: "用户质疑" },
+      { href: "#interaction-final-decision", label: "最终决策" },
+      { href: "#interaction-componentization", label: "设计组件化" }
     ]
     : [
       { href: "#social-overview", label: overviewLabel },
@@ -1783,7 +1787,7 @@ function renderZhihuSocialDesignCasePage(content, work) {
           <h2 class="zhihu-social-subtitle">${escapeHtml(overviewLabel)}</h2>
           ${
             isInteractionBarRevampPage
-              ? `<h2 class="zhihu-social-diagnosis-title">在「提升互动率」与「用户表达」之间的设计决策</h2>`
+              ? `<h2 class="zhihu-social-diagnosis-title" id="interaction-intro-title">在「提升互动率」与「用户表达」之间的设计决策</h2>`
               : `<p class="zhihu-social-lead">在「提升互动率」与「用户表达」之间的设计决策</p>`
           }
           ${
@@ -1849,13 +1853,13 @@ function renderZhihuSocialDesignCasePage(content, work) {
                   <p>赞同与喜欢在“表达支持”上存在重叠，尝试是否可以取其一 or 合并，反对收起</p>
                 </div>
                 <div class="zhihu-social-image-placeholder interaction-revamp-image-plain">
-                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/3.png" alt="方向1方案配图 3" loading="lazy" />
+                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/hudong6.png?v=20260508-2204" alt="方向1方案配图 3" loading="lazy" />
                 </div>
                 <div class="zhihu-social-image-placeholder interaction-revamp-image-plain">
-                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/4.png" alt="方向1方案配图 4" loading="lazy" />
+                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/hudong4.png?v=20260508-2144" alt="方向1方案配图 4" loading="lazy" />
                 </div>
                 <div class="zhihu-social-image-placeholder interaction-revamp-image-plain">
-                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/5.png" alt="方向1方案配图 5" loading="lazy" />
+                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/hudong5.png?v=20260508-2144" alt="方向1方案配图 5" loading="lazy" />
                 </div>
                 <section class="interaction-revamp-decision-module interaction-revamp-decision-module--analysis" aria-label="方案决策分析模块">
                   <h3 class="interaction-revamp-decision-title">设计方案决策</h3>
@@ -1942,9 +1946,9 @@ function renderZhihuSocialDesignCasePage(content, work) {
                     </div>
                   </div>
                 </section>
-                <div class="zhihu-social-diagnosis-head zhihu-social-diagnosis-head--after-image">
-                  <p class="zhihu-social-diagnosis-label">数据结论：在统一表达的前提下，「赞/踩」优于「赞同/反对」</p>
-                  <h2 class="zhihu-social-diagnosis-title">带来更高的核心表达增长，且未损失整体互动效率</h2>
+                <div class="zhihu-social-diagnosis-head zhihu-social-diagnosis-head--after-image" id="interaction-data-conclusion">
+                  <p class="zhihu-social-diagnosis-label">数据表现</p>
+                  <h2 class="zhihu-social-diagnosis-title">在统一表达的前提下，「赞/踩」优于「赞同/反对」</h2>
                 </div>
                 <div class="zhihu-social-image-placeholder interaction-revamp-image-plain">
                   <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/9.png" alt="数据结论配图 9" loading="lazy" />
@@ -2118,7 +2122,7 @@ function renderZhihuSocialDesignCasePage(content, work) {
                     </article>
                   </div>
                 </section>
-                <section class="interaction-revamp-decision-module interaction-revamp-decision-module--data-validation" aria-label="设计方案分析模块">
+                <section class="interaction-revamp-decision-module interaction-revamp-decision-module--data-validation interaction-revamp-decision-module--final-data" aria-label="设计方案分析模块">
                   <h3 class="interaction-revamp-decision-title interaction-revamp-decision-title--semibold">方案决策</h3>
                   <div class="interaction-revamp-decision-note">
                     <span class="interaction-revamp-decision-note-line" aria-hidden="true"></span>
@@ -2136,8 +2140,8 @@ function renderZhihuSocialDesignCasePage(content, work) {
                   </div>
                 </section>
                 <div class="zhihu-social-diagnosis-head zhihu-social-diagnosis-head--after-image" id="interaction-validation">
-                  <p class="zhihu-social-diagnosis-label">用户验证</p>
-                  <h2 class="zhihu-social-diagnosis-title">扩量观测</h2>
+                  <p class="zhihu-social-diagnosis-label">用户质疑</p>
+                  <h2 class="zhihu-social-diagnosis-title">实验扩量后，核心用户并不买账</h2>
                 </div>
                 <div class="zhihu-social-image-placeholder interaction-revamp-image-plain interaction-revamp-validation-image">
                   <p class="interaction-revamp-validation-caption">当前扩量方案</p>
@@ -2186,23 +2190,122 @@ function renderZhihuSocialDesignCasePage(content, work) {
                     <article class="interaction-revamp-negative-data-card">
                       <p class="interaction-revamp-negative-data-label">170 条反馈中提到反对按钮</p>
                       <p class="interaction-revamp-negative-data-value interaction-revamp-negative-data-value--pos">26.1%</p>
-                      <p class="interaction-revamp-negative-data-meta">占比</p>
                     </article>
                     <article class="interaction-revamp-negative-data-card">
                       <p class="interaction-revamp-negative-data-label">F3 频次</p>
                       <p class="interaction-revamp-negative-data-value">79.22%</p>
-                      <p class="interaction-revamp-negative-data-meta">占比</p>
                     </article>
                     <article class="interaction-revamp-negative-data-card">
                       <p class="interaction-revamp-negative-data-label">创建账号2年以上</p>
                       <p class="interaction-revamp-negative-data-value">93.42%</p>
-                      <p class="interaction-revamp-negative-data-meta">占比</p>
                     </article>
                     <article class="interaction-revamp-negative-data-card">
                       <p class="interaction-revamp-negative-data-label">这些用户的互动率是大盘的</p>
                       <p class="interaction-revamp-negative-data-value">14 <span>倍</span></p>
-                      <p class="interaction-revamp-negative-data-meta">喜欢率是大盘的 10倍</p>
                     </article>
+                  </div>
+                </section>
+                <div class="zhihu-social-diagnosis-head zhihu-social-diagnosis-head--after-image" id="interaction-final-decision">
+                  <p class="zhihu-social-diagnosis-label">最终决策</p>
+                  <h2 class="zhihu-social-diagnosis-title">在增长与表达之间，我们选择保证用户表达的完整性与准确性</h2>
+                </div>
+                <div class="zhihu-social-image-placeholder interaction-revamp-image-plain interaction-revamp-image-plain--with-copy">
+                  <div class="interaction-revamp-image-copy">
+                    <p>回答/文章外露「反对」，想法不支持反对</p>
+                    <p>以「赞同」为主互动</p>
+                  </div>
+                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/13.png" alt="最终决策配图 13" loading="lazy" />
+                </div>
+                <section class="interaction-revamp-decision-module interaction-revamp-decision-module--data-validation" aria-label="设计方案分析模块">
+                  <h3 class="interaction-revamp-decision-title interaction-revamp-decision-title--semibold">反对外露最终数据</h3>
+                  <div class="interaction-revamp-decision-note">
+                    <span class="interaction-revamp-decision-note-line" aria-hidden="true"></span>
+                    <div class="interaction-revamp-decision-note-text">
+                      <p class="interaction-revamp-decision-note-heading interaction-revamp-decision-note-heading--dark">反对外露后</p>
+                      <ul class="interaction-revamp-decision-list interaction-revamp-decision-list--data-validation">
+                        <li>反对行为大幅增长（+133.39%）</li>
+                        <li>赞同仅小幅下降（-2.21%）</li>
+                        <li>整体消费与分发无显著影响</li>
+                      </ul>
+                      <p class="interaction-revamp-decision-note-heading interaction-revamp-decision-note-heading--dark interaction-revamp-final-conclusion-heading" style="margin-top: 20px;">结论</p>
+                      <p class="interaction-revamp-decision-note-copy interaction-revamp-decision-note-copy--small">反对行为大幅增长，而整体消费未受影响，<br />说明用户表达被恢复，且未以整体效率为代价</p>
+                      <p class="interaction-revamp-decision-note-heading interaction-revamp-decision-note-heading--serif interaction-revamp-final-proof-line">这验证了：反对并非负向噪音，而是必要表达</p>
+                    </div>
+                  </div>
+                </section>
+                <div class="zhihu-social-diagnosis-head zhihu-social-diagnosis-head--after-image" id="interaction-componentization">
+                  <p class="zhihu-social-diagnosis-label">组件化沉淀</p>
+                  <h2 class="zhihu-social-diagnosis-title">把互动 bar 沉淀为可复用的产品能力</h2>
+                </div>
+                <h3 class="zhilink-third-title">背景&问题</h3>
+                <div class="zhilink-third-copy">
+                  <p>在互动 bar 改版过程中，我们同时耦合了短容器与多端迭代：<br /><br />- 多版本实验并行（不同交互方案）<br />- 多端差异（iOS / Android / Hybrid）<br />- 多研发与不同技术实现<br /><br />导致设计侧 & 研发侧做了大量的重复工作</p>
+                </div>
+                <h3 class="zhilink-third-title">设计思路</h3>
+                <div class="zhilink-third-copy">
+                  <p>将互动 bar 从“页面设计”，抽象为“可配置的业务组件”</p>
+                </div>
+                <section class="interaction-revamp-module-split interaction-revamp-module-split--a">
+                  <h3>A-模块拆分</h3>
+                  <ul>
+                    <li>插件区：承载关注 / 评论 / 商业能力</li>
+                    <li>互动区：承载赞同 / 反对 / 收藏 / 评论/分享</li>
+                  </ul>
+                </section>
+                <div class="zhihu-social-image-placeholder interaction-revamp-image-plain">
+                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/14.png" alt="模块拆分配图 14" loading="lazy" />
+                </div>
+                <section class="interaction-revamp-module-split interaction-revamp-module-split--bc">
+                  <h3>B-能力抽象</h3>
+                  <div class="interaction-revamp-module-split-copy">
+                    <p>定义组件的可配置能力：</p>
+                    <ul>
+                      <li>组件形态：可切换不同的组件（简版 & plus 版）</li>
+                      <li>表达方式：图标支持可替换</li>
+                      <li>交互反馈：支持 toast / 动效统一</li>
+                      <li>功能扩展：支持关注、商业、评论等接入</li>
+                    </ul>
+                  </div>
+                </section>
+                <section class="interaction-revamp-module-split interaction-revamp-module-split--bc">
+                  <h3>C-布局与适配</h3>
+                </section>
+                <div class="zhihu-social-image-placeholder interaction-revamp-image-plain">
+                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/15.png" alt="布局与适配配图 15" loading="lazy" />
+                </div>
+                <p class="interaction-revamp-pdf-note">查看完整组件文档请点击 👉 <a class="interaction-revamp-pdf-note-link" href="#" aria-label="查看完整组件文档 PDF">PDF 文档</a></p>
+                <h3 class="zhilink-third-title">组件化价值 & 个人贡献</h3>
+                <section class="interaction-revamp-decision-module interaction-revamp-decision-module--contribution" aria-label="组件化价值与个人贡献模块">
+                  <div class="interaction-revamp-decision-note">
+                    <span class="interaction-revamp-decision-note-line" aria-hidden="true"></span>
+                    <div class="interaction-revamp-decision-note-text interaction-revamp-decision-note-text--contribution">
+                      <div class="interaction-revamp-contribution-block">
+                        <p class="interaction-revamp-decision-note-heading">组件化价值</p>
+                        <ul class="interaction-revamp-decision-list interaction-revamp-contribution-list">
+                          <li>多内容场景（回答 / 想法 / 短容器）统一复用</li>
+                          <li>多端实现一致，显著降低沟通与实现成本</li>
+                          <li>实验方案可快速切换，提高验证效率</li>
+                          <li>商业与关注能力灵活接入，直接带来业务增长</li>
+                        </ul>
+                      </div>
+                      <div class="interaction-revamp-contribution-block">
+                        <p class="interaction-revamp-decision-note-heading">我的关键贡献</p>
+                        <p class="interaction-revamp-contribution-subtitle">项目把控</p>
+                        <ul class="interaction-revamp-decision-list interaction-revamp-contribution-list">
+                          <li>梳理多版本方案与节奏，确保复杂改版稳定推进</li>
+                        </ul>
+                        <p class="interaction-revamp-contribution-subtitle">风险预判</p>
+                        <ul class="interaction-revamp-decision-list interaction-revamp-contribution-list">
+                          <li>识别多实验并行带来的体验与数据问题</li>
+                          <li>推动统一方案降低不确定性</li>
+                        </ul>
+                        <p class="interaction-revamp-contribution-subtitle">资源协调</p>
+                        <ul class="interaction-revamp-decision-list interaction-revamp-contribution-list">
+                          <li>在短容器资源受限下推进三端统一落地</li>
+                          <li>平衡效率与体验，保证最终效果</li>
+                        </ul>
+                      </div>
+                    </div>
                   </div>
                 </section>
               `
@@ -3101,7 +3204,7 @@ function renderLayout({ title, description, bodyClass = "", content, body, scrip
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>${escapeHtml(title)}</title>
     <meta name="description" content="${escapeHtml(description)}" />
-    <link rel="stylesheet" href="/styles.css?v=20260508-1457" />
+    <link rel="stylesheet" href="/styles.css?v=20260508-1928" />
   </head>
   <body class="${escapeHtml(bodyClass)}">
     ${content ? '<div class="cursor-dot" aria-hidden="true"></div>' : ""}
