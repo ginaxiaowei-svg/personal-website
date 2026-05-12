@@ -1,0 +1,11 @@
+{
+  "name": "mr-march-local-rebuild",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Deployable static rebuild of mr-march.com",
+  "scripts": {
+    "build": "python3 scripts/build_site.py",
+    "sync": "python3 scripts/build_site.py",
+    "dev": "python3 -m http.server 4173 -d dist"
+  }
+}

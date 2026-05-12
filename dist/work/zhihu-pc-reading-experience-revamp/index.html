@@ -1,0 +1,825 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>知乎 PC 端整体体验升级 | Case Study</title>
+    <meta name="description" content="围绕桌面阅读场景与办公语境，重构知乎 PC 端导航、布局与视觉语言，建立更低噪音、更内容优先的长期阅读体验。" />
+    <link rel="stylesheet" href="/styles.css?v=20260512-1302" />
+  </head>
+  <body class="case-study-page case-study-page--zhihu-social case-study-page--zhihu-pc">
+    <div class="cursor-dot" aria-hidden="true"></div>
+    
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a href="/" class="brand brand--back">
+          
+        <span class="back-icon" aria-hidden="true">
+          <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" focusable="false">
+            <path d="M580.625 271.15625h-331.875l111.09375-111.09375c15.375-15.375 15.375-40.21875 0-55.5-15.375-15.375-40.21875-15.375-55.5 0L130.15625 278.65625c-8.4375 8.4375-12 19.6875-11.25 30.65625-0.84375 10.96875 2.8125 22.21875 11.25 30.65625l174.09375 174.09375c7.6875 7.6875 17.71875 11.53125 27.75 11.53125s20.0625-3.84375 27.75-11.53125c15.375-15.375 15.375-40.21875 0-55.5L250.90625 349.71875h324.75c137.15625 0 252.75 108 255.84375 245.15625 3.1875 140.90625-110.53125 256.59375-250.78125 256.59375h-50.25c-0.5625 0-1.21875-0.09375-1.78125-0.09375H191.65625c-0.65625 0-1.21875 0.09375-1.78125 0.09375-18.75 0.84375-33.9375 14.71875-36.9375 32.8125v12.9375c3 18 18.1875 31.875 36.75 32.8125H574.8125c180.5625 0 331.875-142.875 335.15625-323.34375 3.375-184.40625-145.6875-335.53125-329.34375-335.53125z" fill="currentColor"></path>
+          </svg>
+        </span>
+        <span class="back-label">返回</span>
+    
+        </a>
+
+        <nav class="nav" aria-label="Primary">
+          <a href="/" class="">首页</a><a href="/case-studies/more-works/" class="">更多作品</a><a href="/about/" class="">简历</a>
+    <div class="nav-contact" data-contact-menu>
+      <button class="nav-contact-toggle" type="button" aria-expanded="false">
+        联系我
+      </button>
+      <div class="contact-popover" hidden>
+        <div class="contact-popover-list">
+          <a class="contact-popover-item" href="mailto:ginaxiaowei@gmail.com">
+            <span class="contact-popover-icon" aria-hidden="true">@</span>
+            <span class="contact-popover-copy">
+              <strong>邮箱</strong>
+              <span>ginaxiaowei@gmail.com</span>
+            </span>
+          </a>
+          <a class="contact-popover-item" href="tel:15600132844">
+            <span class="contact-popover-icon" aria-hidden="true">TEL</span>
+            <span class="contact-popover-copy">
+              <strong>电话</strong>
+              <span>15600132844</span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+    
+        </nav>
+      </div>
+    </header>
+    
+    
+    <main class="case-shell zhihu-social-shell zhilink-case-shell zhihu-pc-case-shell">
+      <aside class="zhihu-social-rail reveal is-visible" aria-label="章节导航">
+        <div class="zhihu-social-outline case-outline" data-outline-nav>
+          <span class="zhihu-case-outline-line case-outline-line" data-outline-line aria-hidden="true">
+            <span class="zhihu-case-outline-indicator case-outline-indicator" data-outline-indicator></span>
+          </span>
+          <div class="zhihu-social-outline-content">
+            <a href="#pc-overview" class="zhihu-social-outline-link">设计概述</a>
+            <a href="#pc-insight" class="zhihu-social-outline-link">用户行为洞察</a>
+            <a href="#pc-trends" class="zhihu-social-outline-link">竞品趋势调研</a>
+            <a href="#pc-principles" class="zhihu-social-outline-link">产品设计原则</a>
+            <a href="#pc-decisions" class="zhihu-social-outline-link">核心设计决策</a>
+            <a href="#pc-compare" class="zhihu-social-outline-link">Before / After</a>
+          </div>
+        </div>
+      </aside>
+
+      <div class="zhihu-social-main zhihu-pc-case-main">
+        <section class="zhihu-social-hero reveal is-visible" id="pc-overview">
+          <div class="zhihu-social-hero-head">
+            <img class="zhihu-social-brand" src="/assets/zhicon_brand_zhihu_logo.svg" alt="知乎 Logo" />
+            <h1 class="zhihu-social-title">知乎 PC 端整体体验升级</h1>
+          </div>
+
+          <div class="zhihu-social-meta">
+            <div>
+              <span>我的角色</span>
+              <strong>产品设计 Owner</strong>
+            </div>
+            <div>
+              <span>项目时间</span>
+              <strong>2026年</strong>
+            </div>
+          </div>
+
+          <div class="zhihu-social-divider" aria-hidden="true"></div>
+          <h2 class="zhihu-social-subtitle">设计概述</h2>
+          <h2 class="zhihu-social-diagnosis-title">为桌面场景重新定义更低噪音、更内容优先的阅读体验</h2>
+          <div class="interaction-revamp-tag-row" aria-label="项目标签">
+            <span class="interaction-revamp-tag interaction-revamp-tag--green">场景：工作间隙 / 学习场景 / 多任务浏览</span>
+            <span class="interaction-revamp-tag interaction-revamp-tag--blue">目标：降低视觉噪音，提升桌面阅读稳定性</span>
+          </div>
+          <p class="zhihu-social-copy">知乎 PC 端长期以业务迭代为主，顶部导航不断叠加功能入口，页面逐渐出现信息拥挤、层级厚重、阅读干扰增强等问题。在缺少明确业务推动的情况下，我主动发起了这次 PC 端整体体验升级，希望重新思考知乎在桌面场景下的内容消费体验与未来方向。</p>
+
+          <div class="zhilink-info-cards zhihu-pc-summary-grid">
+            <article class="zhilink-info-card">
+              <span class="case-label">项目背景</span>
+              <p>信息持续叠加，顶部结构开始挤压阅读体验</p>
+            </article>
+            <article class="zhilink-info-card">
+              <span class="case-label">核心场景</span>
+              <p>办公语境下的快速浏览与长时桌面阅读</p>
+            </article>
+            <article class="zhilink-info-card">
+              <span class="case-label">设计目标</span>
+              <p>建立低噪音、低打扰、内容优先的 PC 阅读结构</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="zhihu-social-section reveal is-visible" id="pc-insight">
+          <div class="zhihu-social-diagnosis-head">
+            <p class="zhihu-social-diagnosis-label">用户行为洞察</p>
+            <h2 class="zhihu-social-diagnosis-title">PC 用户正在形成更偏办公场景的内容消费方式</h2>
+          </div>
+          <div class="zhilink-third-copy">
+            <p>在针对桌面阅读场景的调研中发现，越来越多用户会在工作间隙、学习场景与多任务切换过程中高频浏览知乎内容。</p>
+          </div>
+          <ul class="zhihu-pc-bullet-list">
+            <li>更长时间的桌面阅读</li>
+            <li>更高频的信息浏览</li>
+            <li>更低干扰的阅读偏好</li>
+            <li>更偏办公场景下的内容消费行为</li>
+          </ul>
+          <div class="zhihu-social-diagnosis-quote zhihu-pc-closing-note">
+            <span class="zhihu-social-diagnosis-quote-line" aria-hidden="true"></span>
+            <p class="zhihu-social-diagnosis-quote-text">用户更需要一种<strong class="zhihu-social-diagnosis-quote-highlight">低噪音、低打扰、内容优先</strong>的阅读体验。</p>
+          </div>
+        </section>
+
+        <section class="zhihu-social-section reveal is-visible" id="pc-trends">
+          <div class="zhihu-social-diagnosis-head">
+            <p class="zhihu-social-diagnosis-label">竞品趋势调研</p>
+            <h2 class="zhihu-social-diagnosis-title">内容社区产品的桌面体验正整体走向更轻、更平、更沉浸</h2>
+          </div>
+          <div class="zhilink-third-copy">
+            <p>调研覆盖 X、Reddit、Medium、YouTube、Bilibili、小红书与长桥，发现内容社区产品逐渐呈现出一组稳定趋势。</p>
+          </div>
+          <div class="zhihu-pc-trend-carousel" data-pc-trend-carousel aria-label="竞品趋势轮播">
+            <div class="zhihu-pc-trend-frame">
+              <div class="zhihu-pc-trend-track" data-pc-trend-track>
+                <article class="zhihu-pc-trend-slide" data-pc-trend-slide>
+                  <img class="zhihu-pc-trend-shot" src="/assets/case-study/X.png" alt="X 桌面端界面截图" loading="lazy" />
+                </article>
+                <article class="zhihu-pc-trend-slide" data-pc-trend-slide>
+                  <img class="zhihu-pc-trend-shot" src="/assets/case-study/Medium.png" alt="Medium 桌面端界面截图" loading="lazy" />
+                </article>
+                <article class="zhihu-pc-trend-slide" data-pc-trend-slide>
+                  <img class="zhihu-pc-trend-shot" src="/assets/case-study/Reddit.png" alt="Reddit 桌面端界面截图" loading="lazy" />
+                </article>
+                <article class="zhihu-pc-trend-slide" data-pc-trend-slide>
+                  <img class="zhihu-pc-trend-shot" src="/assets/case-study/longbridge.png" alt="Longbridge 桌面端界面截图" loading="lazy" />
+                </article>
+              </div>
+            </div>
+            <div class="zhihu-pc-trend-dots" role="tablist" aria-label="竞品趋势切换">
+              <button class="zhihu-pc-trend-dot is-active" type="button" data-pc-trend-dot aria-selected="true" aria-label="查看第 1 张图片"></button>
+              <button class="zhihu-pc-trend-dot" type="button" data-pc-trend-dot aria-selected="false" aria-label="查看第 2 张图片"></button>
+              <button class="zhihu-pc-trend-dot" type="button" data-pc-trend-dot aria-selected="false" aria-label="查看第 3 张图片"></button>
+              <button class="zhihu-pc-trend-dot" type="button" data-pc-trend-dot aria-selected="false" aria-label="查看第 4 张图片"></button>
+            </div>
+          </div>
+          <ul class="zhihu-pc-bullet-list">
+            <li>顶部导航向侧边导航迁移</li>
+            <li>页面层级更扁平</li>
+            <li>UI 存在感降低</li>
+            <li>内容分区更清晰</li>
+            <li>更强调阅读沉浸感</li>
+          </ul>
+          <div class="zhilink-third-copy">
+            <p>基于这些趋势，我重新定义了知乎 PC 端的整体阅读体验与页面布局，让桌面场景下的内容消费更稳定、更克制，也更适合长期演进。</p>
+          </div>
+        </section>
+
+        <section class="zhihu-social-section reveal is-visible" id="pc-principles">
+          <div class="zhihu-social-diagnosis-head">
+            <p class="zhihu-social-diagnosis-label">产品设计原则</p>
+            <h2 class="zhihu-social-diagnosis-title">用统一原则约束视觉表达，而不是靠局部修修补补</h2>
+          </div>
+          <div class="zhihu-pc-principle-grid">
+            <article class="zhihu-pc-principle-card">
+              <p class="zhihu-social-diagnosis-label">01</p>
+              <h3>文本优先</h3>
+              <p>降低界面存在感，让用户注意力重新回归内容本身。</p>
+            </article>
+            <article class="zhihu-pc-principle-card">
+              <p class="zhihu-social-diagnosis-label">02</p>
+              <h3>低噪音</h3>
+              <p>减少高饱和、高对比与强装饰元素，降低页面视觉干扰。</p>
+            </article>
+            <article class="zhihu-pc-principle-card">
+              <p class="zhihu-social-diagnosis-label">03</p>
+              <h3>Office Friendly</h3>
+              <p>建立更适合办公场景下快速浏览与持续阅读的桌面体验。</p>
+            </article>
+            <article class="zhihu-pc-principle-card">
+              <p class="zhihu-social-diagnosis-label">04</p>
+              <h3>品牌克制</h3>
+              <p>仅在关键操作与核心信息中使用品牌色，保留识别度但不打断阅读。</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="zhihu-social-section reveal is-visible" id="pc-decisions">
+          <div class="zhihu-social-diagnosis-head">
+            <p class="zhihu-social-diagnosis-label">核心设计决策</p>
+            <h2 class="zhihu-social-diagnosis-title">从结构到视觉，统一收敛到一套更稳定的桌面阅读语言</h2>
+          </div>
+          <div class="zhihu-pc-decision-stack">
+            <article class="zhihu-pc-principle-card">
+              <p class="zhihu-social-diagnosis-label">01</p>
+              <h3>导航体系升级</h3>
+              <p>将顶部导航升级为侧边导航，释放顶部空间，降低阅读压迫感，并建立更稳定的业务扩展体系。</p>
+            </article>
+            <article class="zhihu-pc-principle-card">
+              <p class="zhihu-social-diagnosis-label">02</p>
+              <h3>页面布局重构</h3>
+              <p>全站升级为三栏布局，明确划分左侧导航区、中间内容区与右侧功能区，提升信息分区清晰度与内容聚焦感。</p>
+            </article>
+            <article class="zhihu-pc-principle-card">
+              <p class="zhihu-social-diagnosis-label">03</p>
+              <h3>视觉语言升级</h3>
+              <p>整体视觉向更扁平、更克制的方向调整，弱化阴影、减少描边、降低色彩饱和度，并提升留白比例，建立更现代化的桌面阅读体验。</p>
+            </article>
+            <article class="zhihu-pc-principle-card">
+              <p class="zhihu-social-diagnosis-label">04</p>
+              <h3>内容阅读优化</h3>
+              <p>缩小详情页标题尺寸，降低滚动过程中的视觉暴露感；将图片由左侧调整至右侧，减少对文本阅读流的打断；统一 4:3 图片比例，提升桌面阅读节奏稳定性。</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="zhihu-social-section reveal is-visible" id="pc-compare">
+
+          <div class="zhihu-pc-ba-wrap">
+            <h3 class="zhihu-pc-ba-title">首页</h3>
+            <div class="ba-compare" data-ba data-ba-start="50">
+              <div class="ba-compare__header">
+                <span class="ba-label ba-label--before">Before</span>
+                <span class="ba-label ba-label--after">After</span>
+              </div>
+
+              <div class="ba-compare__stage">
+                <img class="ba-img ba-img--before" src="/assets/case-study/首页-改版前.png" alt="首页改版前" loading="lazy" />
+                <img class="ba-img ba-img--after" src="/assets/case-study/首页-改版后.png" alt="首页改版后" loading="lazy" />
+                <div class="ba-divider" aria-hidden="true"></div>
+                <button
+                  type="button"
+                  class="ba-handle"
+                  aria-label="拖动以对比首页改版前后"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-valuenow="50"
+                  role="slider">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path
+                      d="M10 6L5 12L10 18"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round" />
+                    <path
+                      d="M14 6L19 12L14 18"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        
+          <div class="zhihu-pc-ba-wrap">
+            <h3 class="zhihu-pc-ba-title">回答页</h3>
+            <div class="ba-compare" data-ba data-ba-start="50">
+              <div class="ba-compare__header">
+                <span class="ba-label ba-label--before">Before</span>
+                <span class="ba-label ba-label--after">After</span>
+              </div>
+
+              <div class="ba-compare__stage">
+                <img class="ba-img ba-img--before" src="/assets/case-study/回答页-改版前.png" alt="回答页改版前" loading="lazy" />
+                <img class="ba-img ba-img--after" src="/assets/case-study/回答页-改版后.png" alt="回答页改版后" loading="lazy" />
+                <div class="ba-divider" aria-hidden="true"></div>
+                <button
+                  type="button"
+                  class="ba-handle"
+                  aria-label="拖动以对比回答页改版前后"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-valuenow="50"
+                  role="slider">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path
+                      d="M10 6L5 12L10 18"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round" />
+                    <path
+                      d="M14 6L19 12L14 18"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        
+          <div class="zhihu-pc-ba-wrap">
+            <h3 class="zhihu-pc-ba-title">关注页</h3>
+            <div class="ba-compare" data-ba data-ba-start="50">
+              <div class="ba-compare__header">
+                <span class="ba-label ba-label--before">Before</span>
+                <span class="ba-label ba-label--after">After</span>
+              </div>
+
+              <div class="ba-compare__stage">
+                <img class="ba-img ba-img--before" src="/assets/case-study/关注页-改版前.png" alt="关注页改版前" loading="lazy" />
+                <img class="ba-img ba-img--after" src="/assets/case-study/关注页-改版后.png" alt="关注页改版后" loading="lazy" />
+                <div class="ba-divider" aria-hidden="true"></div>
+                <button
+                  type="button"
+                  class="ba-handle"
+                  aria-label="拖动以对比关注页改版前后"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-valuenow="50"
+                  role="slider">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path
+                      d="M10 6L5 12L10 18"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round" />
+                    <path
+                      d="M14 6L19 12L14 18"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        
+          <div class="zhihu-pc-ba-wrap">
+            <h3 class="zhihu-pc-ba-title">热榜页</h3>
+            <div class="ba-compare" data-ba data-ba-start="50">
+              <div class="ba-compare__header">
+                <span class="ba-label ba-label--before">Before</span>
+                <span class="ba-label ba-label--after">After</span>
+              </div>
+
+              <div class="ba-compare__stage">
+                <img class="ba-img ba-img--before" src="/assets/case-study/热榜页-改版前.png" alt="热榜页改版前" loading="lazy" />
+                <img class="ba-img ba-img--after" src="/assets/case-study/热榜页-改版后.png" alt="热榜页改版后" loading="lazy" />
+                <div class="ba-divider" aria-hidden="true"></div>
+                <button
+                  type="button"
+                  class="ba-handle"
+                  aria-label="拖动以对比热榜页改版前后"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-valuenow="50"
+                  role="slider">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path
+                      d="M10 6L5 12L10 18"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round" />
+                    <path
+                      d="M14 6L19 12L14 18"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        
+          <div class="zhihu-pc-ba-wrap">
+            <h3 class="zhihu-pc-ba-title">个人主页</h3>
+            <div class="ba-compare" data-ba data-ba-start="50">
+              <div class="ba-compare__header">
+                <span class="ba-label ba-label--before">Before</span>
+                <span class="ba-label ba-label--after">After</span>
+              </div>
+
+              <div class="ba-compare__stage">
+                <img class="ba-img ba-img--before" src="/assets/case-study/个人主页-改版前.png" alt="个人主页改版前" loading="lazy" />
+                <img class="ba-img ba-img--after" src="/assets/case-study/个人主页-改版后.png" alt="个人主页改版后" loading="lazy" />
+                <div class="ba-divider" aria-hidden="true"></div>
+                <button
+                  type="button"
+                  class="ba-handle"
+                  aria-label="拖动以对比个人主页改版前后"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-valuenow="50"
+                  role="slider">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path
+                      d="M10 6L5 12L10 18"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round" />
+                    <path
+                      d="M14 6L19 12L14 18"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        
+          <div class="zhihu-pc-ba-wrap">
+            <h3 class="zhihu-pc-ba-title">问题页</h3>
+            <div class="ba-compare" data-ba data-ba-start="50">
+              <div class="ba-compare__header">
+                <span class="ba-label ba-label--before">Before</span>
+                <span class="ba-label ba-label--after">After</span>
+              </div>
+
+              <div class="ba-compare__stage">
+                <img class="ba-img ba-img--before" src="/assets/case-study/问题页-改版前.png" alt="问题页改版前" loading="lazy" />
+                <img class="ba-img ba-img--after" src="/assets/case-study/问题页-改版后.png" alt="问题页改版后" loading="lazy" />
+                <div class="ba-divider" aria-hidden="true"></div>
+                <button
+                  type="button"
+                  class="ba-handle"
+                  aria-label="拖动以对比问题页改版前后"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-valuenow="50"
+                  role="slider">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <path
+                      d="M10 6L5 12L10 18"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round" />
+                    <path
+                      d="M14 6L19 12L14 18"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        
+        </section>
+
+      </div>
+    </main>
+    
+    
+    <footer class="portfolio-footer reveal" id="contact">
+      <div class="portfolio-footer-grid">
+        <div>
+          <p class="portfolio-footer-title">Designed and built by Xiaowei</p>
+        </div>
+        <div class="portfolio-footer-actions">
+          <div class="portfolio-footer-links">
+            <span class="portfolio-footer-item">
+              <a href="tel:15600132844">电话：15600132844</a>
+              <button class="portfolio-footer-copy-button" type="button" data-copy-text="15600132844">复制</button>
+            </span>
+            <span class="portfolio-footer-item">
+              <a href="mailto:ginaxiaowei@gmail.com">邮箱：ginaxiaowei@gmail.com</a>
+              <button class="portfolio-footer-copy-button" type="button" data-copy-text="ginaxiaowei@gmail.com">复制</button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </footer>
+    
+    
+<script>
+(() => {
+  const cursor = document.querySelector(".cursor-dot");
+  if (cursor && window.matchMedia("(pointer:fine)").matches) {
+    window.addEventListener("mousemove", (event) => {
+      cursor.style.transform = `translate(${event.clientX}px, ${event.clientY}px)`;
+      cursor.style.opacity = "1";
+    });
+
+    window.addEventListener("mouseout", () => {
+      cursor.style.opacity = "0";
+    });
+  }
+
+  const outlines = Array.from(document.querySelectorAll("[data-outline-nav]"));
+  outlines.forEach((outline) => {
+    const line = outline.querySelector("[data-outline-line]");
+    const indicator = outline.querySelector("[data-outline-indicator]");
+    const links = Array.from(outline.querySelectorAll('a[href^="#"]'));
+    const items = links
+      .map((link) => {
+        const href = link.getAttribute("href");
+        if (!href || href === "#") return null;
+        const section = document.querySelector(href);
+        if (!section) return null;
+        return { link, section };
+      })
+      .filter(Boolean);
+
+    if (!items.length) return;
+
+    const setActive = (activeLink) => {
+      links.forEach((link) => {
+        link.classList.toggle("is-active", link === activeLink);
+      });
+
+      if (!line || !indicator || !activeLink) return;
+
+      const lineRect = line.getBoundingClientRect();
+      const linkRect = activeLink.getBoundingClientRect();
+      const top = Math.max(0, linkRect.top - lineRect.top);
+      const height = Math.max(1, linkRect.height);
+      indicator.style.transform = `translateY(${top}px)`;
+      indicator.style.height = `${height}px`;
+      indicator.style.opacity = "1";
+    };
+
+    const resolveTop = (section) => Math.max(0, window.scrollY + section.getBoundingClientRect().top - 140);
+
+    const pickActiveByScroll = () => {
+      const anchorOffset = 160;
+      let current = items[0];
+      items.forEach((item) => {
+        if (item.section.getBoundingClientRect().top <= anchorOffset) {
+          current = item;
+        }
+      });
+      setActive(current.link);
+    };
+
+    links.forEach((link) => {
+      link.addEventListener("click", (event) => {
+        const item = items.find((entry) => entry.link === link);
+        if (!item) return;
+        event.preventDefault();
+        setActive(link);
+        window.scrollTo({ top: resolveTop(item.section), behavior: "auto" });
+        if (window.history && typeof window.history.replaceState === "function") {
+          window.history.replaceState(null, "", link.getAttribute("href") || "");
+        }
+      });
+    });
+
+    let ticking = false;
+    const onScrollOrResize = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        pickActiveByScroll();
+        ticking = false;
+      });
+    };
+
+    window.addEventListener("scroll", onScrollOrResize, { passive: true });
+    window.addEventListener("resize", onScrollOrResize);
+    pickActiveByScroll();
+  });
+
+  const carousels = Array.from(document.querySelectorAll("[data-pc-trend-carousel]"));
+  carousels.forEach((carousel) => {
+    const track = carousel.querySelector("[data-pc-trend-track]");
+    const slides = Array.from(carousel.querySelectorAll("[data-pc-trend-slide]"));
+    const dots = Array.from(carousel.querySelectorAll("[data-pc-trend-dot]"));
+    if (!(track instanceof HTMLElement) || slides.length < 2) return;
+
+    let currentIndex = 0;
+    let timer = null;
+
+    const setActive = (nextIndex) => {
+      currentIndex = (nextIndex + slides.length) % slides.length;
+      track.style.transform = `translateX(-${currentIndex * 100}%)`;
+      slides.forEach((slide, index) => {
+        slide.classList.toggle("is-active", index === currentIndex);
+      });
+      dots.forEach((dot, index) => {
+        dot.classList.toggle("is-active", index === currentIndex);
+        dot.setAttribute("aria-selected", index === currentIndex ? "true" : "false");
+      });
+    };
+
+    const start = () => {
+      if (timer) return;
+      timer = window.setInterval(() => {
+        setActive(currentIndex + 1);
+      }, 3000);
+    };
+
+    const stop = () => {
+      if (!timer) return;
+      window.clearInterval(timer);
+      timer = null;
+    };
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener("click", () => {
+        setActive(index);
+        stop();
+        start();
+      });
+    });
+
+    carousel.addEventListener("mouseenter", stop);
+    carousel.addEventListener("mouseleave", start);
+    carousel.addEventListener("focusin", stop);
+    carousel.addEventListener("focusout", () => {
+      window.setTimeout(() => {
+        if (!carousel.contains(document.activeElement)) {
+          start();
+        }
+      }, 0);
+    });
+
+    setActive(0);
+    start();
+  });
+
+  const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
+  document.querySelectorAll("[data-ba]").forEach((root) => {
+    const stage = root.querySelector(".ba-compare__stage");
+    const handle = root.querySelector(".ba-handle");
+    if (!stage || !handle) return;
+
+    const start = Number(root.dataset.baStart);
+    let pos = Number.isFinite(start) ? clamp(start, 0, 100) : 50;
+    let dragging = false;
+    let activePointerId = null;
+
+    const apply = (p) => {
+      pos = clamp(p, 0, 100);
+      root.style.setProperty("--ba-pos", pos + "%");
+      handle.setAttribute("aria-valuenow", String(Math.round(pos)));
+    };
+
+    const positionFromEvent = (clientX) => {
+      const rect = stage.getBoundingClientRect();
+      const x = clientX - rect.left;
+      return (x / rect.width) * 100;
+    };
+
+    const onPointerMove = (event) => {
+      if (!dragging) return;
+      if (activePointerId !== null && event.pointerId !== activePointerId) return;
+      event.preventDefault();
+      apply(positionFromEvent(event.clientX));
+    };
+
+    const stopDragging = () => {
+      dragging = false;
+      activePointerId = null;
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerup", onPointerUp);
+      window.removeEventListener("pointercancel", onPointerUp);
+    };
+
+    const onPointerUp = (event) => {
+      if (activePointerId !== null && event.pointerId !== activePointerId) return;
+      stopDragging();
+    };
+
+    const onPointerDown = (event) => {
+      event.preventDefault();
+      dragging = true;
+      activePointerId = event.pointerId;
+      apply(positionFromEvent(event.clientX));
+      window.addEventListener("pointermove", onPointerMove);
+      window.addEventListener("pointerup", onPointerUp);
+      window.addEventListener("pointercancel", onPointerUp);
+    };
+
+    stage.addEventListener("pointerdown", onPointerDown);
+    handle.addEventListener("pointerdown", onPointerDown);
+
+    handle.addEventListener("keydown", (event) => {
+      const step = event.shiftKey ? 10 : 2;
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        apply(pos - step);
+      } else if (event.key === "ArrowRight") {
+        event.preventDefault();
+        apply(pos + step);
+      } else if (event.key === "Home") {
+        event.preventDefault();
+        apply(0);
+      } else if (event.key === "End") {
+        event.preventDefault();
+        apply(100);
+      }
+    });
+
+    apply(pos);
+  });
+})();
+</script>
+
+    <script>
+const openContactMenu = (menu) => {
+  const toggle = menu.querySelector(".nav-contact-toggle");
+  const popover = menu.querySelector(".contact-popover");
+  if (!toggle || !popover) return;
+  closeContactMenus(menu);
+  menu.classList.add("is-open");
+  toggle.setAttribute("aria-expanded", "true");
+  popover.hidden = false;
+};
+
+const closeContactMenu = (menu) => {
+  const toggle = menu.querySelector(".nav-contact-toggle");
+  const popover = menu.querySelector(".contact-popover");
+  if (!toggle || !popover) return;
+  menu.classList.remove("is-open");
+  toggle.setAttribute("aria-expanded", "false");
+  popover.hidden = true;
+};
+
+const closeContactMenus = (exceptMenu) => {
+  document.querySelectorAll("[data-contact-menu]").forEach((menu) => {
+    if (exceptMenu && menu === exceptMenu) return;
+    closeContactMenu(menu);
+  });
+};
+
+document.querySelectorAll("[data-contact-menu]").forEach((menu) => {
+  const toggle = menu.querySelector(".nav-contact-toggle");
+  const popover = menu.querySelector(".contact-popover");
+  if (!toggle || !popover) return;
+  toggle.addEventListener("click", (event) => {
+    event.preventDefault();
+    const isOpen = menu.classList.contains("is-open");
+    if (isOpen) {
+      closeContactMenu(menu);
+    } else {
+      openContactMenu(menu);
+    }
+  });
+  menu.addEventListener("mouseenter", () => {
+    openContactMenu(menu);
+  });
+  menu.addEventListener("mouseleave", () => {
+    closeContactMenu(menu);
+  });
+  menu.addEventListener("focusin", () => {
+    openContactMenu(menu);
+  });
+  menu.addEventListener("focusout", () => {
+    window.setTimeout(() => {
+      if (!menu.contains(document.activeElement)) {
+        closeContactMenu(menu);
+      }
+    }, 0);
+  });
+});
+
+document.addEventListener("click", (event) => {
+  if (!event.target.closest("[data-contact-menu]")) {
+    closeContactMenus();
+  }
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    closeContactMenus();
+  }
+});
+
+</script>
+    
+<script>
+  document.querySelectorAll("[data-copy-text]").forEach((button) => {
+    if (button.dataset.copyBound === "true") return;
+    button.dataset.copyBound = "true";
+    const defaultLabel = button.textContent;
+    button.addEventListener("click", async () => {
+      const text = button.getAttribute("data-copy-text") || "";
+      if (!text) return;
+      try {
+        await navigator.clipboard.writeText(text);
+        button.textContent = "已复制";
+        button.classList.add("is-copied");
+        window.setTimeout(() => {
+          button.textContent = defaultLabel;
+          button.classList.remove("is-copied");
+        }, 1600);
+      } catch (error) {
+        button.textContent = "复制失败";
+        window.setTimeout(() => {
+          button.textContent = defaultLabel;
+        }, 1600);
+      }
+    });
+  });
+</script>
+
+  </body>
+</html>
