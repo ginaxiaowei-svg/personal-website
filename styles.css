@@ -23,13 +23,13 @@
   --case-content-width: 768px;
   --bg: #f7f8f4;
   --panel: rgba(247, 248, 244, 0.84);
-  --text: #131515;
+  --text: #32404f;
   --muted: #626867;
   --subtle: #939997;
-  --line: rgba(19, 21, 21, 0.1);
-  --line-strong: rgba(19, 21, 21, 0.18);
-  --accent: #2d7f7a;
-  --accent-soft: rgba(45, 127, 122, 0.08);
+  --line: rgba(50, 64, 79, 0.1);
+  --line-strong: rgba(50, 64, 79, 0.18);
+  --accent: #0066ff;
+  --accent-soft: rgba(0, 102, 255, 0.08);
   --shadow: 0 18px 40px rgba(14, 18, 17, 0.05);
   --page: min(1800px, calc(100vw - 48px));
   --content: minmax(0, 1fr);
@@ -49,7 +49,7 @@ body {
   margin: 0;
   min-height: 100vh;
   background:
-    radial-gradient(circle at top left, rgba(45, 127, 122, 0.06), transparent 28%),
+    radial-gradient(circle at top left, rgba(0, 102, 255, 0.06), transparent 28%),
     radial-gradient(circle at 100% 20%, rgba(194, 167, 120, 0.09), transparent 22%),
     var(--bg);
   color: var(--text);
@@ -64,8 +64,8 @@ body::before {
   pointer-events: none;
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.34)),
-    linear-gradient(rgba(19, 21, 21, 0.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(19, 21, 21, 0.018) 1px, transparent 1px);
+    linear-gradient(rgba(50, 64, 79, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(50, 64, 79, 0.018) 1px, transparent 1px);
   background-size: auto, 28px 28px, 28px 28px;
   opacity: 0.4;
 }
@@ -224,9 +224,8 @@ button {
 }
 
 .brand--back:hover .back-icon {
-  border-color: rgba(45, 127, 122, 0.22);
+  border-color: rgba(0, 102, 255, 0.22);
   background: rgba(255, 255, 255, 0.76);
-  transform: translateX(-2px);
 }
 
 .assistant-pill {
@@ -452,7 +451,7 @@ h1 span {
 .project-thumb::before {
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.42), transparent 42%),
-    linear-gradient(180deg, rgba(19, 21, 21, 0.06), rgba(19, 21, 21, 0.02));
+    linear-gradient(180deg, rgba(50, 64, 79, 0.06), rgba(50, 64, 79, 0.02));
   z-index: 1;
 }
 
@@ -465,7 +464,7 @@ h1 span {
   border: 1px solid rgba(255, 255, 255, 0.65);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.74);
-  color: rgba(19, 21, 21, 0.78);
+  color: rgba(50, 64, 79, 0.78);
   font-family: "SF Mono", "IBM Plex Mono", "Menlo", monospace;
   font-size: 0.75rem;
   text-transform: uppercase;
@@ -728,8 +727,8 @@ h1 span {
 }
 
 .admin-primary {
-  border-color: rgba(45, 127, 122, 0.34);
-  background: rgba(45, 127, 122, 0.1);
+  border-color: rgba(0, 102, 255, 0.34);
+  background: rgba(0, 102, 255, 0.1);
 }
 
 .admin-primary:hover,
@@ -804,7 +803,7 @@ h1 span {
 .admin-field select {
   width: 100%;
   padding: 12px 14px;
-  border: 1px solid rgba(19, 21, 21, 0.12);
+  border: 1px solid rgba(50, 64, 79, 0.12);
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.88);
   color: var(--text);
@@ -815,8 +814,8 @@ h1 span {
 .admin-field input:focus,
 .admin-field textarea:focus,
 .admin-field select:focus {
-  outline: 2px solid rgba(45, 127, 122, 0.14);
-  border-color: rgba(45, 127, 122, 0.34);
+  outline: 2px solid rgba(0, 102, 255, 0.14);
+  border-color: rgba(0, 102, 255, 0.34);
 }
 
 .admin-field--full {
@@ -1075,7 +1074,7 @@ h1 span {
   border: 1px solid rgba(255, 255, 255, 0.65);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.72);
-  color: rgba(19, 21, 21, 0.78);
+  color: rgba(50, 64, 79, 0.78);
   font-family: "SF Mono", "IBM Plex Mono", "Menlo", monospace;
   font-size: 0.75rem;
   text-transform: uppercase;
@@ -2518,7 +2517,7 @@ h1 span {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 21px;
+  padding: 26px 21px 10px;
   border: 1px solid rgba(50, 64, 79, 0.12);
   border-radius: 8px;
   background: linear-gradient(159deg, #eff6ff 0%, #ffffff 100%);
@@ -2556,9 +2555,9 @@ h1 span {
   margin: 0;
   color: var(--color-text-primary);
   font-size: 14px;
-  line-height: 1.05;
+  line-height: 20px;
   letter-spacing: -0.0168em;
-  font-weight: 600;
+  font-weight: 400;
   text-align: center;
 }
 
@@ -6605,4 +6604,176 @@ body.case-study-page.case-study-page--zhihu > main.case-shell.zhihu-case-shell >
 .case-study-page--interaction-revamp-lite .site-footer--case-nav {
   border-top: 0;
   padding-top: 0;
+}
+
+/* ==========================================================================
+   Home page — floating circular menu (interaction only)
+   ========================================================================== */
+
+.home-floating-nav {
+  position: fixed;
+  top: clamp(14px, 1.6vw, 22px);
+  right: clamp(18px, 2.4vw, 36px);
+  display: flex;
+  align-items: center;
+  z-index: 50;
+}
+
+.home-page .brand {
+  padding-right: 64px;
+}
+
+@media (max-width: 720px) {
+  .home-page .brand {
+    padding-right: 60px;
+  }
+}
+
+.home-menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid var(--line);
+  color: var(--text);
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition:
+    background 200ms var(--ease),
+    border-color 200ms var(--ease),
+    transform 160ms var(--ease);
+}
+
+.home-menu-toggle:hover {
+  background: var(--accent-soft);
+  border-color: rgba(0, 102, 255, 0.28);
+}
+
+.home-menu-toggle:active {
+  transform: scale(0.96);
+}
+
+.home-menu-toggle:focus-visible {
+  outline: 2px solid rgba(0, 102, 255, 0.36);
+  outline-offset: 3px;
+}
+
+.home-menu-icon {
+  position: relative;
+  display: inline-block;
+  width: 18px;
+  height: 14px;
+}
+
+.home-menu-icon span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1.5px;
+  background: currentColor;
+  border-radius: 2px;
+  transition:
+    transform 240ms var(--ease),
+    top 240ms var(--ease);
+}
+
+.home-menu-icon span:nth-child(1) {
+  top: 4px;
+}
+
+.home-menu-icon span:nth-child(2) {
+  top: 9px;
+}
+
+.home-menu-toggle[aria-expanded="true"] .home-menu-icon span:nth-child(1) {
+  top: 6px;
+  transform: rotate(45deg);
+}
+
+.home-menu-toggle[aria-expanded="true"] .home-menu-icon span:nth-child(2) {
+  top: 6px;
+  transform: rotate(-45deg);
+}
+
+.home-menu-panel {
+  position: absolute;
+  top: calc(100% + 14px);
+  right: 0;
+  min-width: 200px;
+  padding: 10px 0;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(18px);
+  border: 1px solid var(--line);
+  box-shadow: 0 18px 60px rgba(50, 64, 79, 0.14);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  opacity: 0;
+  transform: translateY(-8px) scale(0.96);
+  transform-origin: top right;
+  pointer-events: none;
+  transition:
+    opacity 200ms var(--ease),
+    transform 220ms var(--ease);
+  z-index: 60;
+}
+
+.home-floating-nav[data-home-menu-open="true"] .home-menu-panel {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.home-menu-link {
+  display: block;
+  padding: 10px 22px;
+  font-size: 15px;
+  color: var(--text);
+  white-space: nowrap;
+  transition:
+    background 160ms var(--ease),
+    color 160ms var(--ease);
+}
+
+.home-menu-link:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+/* Hero — live local clock block */
+.home-hero-clock {
+  margin: 28px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: "SF Mono", "IBM Plex Mono", "Menlo", monospace;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+.home-hero-clock-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.home-hero-clock-label {
+  color: var(--subtle);
+  text-transform: uppercase;
+}
+
+.home-hero-clock-value {
+  color: var(--text);
+}
+
+@media (max-width: 720px) {
+  .home-menu-panel {
+    min-width: 180px;
+  }
 }

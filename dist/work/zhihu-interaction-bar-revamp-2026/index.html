@@ -1,0 +1,1352 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>知乎互动 bar 改版 | Case Study</title>
+    <meta name="description" content="围绕互动表达效率与社区表达完整性，本项目延续既有模块规范，采用统一的左侧导航、标题层级、正文节奏与图片容器规则，搭建可复用的互动 bar 案例页面。" />
+    <link rel="stylesheet" href="/styles.css?v=20260509-1550" />
+  </head>
+  <body class="case-study-page case-study-page--zhihu-social case-study-page--interaction-revamp-lite">
+    <div class="cursor-dot" aria-hidden="true"></div>
+    
+    
+    
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a href="/" class="brand brand--back">
+          
+        <span class="back-icon" aria-hidden="true">
+          <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" focusable="false">
+            <path d="M580.625 271.15625h-331.875l111.09375-111.09375c15.375-15.375 15.375-40.21875 0-55.5-15.375-15.375-40.21875-15.375-55.5 0L130.15625 278.65625c-8.4375 8.4375-12 19.6875-11.25 30.65625-0.84375 10.96875 2.8125 22.21875 11.25 30.65625l174.09375 174.09375c7.6875 7.6875 17.71875 11.53125 27.75 11.53125s20.0625-3.84375 27.75-11.53125c15.375-15.375 15.375-40.21875 0-55.5L250.90625 349.71875h324.75c137.15625 0 252.75 108 255.84375 245.15625 3.1875 140.90625-110.53125 256.59375-250.78125 256.59375h-50.25c-0.5625 0-1.21875-0.09375-1.78125-0.09375H191.65625c-0.65625 0-1.21875 0.09375-1.78125 0.09375-18.75 0.84375-33.9375 14.71875-36.9375 32.8125v12.9375c3 18 18.1875 31.875 36.75 32.8125H574.8125c180.5625 0 331.875-142.875 335.15625-323.34375 3.375-184.40625-145.6875-335.53125-329.34375-335.53125z" fill="currentColor"></path>
+          </svg>
+        </span>
+        <span class="back-label">返回</span>
+    
+        </a>
+
+        <nav class="nav" aria-label="Primary">
+          <a href="/" class="">首页</a><a href="/case-studies/more-works/" class="">更多作品</a><a href="/about/" class="">简历</a>
+    <div class="nav-contact" data-contact-menu>
+      <button class="nav-contact-toggle" type="button" aria-expanded="false">
+        联系我
+      </button>
+      <div class="contact-popover" hidden>
+        <div class="contact-popover-list">
+          <a class="contact-popover-item" href="mailto:ginaxiaowei@gmail.com">
+            <span class="contact-popover-icon" aria-hidden="true">@</span>
+            <span class="contact-popover-copy">
+              <strong>邮箱</strong>
+              <span>ginaxiaowei@gmail.com</span>
+            </span>
+          </a>
+          <a class="contact-popover-item" href="tel:15600132844">
+            <span class="contact-popover-icon" aria-hidden="true">TEL</span>
+            <span class="contact-popover-copy">
+              <strong>电话</strong>
+              <span>15600132844</span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+    
+        </nav>
+      </div>
+    </header>
+    
+  
+
+    <main class="case-shell zhihu-social-shell">
+      <aside class="zhihu-social-rail reveal is-visible" aria-label="章节导航">
+        <div class="zhihu-social-outline case-outline" data-outline-nav>
+          <span class="zhihu-case-outline-line case-outline-line" data-outline-line aria-hidden="true">
+            <span class="zhihu-case-outline-indicator case-outline-indicator" data-outline-indicator></span>
+          </span>
+          <div class="zhihu-social-outline-content">
+            <a href="#social-overview" class="zhihu-social-outline-link">设计概述</a><a href="#interaction-essence" class="zhihu-social-outline-link">互动的本质</a><a href="#interaction-problem" class="zhihu-social-outline-link">定义问题</a><a href="#interaction-plan" class="zhihu-social-outline-link">方案尝试</a><a href="#interaction-data-conclusion" class="zhihu-social-outline-link">数据结论</a><a href="#interaction-validation" class="zhihu-social-outline-link">用户质疑</a><a href="#interaction-final-decision" class="zhihu-social-outline-link">最终决策</a><a href="#interaction-componentization" class="zhihu-social-outline-link">设计组件化</a>
+          </div>
+        </div>
+      </aside>
+
+      <div class="zhihu-social-main">
+        <section class="zhihu-social-hero reveal is-visible" id="social-overview">
+          <div class="zhihu-social-hero-head">
+            <img class="zhihu-social-brand" src="/assets/zhicon_brand_zhihu_logo.svg" alt="知乎 Logo" />
+            <h1 class="zhihu-social-title">知乎互动 bar 改版</h1>
+          </div>
+
+          <div class="zhihu-social-meta">
+            <div>
+              <span>我的角色</span>
+              <strong>产品设计 Owner</strong>
+            </div>
+            <div>
+              <span>项目时间</span>
+              <strong>2024 年</strong>
+            </div>
+          </div>
+
+          <div class="zhihu-social-divider" aria-hidden="true"></div>
+          <h2 class="zhihu-social-subtitle">设计概述</h2>
+          <h2 class="zhihu-social-diagnosis-title" id="interaction-intro-title">在「提升互动率」与「用户表达」之间的设计决策</h2>
+          
+                <div class="interaction-revamp-tag-row" aria-label="项目标签">
+                  <span class="interaction-revamp-tag interaction-revamp-tag--green">目标：提升互动率、统一互动结构</span>
+                  <span class="interaction-revamp-tag interaction-revamp-tag--blue">场景：知乎回答 / 文章 / 想法详情页</span>
+                </div>
+                <p class="zhihu-social-copy">在提升整体互动率、支撑多内容形态统一分发的目标下，我重新梳理了知乎互动结构，通过多轮设计探索与实验，在增长目标与社区表达文化之间通过设计做出决策，并将互动能力沉淀为可复用的组件体系。</p>
+              
+          
+                <div class="zhihu-social-image-placeholder interaction-revamp-compare-board--spaced">
+                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/zhihu-social-interaction-bar-4x.png?v=20260504-1449" alt="互动 bar 改版前后对比图" loading="lazy" />
+                </div>
+                <div class="zhihu-social-diagnosis-head interaction-revamp-subtitle-block" id="interaction-essence">
+                  <p class="zhihu-social-diagnosis-label">互动的本质</p>
+                  <h2 class="zhihu-social-diagnosis-title">不仅是点击行为，而是内容的一部分</h2>
+                </div>
+                <h3 class="zhilink-third-title">互动 bar 的作用</h3>
+                <div class="zhilink-third-copy">
+                  <p>互动设计，本质是在定义用户如何参与内容</p>
+                </div>
+                <div class="interaction-revamp-role-cards" aria-label="互动 bar 的作用">
+                  <article class="interaction-revamp-role-card">
+                    <p class="interaction-revamp-role-label">表达观点</p>
+                  </article>
+                  <article class="interaction-revamp-role-card">
+                    <p class="interaction-revamp-role-label">影响内容排序</p>
+                  </article>
+                  <article class="interaction-revamp-role-card">
+                    <p class="interaction-revamp-role-label">构成讨论关系（赞同 / 反对）</p>
+                  </article>
+                </div>
+                <h3 class="zhilink-third-title">改版目标</h3>
+                <div class="zhilink-third-copy">
+                  <p>互动设计，本质是在定义用户如何参与内容</p>
+                </div>
+                <div class="interaction-revamp-goal-cards" aria-label="改版目标卡片">
+                  <article class="interaction-revamp-goal-card interaction-revamp-goal-card--first">
+                    <p class="interaction-revamp-goal-label">目标1</p>
+                    <p class="interaction-revamp-goal-main">提升整体互动率</p>
+                    <p class="interaction-revamp-goal-sub">以“赞同”为核心</p>
+                  </article>
+                  <article class="interaction-revamp-goal-card interaction-revamp-goal-card--second">
+                    <p class="interaction-revamp-goal-label">目标2</p>
+                    <p class="interaction-revamp-goal-main">统一互动方式</p>
+                    <p class="interaction-revamp-goal-sub">短容器流将混推：想法 / 回答 / 文章</p>
+                  </article>
+                </div>
+                <div class="zhihu-social-image-placeholder interaction-revamp-goal-image">
+                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/1.png?v=20260507-1854" alt="改版目标配图 1" loading="lazy" />
+                </div>
+                <div class="zhihu-social-diagnosis-head zhihu-social-diagnosis-head--after-image" id="interaction-problem">
+                  <p class="zhihu-social-diagnosis-label">定义问题</p>
+                  <h2 class="zhihu-social-diagnosis-title">用户表达有门槛</h2>
+                </div>
+                <div class="zhihu-social-image-placeholder interaction-revamp-image-plain">
+                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/2.png" alt="定义问题配图 2" loading="lazy" />
+                </div>
+                <div class="zhihu-social-diagnosis-head zhihu-social-diagnosis-head--after-image" id="interaction-plan">
+                  <p class="zhihu-social-diagnosis-label">方案尝试</p>
+                  <h2 class="zhihu-social-diagnosis-title">从降低门槛到重新定义互动表达方式</h2>
+                </div>
+                <h3 class="zhilink-third-title">方向 1 ：互动类型多，是否减少互动类型</h3>
+                <div class="zhilink-third-copy">
+                  <p>赞同与喜欢在“表达支持”上存在重叠，尝试是否可以取其一 or 合并，反对收起</p>
+                </div>
+                <div class="zhihu-social-image-placeholder interaction-revamp-image-plain">
+                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/hudong6.png?v=20260508-2204" alt="方向1方案配图 3" loading="lazy" />
+                </div>
+                <div class="zhihu-social-image-placeholder interaction-revamp-image-plain">
+                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/hudong4.png?v=20260508-2144" alt="方向1方案配图 4" loading="lazy" />
+                </div>
+                <div class="zhihu-social-image-placeholder interaction-revamp-image-plain">
+                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/hudong5.png?v=20260508-2144" alt="方向1方案配图 5" loading="lazy" />
+                </div>
+                <section class="interaction-revamp-decision-module interaction-revamp-decision-module--analysis" aria-label="方案决策分析模块">
+                  <h3 class="interaction-revamp-decision-title">设计方案决策</h3>
+                  <div class="interaction-revamp-decision-table" aria-label="方案决策分析表格">
+                    <div class="interaction-revamp-decision-table-header">
+                      <span>方案</span>
+                      <span>使用门槛</span>
+                      <span>内容适配性-回答/文章</span>
+                      <span>内容适配性-想法</span>
+                      <span>核心问题</span>
+                    </div>
+                    <div class="interaction-revamp-decision-table-body">
+                      <div class="interaction-revamp-decision-table-row">
+                        <div class="interaction-revamp-decision-table-cell interaction-revamp-decision-table-cell--plan">
+                          <span class="interaction-revamp-decision-plan-badge">A</span>
+                          <span>以「赞同」为主互动</span>
+                        </div>
+                        <div class="interaction-revamp-decision-table-cell">中：用户更谨慎</div>
+                        <div class="interaction-revamp-decision-table-cell">中：适合观点表达</div>
+                        <div class="interaction-revamp-decision-table-cell">低：对轻内容偏重</div>
+                        <div class="interaction-revamp-decision-table-cell interaction-revamp-decision-table-cell--warning">
+                          <p>表达门槛较高</p>
+                          <p>对轻内容场景不友好</p>
+                        </div>
+                      </div>
+                      <div class="interaction-revamp-decision-table-row">
+                        <div class="interaction-revamp-decision-table-cell interaction-revamp-decision-table-cell--plan">
+                          <span class="interaction-revamp-decision-plan-badge">B</span>
+                          <span>以「喜欢」为主互动</span>
+                        </div>
+                        <div class="interaction-revamp-decision-table-cell">低：点击成本低</div>
+                        <div class="interaction-revamp-decision-table-cell">低：难承载观点表达</div>
+                        <div class="interaction-revamp-decision-table-cell">高：适合轻表达</div>
+                        <div class="interaction-revamp-decision-table-cell interaction-revamp-decision-table-cell--warning">表达能力不足，无法统一</div>
+                      </div>
+                      <div class="interaction-revamp-decision-table-row">
+                        <div class="interaction-revamp-decision-table-cell interaction-revamp-decision-table-cell--plan">
+                          <span class="interaction-revamp-decision-plan-badge">C</span>
+                          <span>以「赞同+喜欢」为主互动</span>
+                        </div>
+                        <div class="interaction-revamp-decision-table-cell">高：需重新理解</div>
+                        <div class="interaction-revamp-decision-table-cell">低：语义不清</div>
+                        <div class="interaction-revamp-decision-table-cell">低：认知复杂</div>
+                        <div class="interaction-revamp-decision-table-cell interaction-revamp-decision-table-cell--warning">表达边界模糊，增加理解成本</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="interaction-revamp-decision-note">
+                    <span class="interaction-revamp-decision-note-line" aria-hidden="true"></span>
+                    <div class="interaction-revamp-decision-note-text">
+                      <p class="interaction-revamp-decision-note-heading">在多目标冲突下做决策</p>
+                      <p>在这一阶段我发现，不同内容类型确实存在更适合的表达方式：「赞同」更适合回答/文章，「喜欢」更适合想法。<br />但如果继续维持这种差异，在未来统一分发的场景下，用户将始终面对不一致的表达方式。</p>
+                      <p class="interaction-revamp-decision-note-heading interaction-revamp-decision-note-heading--conclusion">结论与下一步：</p>
+                      <p>局部最优 ≠ 整体最优<br />因此我选择优先保证表达方式的一致性，而不是每个内容类型的局部最优。<br />下一步尝试在表达一致性的前提下，进一步降低使用门槛。</p>
+                    </div>
+                  </div>
+                </section>
+                <h3 class="zhilink-third-title">方向 2 ：降低使用门槛</h3>
+                <div class="zhilink-third-copy">
+                  <p>赞同与喜欢在“表达支持”上存在重叠，尝试是否可以取其一 or 合并，反对收起</p>
+                </div>
+                <div class="zhihu-social-image-placeholder interaction-revamp-image-pair">
+                  <div class="interaction-revamp-image-pair-grid">
+                    <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/hudong6.png?v=20260508-2221" alt="方向2方案配图 6" loading="lazy" />
+                    <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/hudong7.png?v=20260508-2221" alt="方向2方案配图 7" loading="lazy" />
+                  </div>
+                </div>
+                <div class="zhihu-social-image-placeholder interaction-revamp-image-plain">
+                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/hudong8.png?v=20260508-2254" alt="方向2方案配图 8" loading="lazy" />
+                </div>
+                <section class="interaction-revamp-decision-module" aria-label="方案决策分析模块">
+                  <div class="interaction-revamp-decision-note">
+                    <span class="interaction-revamp-decision-note-line" aria-hidden="true"></span>
+                    <div class="interaction-revamp-decision-note-text interaction-revamp-decision-note-text--analysis">
+                      <p class="interaction-revamp-decision-note-heading">方案决策</p>
+                      <p>A1 通过「赞/踩」替代「赞同/反对」，并收拢喜欢等次要互动，降低主区选择成本，但在想法场景中“反对”不适配，同时关注入口仍存在误触问题，本质仍是局部优化。</p>
+                      <p>A2 则从整体表达方式出发重构互动结构：收拢次要互动、强化主互动入口，并统一不同内容的表达路径，在降低决策成本的同时，带动了赞同、关注与分享的整体提升。</p>
+                      <p class="interaction-revamp-decision-note-heading interaction-revamp-decision-note-heading--conclusion">结论与下一步：</p>
+                      <ul class="interaction-revamp-decision-list">
+                        <li>最终选择 A2，并明确：以「赞同」为核心表达，构建主次分层的表达方式。</li>
+                        <li>B1 & B2 不冲突，一起小流量实验。</li>
+                        <li>同时开启实验验证「赞/踩 👍👎」的心理门槛低于「赞同/反对 △▽」。</li>
+                      </ul>
+                    </div>
+                  </div>
+                </section>
+                <div class="zhihu-social-diagnosis-head zhihu-social-diagnosis-head--after-image" id="interaction-data-conclusion">
+                  <p class="zhihu-social-diagnosis-label">数据表现</p>
+                  <h2 class="zhihu-social-diagnosis-title">在统一表达的前提下，「赞/踩」优于「赞同/反对」</h2>
+                </div>
+                <div class="zhihu-social-image-placeholder interaction-revamp-image-plain interaction-revamp-image-plain--80">
+                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/9.png" alt="数据结论配图 9" loading="lazy" />
+                </div>
+                <section class="interaction-revamp-data-module" aria-label="详细指标对比表">
+                  <header class="interaction-revamp-data-header">
+                    <h3>详细指标对比表</h3>
+                    <p>完整的互动指标变化率数据</p>
+                  </header>
+
+                  <div class="interaction-revamp-data-table-wrap">
+                    <table class="interaction-revamp-data-table">
+                      <thead>
+                        <tr>
+                          <th>指标</th>
+                          <th>实验 A</th>
+                          <th>实验 B</th>
+                          <th>差异</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="interaction-revamp-data-key">赞同量</td>
+                          <td><span class="is-pos">+6.36%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-up.svg?v=20260508-1055" alt="" aria-hidden="true" /></td>
+                          <td><span class="is-pos">+13.12%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-up.svg?v=20260508-1055" alt="" aria-hidden="true" /></td>
+                          <td class="is-pos">+6.76pp</td>
+                        </tr>
+                        <tr>
+                          <td class="interaction-revamp-data-key">收藏量</td>
+                          <td><span class="is-pos">+5.87%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-up.svg?v=20260508-1055" alt="" aria-hidden="true" /></td>
+                          <td><span class="is-pos">+4.42%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-up.svg?v=20260508-1055" alt="" aria-hidden="true" /></td>
+                          <td class="is-neg">-1.45pp</td>
+                        </tr>
+                        <tr>
+                          <td class="interaction-revamp-data-key">分享量</td>
+                          <td><span class="is-pos">+6.50%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-up.svg?v=20260508-1055" alt="" aria-hidden="true" /></td>
+                          <td><span class="is-pos">+7.53%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-up.svg?v=20260508-1055" alt="" aria-hidden="true" /></td>
+                          <td class="is-pos">+1.03pp</td>
+                        </tr>
+                        <tr>
+                          <td class="interaction-revamp-data-key">评论量</td>
+                          <td><span class="is-pos">+0.21%</span> <span class="interaction-revamp-data-badge interaction-revamp-data-badge--n">n</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-up.svg?v=20260508-1055" alt="" aria-hidden="true" /></td>
+                          <td><span class="is-pos">+3.96%</span> <span class="interaction-revamp-data-badge interaction-revamp-data-badge--n">n</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-up.svg?v=20260508-1055" alt="" aria-hidden="true" /></td>
+                          <td class="is-pos">+3.75pp</td>
+                        </tr>
+                        <tr>
+                          <td class="interaction-revamp-data-key">喜欢量</td>
+                          <td><span class="is-neg">-90.00%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-down.svg?v=20260508-1055" alt="" aria-hidden="true" /></td>
+                          <td><span class="is-neg">-90.00%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-down.svg?v=20260508-1055" alt="" aria-hidden="true" /></td>
+                          <td class="is-muted">+0.00pp</td>
+                        </tr>
+                        <tr>
+                          <td class="interaction-revamp-data-key">总互动量</td>
+                          <td><span class="is-neg">-5.10%</span> <span class="interaction-revamp-data-badge">s</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-down.svg?v=20260508-1055" alt="" aria-hidden="true" /></td>
+                          <td><span class="is-neg">-1.60%</span> <span class="interaction-revamp-data-badge interaction-revamp-data-badge--n">n</span> <img class="interaction-revamp-trend-icon" src="/assets/case-study/trend-down.svg?v=20260508-1055" alt="" aria-hidden="true" /></td>
+                          <td class="is-pos">+3.50pp</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div class="interaction-revamp-data-subtitle">「赞/赞同」数据的用户频次分布</div>
+
+                  <div class="interaction-revamp-data-table-wrap">
+                    <table class="interaction-revamp-data-table interaction-revamp-data-table--users">
+                      <thead>
+                        <tr>
+                          <th>用户类型</th>
+                          <th>实验 A</th>
+                          <th>实验 B</th>
+                          <th>差异</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="interaction-revamp-data-key">F3 用户</td>
+                          <td class="is-pos">+3.7%</td>
+                          <td class="is-pos">+2.4%</td>
+                          <td class="is-neg">-1.3pp</td>
+                        </tr>
+                        <tr>
+                          <td class="interaction-revamp-data-key">F2 用户</td>
+                          <td class="is-pos">+8.1%</td>
+                          <td class="is-pos">+7.5%</td>
+                          <td class="is-muted">-0.6pp</td>
+                        </tr>
+                        <tr>
+                          <td class="interaction-revamp-data-key">F1 用户</td>
+                          <td class="is-pos">+8.6%</td>
+                          <td class="is-pos">+12.0%</td>
+                          <td class="is-pos">+3.4pp</td>
+                        </tr>
+                        <tr>
+                          <td class="interaction-revamp-data-key">新用户</td>
+                          <td class="is-pos">+4.3%</td>
+                          <td class="is-pos">+19.4%</td>
+                          <td class="is-pos">+15.1pp</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </section>
+                <section class="interaction-revamp-kpi-module" aria-label="实验指标摘要模块">
+                  <div class="interaction-revamp-kpi-column">
+                    <article class="interaction-revamp-kpi-card">
+                      <div class="interaction-revamp-kpi-content">
+                        <p class="interaction-revamp-kpi-title">实验 A - 赞同量增长</p>
+                        <p class="interaction-revamp-kpi-value interaction-revamp-kpi-value--pos">+13.12%</p>
+                        <p class="interaction-revamp-kpi-meta">统计显著</p>
+                      </div>
+                      <span class="interaction-revamp-kpi-icon-wrap interaction-revamp-kpi-icon-wrap--blue">
+                        <img class="interaction-revamp-kpi-icon interaction-revamp-kpi-icon--lg" src="https://www.figma.com/api/mcp/asset/5e7d69c7-b96c-4f57-8dc5-1a234ff72d73" alt="" aria-hidden="true" />
+                      </span>
+                    </article>
+
+                    <article class="interaction-revamp-kpi-card">
+                      <div class="interaction-revamp-kpi-content">
+                        <p class="interaction-revamp-kpi-title">实验 A - 总互动量</p>
+                        <p class="interaction-revamp-kpi-value interaction-revamp-kpi-value--neg">-1.60%</p>
+                        <p class="interaction-revamp-kpi-meta">不显著</p>
+                      </div>
+                      <span class="interaction-revamp-kpi-icon-wrap interaction-revamp-kpi-icon-wrap--yellow">
+                        <img class="interaction-revamp-kpi-icon" src="https://www.figma.com/api/mcp/asset/f9386a77-49fb-4a94-9890-82b8e0597da8" alt="" aria-hidden="true" />
+                      </span>
+                    </article>
+
+                    <article class="interaction-revamp-kpi-card">
+                      <div class="interaction-revamp-kpi-content">
+                        <p class="interaction-revamp-kpi-title">实验 A - 折算赞同变化</p>
+                        <p class="interaction-revamp-kpi-value interaction-revamp-kpi-value--pos">+14.2万</p>
+                        <p class="interaction-revamp-kpi-meta">全量后赞同量</p>
+                      </div>
+                      <span class="interaction-revamp-kpi-icon-wrap interaction-revamp-kpi-icon-wrap--green">
+                        <img class="interaction-revamp-kpi-icon" src="https://www.figma.com/api/mcp/asset/fe06f935-3f76-475e-a7cc-d56c29e88571" alt="" aria-hidden="true" />
+                      </span>
+                    </article>
+                  </div>
+
+                  <div class="interaction-revamp-kpi-column">
+                    <article class="interaction-revamp-kpi-card">
+                      <div class="interaction-revamp-kpi-content">
+                        <p class="interaction-revamp-kpi-title">实验 B-赞同量增长</p>
+                        <p class="interaction-revamp-kpi-value interaction-revamp-kpi-value--pos">+6.36%</p>
+                        <p class="interaction-revamp-kpi-meta">统计显著</p>
+                      </div>
+                      <span class="interaction-revamp-kpi-icon-wrap interaction-revamp-kpi-icon-wrap--blue">
+                        <img class="interaction-revamp-kpi-icon interaction-revamp-kpi-icon--lg" src="https://www.figma.com/api/mcp/asset/2866859b-a925-48b2-b0e6-e16cc2db6059" alt="" aria-hidden="true" />
+                      </span>
+                    </article>
+
+                    <article class="interaction-revamp-kpi-card">
+                      <div class="interaction-revamp-kpi-content">
+                        <p class="interaction-revamp-kpi-title">实验 B - 总互动量</p>
+                        <p class="interaction-revamp-kpi-value interaction-revamp-kpi-value--neg">-5.10%</p>
+                        <p class="interaction-revamp-kpi-meta">统计显著</p>
+                      </div>
+                      <span class="interaction-revamp-kpi-icon-wrap interaction-revamp-kpi-icon-wrap--purple">
+                        <img class="interaction-revamp-kpi-icon" src="https://www.figma.com/api/mcp/asset/42c88524-9992-49ca-afec-0f2b70cd01b4" alt="" aria-hidden="true" />
+                      </span>
+                    </article>
+
+                    <article class="interaction-revamp-kpi-card">
+                      <div class="interaction-revamp-kpi-content">
+                        <p class="interaction-revamp-kpi-title">实验 B - 折算赞同变化</p>
+                        <p class="interaction-revamp-kpi-value interaction-revamp-kpi-value--neg">-15万</p>
+                        <p class="interaction-revamp-kpi-meta">全量后赞同量</p>
+                      </div>
+                      <span class="interaction-revamp-kpi-icon-wrap interaction-revamp-kpi-icon-wrap--red">
+                        <img class="interaction-revamp-kpi-icon" src="https://www.figma.com/api/mcp/asset/ad2f7156-ccdf-4750-999d-6c882d2ed7b2" alt="" aria-hidden="true" />
+                      </span>
+                    </article>
+                  </div>
+                </section>
+                <section class="interaction-revamp-decision-module interaction-revamp-decision-module--data-validation interaction-revamp-decision-module--final-data" aria-label="设计方案分析模块">
+                  <h3 class="interaction-revamp-decision-title interaction-revamp-decision-title--semibold">方案决策</h3>
+                  <div class="interaction-revamp-decision-note">
+                    <span class="interaction-revamp-decision-note-line" aria-hidden="true"></span>
+                    <div class="interaction-revamp-decision-note-text">
+                      <p class="interaction-revamp-decision-note-heading interaction-revamp-decision-note-heading--dark">数据结论</p>
+                      <ul class="interaction-revamp-decision-list interaction-revamp-decision-list--data-validation">
+                        <li>「赞/踩」显著提升表达量，折算后赞同量 <strong>+14.2w（vs 赞同/反对 -15w）</strong></li>
+                        <li>新用户与低频用户增长更明显</li>
+                        <li>分享、评论等互动同步提升</li>
+                      </ul>
+                      <p class="interaction-revamp-decision-note-heading interaction-revamp-decision-note-heading--serif">数据验证降低表达门槛，可以有效提升用户的表达参与度</p>
+                      <p class="interaction-revamp-decision-note-heading interaction-revamp-decision-note-heading--dark">下一步</p>
+                      <p class="interaction-revamp-decision-note-copy interaction-revamp-decision-note-copy--small">实验扩量继续观察</p>
+                    </div>
+                  </div>
+                </section>
+                <div class="zhihu-social-diagnosis-head zhihu-social-diagnosis-head--after-image" id="interaction-validation">
+                  <p class="zhihu-social-diagnosis-label">用户质疑</p>
+                  <h2 class="zhihu-social-diagnosis-title">实验扩量后，核心用户并不买账</h2>
+                </div>
+                <div class="zhihu-social-image-placeholder interaction-revamp-image-plain interaction-revamp-validation-image">
+                  <p class="interaction-revamp-validation-caption">当前扩量方案</p>
+                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/10.png" alt="用户验证配图 10" loading="lazy" />
+                </div>
+                <section class="interaction-revamp-feedback-module" aria-label="用户反馈总结模块">
+                  <p>我们累计收到 170条反馈</p>
+                  <p>用户明确表示：找不到反对按钮，赞≠赞同</p>
+                </section>
+                <section class="interaction-revamp-voice-module" aria-label="用户原声反馈模块">
+                  <article class="interaction-revamp-voice-column">
+                    <div class="interaction-revamp-voice-copy">
+                      <h3>用户原声—正向反馈</h3>
+                      <ul>
+                        <li>创作者并不反对改版本身，他们更关注的是：这次调整能否真正帮助内容涨粉、涨赞和提升传播效率。</li>
+                        <li>相比样式变化，他们更认可那些能提升关注转化、集中高价值互动、并降低用户表达顾虑的设计。</li>
+                      </ul>
+                    </div>
+                    <div class="interaction-revamp-voice-image">
+                      <img class="interaction-revamp-voice-image-img" src="/assets/case-study/11.png" alt="用户原声正向反馈配图 11" loading="lazy" />
+                    </div>
+                  </article>
+                  <article class="interaction-revamp-voice-column">
+                    <div class="interaction-revamp-voice-copy">
+                      <h3>用户原声—负向反馈</h3>
+                      <ul>
+                        <li>赞同不是赞，是理解和认同，是一种更深的表达，现在这种感觉没了，赞同的“含金量”被稀释了。</li>
+                        <li>用户开始质疑平台在限制表达。</li>
+                        <li>赞同与反对被拆分，表达结构被破坏。</li>
+                      </ul>
+                    </div>
+                    <div class="interaction-revamp-voice-image">
+                      <img class="interaction-revamp-voice-image-img" src="/assets/case-study/12.png" alt="用户原声负向反馈配图 12" loading="lazy" />
+                    </div>
+                  </article>
+                </section>
+                <section class="interaction-revamp-negative-data-module" aria-label="用户负反馈数据模块">
+                  <div class="interaction-revamp-negative-data-copy">
+                    <h3>用户负反馈数据</h3>
+                    <ul>
+                      <li>负反馈用户画像特征：互动率高、活跃频率高、创建账号时间长</li>
+                      <li>被影响的不是普通用户，而是<strong>最依赖表达能力的核心用户</strong></li>
+                    </ul>
+                  </div>
+                  <div class="interaction-revamp-negative-data-cards">
+                    <article class="interaction-revamp-negative-data-card">
+                      <p class="interaction-revamp-negative-data-label">170 条反馈中提到反对按钮</p>
+                      <p class="interaction-revamp-negative-data-value interaction-revamp-negative-data-value--pos">26.1%</p>
+                    </article>
+                    <article class="interaction-revamp-negative-data-card">
+                      <p class="interaction-revamp-negative-data-label">F3 频次</p>
+                      <p class="interaction-revamp-negative-data-value">79.22%</p>
+                    </article>
+                    <article class="interaction-revamp-negative-data-card">
+                      <p class="interaction-revamp-negative-data-label">创建账号2年以上</p>
+                      <p class="interaction-revamp-negative-data-value">93.42%</p>
+                    </article>
+                    <article class="interaction-revamp-negative-data-card">
+                      <p class="interaction-revamp-negative-data-label">这些用户的互动率是大盘的</p>
+                      <p class="interaction-revamp-negative-data-value">14 <span>倍</span></p>
+                    </article>
+                  </div>
+                </section>
+                <div class="zhihu-social-diagnosis-head zhihu-social-diagnosis-head--after-image" id="interaction-final-decision">
+                  <p class="zhihu-social-diagnosis-label">最终决策</p>
+                  <h2 class="zhihu-social-diagnosis-title">在增长与表达之间，我们选择保证用户表达的完整性与准确性</h2>
+                </div>
+                <div class="zhihu-social-image-placeholder interaction-revamp-image-plain interaction-revamp-image-plain--with-copy">
+                  <div class="interaction-revamp-image-copy">
+                    <p>回答/文章外露「反对」，想法不支持反对</p>
+                    <p>以「赞同」为主互动</p>
+                  </div>
+                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/13.png" alt="最终决策配图 13" loading="lazy" />
+                </div>
+                <section class="interaction-revamp-decision-module interaction-revamp-decision-module--data-validation" aria-label="设计方案分析模块">
+                  <h3 class="interaction-revamp-decision-title interaction-revamp-decision-title--semibold">反对外露最终数据</h3>
+                  <div class="interaction-revamp-decision-note">
+                    <span class="interaction-revamp-decision-note-line" aria-hidden="true"></span>
+                    <div class="interaction-revamp-decision-note-text">
+                      <p class="interaction-revamp-decision-note-heading interaction-revamp-decision-note-heading--dark">反对外露后</p>
+                      <ul class="interaction-revamp-decision-list interaction-revamp-decision-list--data-validation">
+                        <li>反对行为大幅增长（+133.39%）</li>
+                        <li>赞同仅小幅下降（-2.21%）</li>
+                        <li>整体消费与分发无显著影响</li>
+                      </ul>
+                      <p class="interaction-revamp-decision-note-heading interaction-revamp-decision-note-heading--dark interaction-revamp-final-conclusion-heading" style="margin-top: 20px;">结论</p>
+                      <p class="interaction-revamp-decision-note-copy interaction-revamp-decision-note-copy--small">反对行为大幅增长，而整体消费未受影响，<br />说明用户表达被恢复，且未以整体效率为代价</p>
+                      <p class="interaction-revamp-decision-note-heading interaction-revamp-decision-note-heading--serif interaction-revamp-final-proof-line">这验证了：反对并非负向噪音，而是必要表达</p>
+                    </div>
+                  </div>
+                </section>
+                <div class="zhihu-social-diagnosis-head zhihu-social-diagnosis-head--after-image" id="interaction-componentization">
+                  <p class="zhihu-social-diagnosis-label">组件化沉淀</p>
+                  <h2 class="zhihu-social-diagnosis-title">把互动 bar 沉淀为可复用的产品能力</h2>
+                </div>
+                <h3 class="zhilink-third-title">背景&问题</h3>
+                <div class="zhilink-third-copy">
+                  <p>在互动 bar 改版过程中，我们同时耦合了短容器与多端迭代：<br /><br />- 多版本实验并行（不同交互方案）<br />- 多端差异（iOS / Android / Hybrid）<br />- 多研发与不同技术实现<br /><br />导致设计侧 & 研发侧做了大量的重复工作</p>
+                </div>
+                <h3 class="zhilink-third-title">设计思路</h3>
+                <div class="zhilink-third-copy">
+                  <p>将互动 bar 从“页面设计”，抽象为“可配置的业务组件”</p>
+                </div>
+                <section class="interaction-revamp-module-split interaction-revamp-module-split--a">
+                  <h3>A-模块拆分</h3>
+                  <ul>
+                    <li>插件区：承载关注 / 评论 / 商业能力</li>
+                    <li>互动区：承载赞同 / 反对 / 收藏 / 评论/分享</li>
+                  </ul>
+                </section>
+                <div class="zhihu-social-image-placeholder interaction-revamp-image-plain">
+                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/14.png" alt="模块拆分配图 14" loading="lazy" />
+                </div>
+                <section class="interaction-revamp-module-split interaction-revamp-module-split--bc">
+                  <h3>B-能力抽象</h3>
+                  <div class="interaction-revamp-module-split-copy">
+                    <p>定义组件的可配置能力：</p>
+                    <ul>
+                      <li>组件形态：可切换不同的组件（简版 & plus 版）</li>
+                      <li>表达方式：图标支持可替换</li>
+                      <li>交互反馈：支持 toast / 动效统一</li>
+                      <li>功能扩展：支持关注、商业、评论等接入</li>
+                    </ul>
+                  </div>
+                </section>
+                <section class="interaction-revamp-module-split interaction-revamp-module-split--bc">
+                  <h3>C-布局与适配</h3>
+                </section>
+                <div class="zhihu-social-image-placeholder interaction-revamp-image-plain interaction-revamp-image-plain--80">
+                  <img class="zhihu-social-image-placeholder-img" src="/assets/case-study/15.png" alt="布局与适配配图 15" loading="lazy" />
+                </div>
+                <p class="interaction-revamp-pdf-note">查看完整组件文档请点击 👉 <a class="interaction-revamp-pdf-note-link" href="#" aria-label="查看完整组件文档 PDF">PDF 文档</a></p>
+                <h3 class="zhilink-third-title">组件化价值 & 个人贡献</h3>
+                <section class="interaction-revamp-decision-module interaction-revamp-decision-module--contribution" aria-label="组件化价值与个人贡献模块">
+                  <div class="interaction-revamp-decision-note">
+                    <span class="interaction-revamp-decision-note-line" aria-hidden="true"></span>
+                    <div class="interaction-revamp-decision-note-text interaction-revamp-decision-note-text--contribution">
+                      <div class="interaction-revamp-contribution-block">
+                        <p class="interaction-revamp-decision-note-heading">组件化价值</p>
+                        <ul class="interaction-revamp-decision-list interaction-revamp-contribution-list">
+                          <li>多内容场景（回答 / 想法 / 短容器）统一复用</li>
+                          <li>多端实现一致，显著降低沟通与实现成本</li>
+                          <li>实验方案可快速切换，提高验证效率</li>
+                          <li>商业与关注能力灵活接入，直接带来业务增长</li>
+                        </ul>
+                      </div>
+                      <div class="interaction-revamp-contribution-block">
+                        <p class="interaction-revamp-decision-note-heading">我的关键贡献</p>
+                        <p class="interaction-revamp-contribution-subtitle">项目把控</p>
+                        <ul class="interaction-revamp-decision-list interaction-revamp-contribution-list">
+                          <li>梳理多版本方案与节奏，确保复杂改版稳定推进</li>
+                        </ul>
+                        <p class="interaction-revamp-contribution-subtitle">风险预判</p>
+                        <ul class="interaction-revamp-decision-list interaction-revamp-contribution-list">
+                          <li>识别多实验并行带来的体验与数据问题</li>
+                          <li>推动统一方案降低不确定性</li>
+                        </ul>
+                        <p class="interaction-revamp-contribution-subtitle">资源协调</p>
+                        <ul class="interaction-revamp-decision-list interaction-revamp-contribution-list">
+                          <li>在短容器资源受限下推进三端统一落地</li>
+                          <li>平衡效率与体验，保证最终效果</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+              
+        </section>
+
+        
+
+        
+
+      </div>
+    </main>
+
+    
+      
+    <footer class="portfolio-footer reveal" id="contact">
+      <div class="portfolio-footer-grid">
+        <div>
+          <p class="portfolio-footer-title">Designed and built by Xiaowei</p>
+        </div>
+        <div class="portfolio-footer-actions">
+          <div class="portfolio-footer-links">
+            <span class="portfolio-footer-item">
+              <a href="tel:15600132844">电话：15600132844</a>
+              <button class="portfolio-footer-copy-button" type="button" data-copy-text="15600132844">复制</button>
+            </span>
+            <span class="portfolio-footer-item">
+              <a href="mailto:ginaxiaowei@gmail.com">邮箱：ginaxiaowei@gmail.com</a>
+              <button class="portfolio-footer-copy-button" type="button" data-copy-text="ginaxiaowei@gmail.com">复制</button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </footer>
+    
+    
+  
+    
+    <script>
+      const cursor = document.querySelector(".cursor-dot");
+      const reveals = document.querySelectorAll(".reveal");
+      const outlines = Array.from(document.querySelectorAll("[data-outline-nav]"));
+
+      if (cursor && window.matchMedia("(pointer:fine)").matches) {
+        window.addEventListener("mousemove", (event) => {
+          cursor.style.transform = `translate(${event.clientX}px, ${event.clientY}px)`;
+          cursor.style.opacity = "1";
+        });
+
+        window.addEventListener("mouseout", () => {
+          cursor.style.opacity = "0";
+        });
+      }
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+            }
+          });
+        },
+        { threshold: 0.12 }
+      );
+
+      reveals.forEach((section) => observer.observe(section));
+
+      outlines.forEach((outline) => {
+        const line = outline.querySelector("[data-outline-line]");
+        const indicator = outline.querySelector("[data-outline-indicator]");
+        const links = Array.from(outline.querySelectorAll('a[href^="#"]'));
+        const sectionItems = links
+          .map((link) => {
+            const href = link.getAttribute("href");
+            if (!href || href === "#") {
+              return null;
+            }
+            const section = document.querySelector(href);
+            if (!section) {
+              return null;
+            }
+            return { link, section, href };
+          })
+          .filter(Boolean);
+        const itemByHref = new Map(sectionItems.map((item) => [item.href, item]));
+
+        if (!sectionItems.length) {
+          return;
+        }
+
+        const setActiveLink = (activeLink) => {
+          links.forEach((link) => {
+            link.classList.toggle("is-active", link === activeLink);
+          });
+
+          if (!line || !indicator || !activeLink) {
+            return;
+          }
+
+          const lineRect = line.getBoundingClientRect();
+          const linkRect = activeLink.getBoundingClientRect();
+          const top = Math.max(0, linkRect.top - lineRect.top);
+          const height = Math.max(1, linkRect.height);
+
+          indicator.style.transform = `translateY(${top}px)`;
+          indicator.style.height = `${height}px`;
+          indicator.style.opacity = "1";
+        };
+
+        const pickActiveByScroll = () => {
+          const anchorOffset = 160;
+          let current = sectionItems[0];
+
+          sectionItems.forEach((item) => {
+            const top = item.section.getBoundingClientRect().top;
+            if (top <= anchorOffset) {
+              current = item;
+            }
+          });
+
+          setActiveLink(current.link);
+        };
+
+        let ticking = false;
+        const onScrollOrResize = () => {
+          if (ticking) {
+            return;
+          }
+          ticking = true;
+          window.requestAnimationFrame(() => {
+            pickActiveByScroll();
+            ticking = false;
+          });
+        };
+
+        let scrollCorrectionTimer = null;
+        const resolveSectionTop = (section) => Math.max(0, window.scrollY + section.getBoundingClientRect().top - 140);
+        const scrollToSection = (section) => {
+          if (scrollCorrectionTimer) {
+            window.clearTimeout(scrollCorrectionTimer);
+            scrollCorrectionTimer = null;
+          }
+          // Click should land immediately at target.
+          window.scrollTo({ top: resolveSectionTop(section), behavior: "auto" });
+          // One-shot correction to counter layout shifts from lazy content.
+          scrollCorrectionTimer = window.setTimeout(() => {
+            window.scrollTo({ top: resolveSectionTop(section), behavior: "auto" });
+            scrollCorrectionTimer = null;
+          }, 180);
+        };
+
+        links.forEach((link) => {
+          link.addEventListener("click", (event) => {
+            const href = link.getAttribute("href");
+            const item = href ? itemByHref.get(href) : null;
+            if (!item) {
+              return;
+            }
+            event.preventDefault();
+            setActiveLink(link);
+            scrollToSection(item.section);
+            if (window.history && typeof window.history.replaceState === "function") {
+              window.history.replaceState(null, "", href);
+            }
+          });
+        });
+
+        window.addEventListener("scroll", onScrollOrResize, { passive: true });
+        window.addEventListener("resize", onScrollOrResize);
+        pickActiveByScroll();
+      });
+
+      const viewSwitchers = Array.from(document.querySelectorAll("[data-view-switch]"));
+      viewSwitchers.forEach((switcher) => {
+        const module = switcher.closest("[data-view-module]");
+        if (!module) {
+          return;
+        }
+
+        const tabs = Array.from(switcher.querySelectorAll("[data-view-tab]"));
+        const panels = Array.from(module.querySelectorAll("[data-view-panel]"));
+        if (!tabs.length || !panels.length) {
+          return;
+        }
+        const isTestWallModule = module.classList.contains("zhihu-test-wall-body");
+        let autoplayTimer = null;
+        let isImageHovered = false;
+
+        const stopAutoplay = () => {
+          if (!autoplayTimer) {
+            return;
+          }
+          window.clearInterval(autoplayTimer);
+          autoplayTimer = null;
+        };
+
+        const startAutoplay = () => {
+          if (!isTestWallModule || tabs.length < 2 || autoplayTimer) {
+            return;
+          }
+          autoplayTimer = window.setInterval(() => {
+            if (isImageHovered) {
+              return;
+            }
+            const activeTab = tabs.find((tab) => tab.classList.contains("is-active")) || tabs[0];
+            const activeIndex = tabs.indexOf(activeTab);
+            const nextTab = tabs[(activeIndex + 1) % tabs.length];
+            const nextView = nextTab && nextTab.getAttribute("data-view-tab");
+            if (!nextView) {
+              return;
+            }
+            setActiveView(nextView, { animate: true });
+          }, 4000);
+        };
+
+        const setActiveView = (viewName, options = {}) => {
+          const { animate = true } = options;
+          const currentPanel = panels.find((panel) => panel.classList.contains("is-active"));
+          const nextPanel = panels.find((panel) => panel.getAttribute("data-view-panel") === viewName);
+          if (!nextPanel) {
+            return;
+          }
+
+          if (currentPanel === nextPanel) {
+            tabs.forEach((tab) => {
+              const isActive = tab.getAttribute("data-view-tab") === viewName;
+              tab.classList.toggle("is-active", isActive);
+              tab.setAttribute("aria-selected", isActive ? "true" : "false");
+            });
+            return;
+          }
+
+          tabs.forEach((tab) => {
+            const isActive = tab.getAttribute("data-view-tab") === viewName;
+            tab.classList.toggle("is-active", isActive);
+            tab.setAttribute("aria-selected", isActive ? "true" : "false");
+          });
+
+          if (!animate || !currentPanel) {
+            panels.forEach((panel) => {
+              const isActive = panel === nextPanel;
+              panel.classList.remove("is-entering-right", "is-leaving-left");
+              panel.classList.toggle("is-active", isActive);
+              panel.setAttribute("aria-hidden", isActive ? "false" : "true");
+            });
+            return;
+          }
+
+          panels.forEach((panel) => {
+            if (panel !== currentPanel && panel !== nextPanel) {
+              panel.classList.remove("is-active", "is-entering-right", "is-leaving-left");
+              panel.setAttribute("aria-hidden", "true");
+            }
+          });
+
+          currentPanel.classList.remove("is-entering-right");
+          currentPanel.classList.add("is-leaving-left");
+          currentPanel.setAttribute("aria-hidden", "false");
+
+          nextPanel.classList.remove("is-leaving-left");
+          nextPanel.classList.add("is-active", "is-entering-right");
+          nextPanel.setAttribute("aria-hidden", "false");
+
+          // Force reflow so entering state is applied before transition.
+          void nextPanel.offsetWidth;
+          nextPanel.classList.remove("is-entering-right");
+
+          const finishTransition = () => {
+            currentPanel.classList.remove("is-active", "is-leaving-left");
+            currentPanel.setAttribute("aria-hidden", "true");
+            nextPanel.classList.remove("is-entering-right");
+          };
+
+          let finished = false;
+          const handleTransitionEnd = (event) => {
+            if (event.target !== nextPanel || event.propertyName !== "transform" || finished) {
+              return;
+            }
+            finished = true;
+            nextPanel.removeEventListener("transitionend", handleTransitionEnd);
+            finishTransition();
+          };
+
+          nextPanel.addEventListener("transitionend", handleTransitionEnd);
+          window.setTimeout(() => {
+            if (finished) {
+              return;
+            }
+            finished = true;
+            nextPanel.removeEventListener("transitionend", handleTransitionEnd);
+            finishTransition();
+          }, 420);
+        };
+
+        tabs.forEach((tab) => {
+          tab.addEventListener("click", () => {
+            const nextView = tab.getAttribute("data-view-tab");
+            if (!nextView) {
+              return;
+            }
+            setActiveView(nextView, { animate: true });
+            if (isTestWallModule) {
+              stopAutoplay();
+              startAutoplay();
+            }
+          });
+        });
+
+        const defaultTab = tabs.find((tab) => tab.classList.contains("is-active")) || tabs[0];
+        const defaultView = defaultTab.getAttribute("data-view-tab");
+        if (defaultView) {
+          setActiveView(defaultView, { animate: false });
+        }
+
+        if (isTestWallModule) {
+          const hoverTargets = Array.from(module.querySelectorAll(".zhihu-test-wall-image-panel, .zhihu-test-wall-image"));
+          hoverTargets.forEach((target) => {
+            target.addEventListener("mouseenter", () => {
+              isImageHovered = true;
+              stopAutoplay();
+            });
+            target.addEventListener("mouseleave", () => {
+              isImageHovered = false;
+              startAutoplay();
+            });
+          });
+          startAutoplay();
+        }
+      });
+
+      const socialPlanModules = Array.from(document.querySelectorAll("[data-social-plan-module]"));
+      socialPlanModules.forEach((module) => {
+        const tabs = Array.from(module.querySelectorAll("[data-social-plan-tab]"));
+        const slides = Array.from(module.querySelectorAll("[data-social-plan-slide]"));
+        const track = module.querySelector(".zhihu-social-carousel-track");
+        if (!tabs.length || !slides.length || !(track instanceof HTMLElement)) {
+          return;
+        }
+
+        const slideKeys = slides.map((slide) => slide.getAttribute("data-social-plan-slide"));
+        const interval = 3000;
+        let currentIndex = 0;
+        let timer = null;
+
+        const setActive = (key) => {
+          const nextIndex = slideKeys.indexOf(key);
+          if (nextIndex < 0) {
+            return;
+          }
+          currentIndex = nextIndex;
+          tabs.forEach((tab) => {
+            const isActive = tab.getAttribute("data-social-plan-tab") === key;
+            tab.classList.toggle("is-active", isActive);
+            tab.setAttribute("aria-selected", isActive ? "true" : "false");
+          });
+          slides.forEach((slide) => {
+            slide.classList.toggle("is-active", slide.getAttribute("data-social-plan-slide") === key);
+          });
+          track.style.transform = "translateX(-" + nextIndex * 100 + "%)";
+        };
+
+        const start = () => {
+          if (timer || slides.length < 2) {
+            return;
+          }
+          timer = window.setInterval(() => {
+            currentIndex = (currentIndex + 1) % slides.length;
+            setActive(slideKeys[currentIndex]);
+          }, interval);
+        };
+
+        const stop = () => {
+          if (!timer) {
+            return;
+          }
+          window.clearInterval(timer);
+          timer = null;
+        };
+
+        tabs.forEach((tab) => {
+          tab.addEventListener("click", () => {
+            const key = tab.getAttribute("data-social-plan-tab");
+            if (!key) {
+              return;
+            }
+            setActive(key);
+            stop();
+            start();
+          });
+        });
+
+        module.addEventListener("mouseenter", stop);
+        module.addEventListener("mouseleave", start);
+
+        const defaultTab = tabs.find((tab) => tab.classList.contains("is-active")) || tabs[0];
+        const defaultKey = defaultTab ? defaultTab.getAttribute("data-social-plan-tab") : null;
+        if (defaultKey) {
+          setActive(defaultKey);
+        }
+        start();
+      });
+
+      const zoomableImages = Array.from(document.querySelectorAll("img")).filter((image) => {
+        return !image.classList.contains("image-zoom-modal-image") && !image.closest(".image-zoom-modal");
+      });
+      if (zoomableImages.length) {
+        const zoomModal = document.createElement("div");
+        zoomModal.className = "image-zoom-modal";
+        zoomModal.setAttribute("aria-hidden", "true");
+        zoomModal.innerHTML = `
+          <button class="image-zoom-backdrop" type="button" data-zoom-close aria-label="关闭放大图片"></button>
+          <div class="image-zoom-dialog" role="dialog" aria-modal="true" aria-label="图片预览">
+            <button class="image-zoom-nav image-zoom-nav--prev" type="button" data-zoom-nav="prev" aria-label="查看上一张">‹</button>
+            <button class="image-zoom-nav image-zoom-nav--next" type="button" data-zoom-nav="next" aria-label="查看下一张">›</button>
+            <img class="image-zoom-modal-image" alt="" />
+          </div>
+        `;
+        document.body.appendChild(zoomModal);
+
+        const zoomModalImage = zoomModal.querySelector(".image-zoom-modal-image");
+        const zoomPrevButton = zoomModal.querySelector('[data-zoom-nav="prev"]');
+        const zoomNextButton = zoomModal.querySelector('[data-zoom-nav="next"]');
+        let isModalOpen = false;
+        let openRequestId = 0;
+        let currentZoomIndex = 0;
+        let currentZoomGallery = [];
+        const zoomSourceCache = new Map();
+
+        const dedupeSources = (sources) => Array.from(new Set(sources.filter(Boolean)));
+
+        const splitImageSource = (rawSrc) => {
+          if (!rawSrc) {
+            return null;
+          }
+          const [pathPart, queryPart = ""] = rawSrc.split("?");
+          const querySuffix = queryPart ? "?" + queryPart : "";
+          const extMatch = pathPart.match(/(.[a-z0-9]+)$/i);
+          if (!extMatch) {
+            return null;
+          }
+          const ext = extMatch[1];
+          const stem = pathPart.slice(0, -ext.length);
+          const scaleMatch = stem.match(/^(.*?)(?:@(d+)x|-(d+)x)$/i);
+          const baseStem = scaleMatch ? scaleMatch[1] : stem;
+          return { ext, querySuffix, baseStem };
+        };
+
+        const buildHighResCandidates = (rawSrc) => {
+          const sourceParts = splitImageSource(rawSrc);
+          if (!sourceParts) {
+            return dedupeSources([rawSrc]);
+          }
+          const { ext, querySuffix, baseStem } = sourceParts;
+          return [
+            baseStem + "@5x" + ext + querySuffix,
+            baseStem + "-5x" + ext + querySuffix,
+            baseStem + "@4x" + ext + querySuffix,
+            baseStem + "-4x" + ext + querySuffix,
+            baseStem + "@3x" + ext + querySuffix,
+            baseStem + "-3x" + ext + querySuffix,
+            rawSrc
+          ];
+        };
+
+        const canLoadImage = (src) =>
+          new Promise((resolve) => {
+            const probe = new Image();
+            probe.onload = () => resolve(true);
+            probe.onerror = () => resolve(false);
+            probe.src = src;
+          });
+
+        const resolveZoomSource = async (image) => {
+          const explicitZoomSrc = image.dataset.zoomSrc;
+          const fallbackSrc = explicitZoomSrc || image.currentSrc || image.src;
+          if (zoomSourceCache.has(fallbackSrc)) {
+            return zoomSourceCache.get(fallbackSrc);
+          }
+          const candidates = dedupeSources(buildHighResCandidates(fallbackSrc));
+          for (const candidate of candidates) {
+            if (await canLoadImage(candidate)) {
+              zoomSourceCache.set(fallbackSrc, candidate);
+              return candidate;
+            }
+          }
+          zoomSourceCache.set(fallbackSrc, fallbackSrc);
+          return fallbackSrc;
+        };
+
+        const closeZoomModal = () => {
+          if (!isModalOpen) {
+            return;
+          }
+          zoomModal.classList.remove("is-open");
+          zoomModal.setAttribute("aria-hidden", "true");
+          document.body.style.overflow = "";
+          isModalOpen = false;
+        };
+
+        const getZoomGallery = (image) => {
+          const zoomGroup = image.dataset.zoomGroup;
+          if (!zoomGroup) {
+            return [image];
+          }
+          const sameGroup = zoomableImages.filter((candidate) => candidate.dataset.zoomGroup === zoomGroup);
+          if (sameGroup.length < 2) {
+            return [image];
+          }
+          return sameGroup
+            .slice()
+            .sort((a, b) => {
+              const aOrder = Number(a.dataset.zoomOrder || 0);
+              const bOrder = Number(b.dataset.zoomOrder || 0);
+              return aOrder - bOrder;
+            });
+        };
+
+        const updateZoomNavState = () => {
+          const canNavigate = currentZoomGallery.length > 1;
+          zoomModal.classList.toggle("has-zoom-nav", canNavigate);
+          if (!canNavigate) {
+            return;
+          }
+          const prevImage = currentZoomGallery[(currentZoomIndex - 1 + currentZoomGallery.length) % currentZoomGallery.length];
+          const nextImage = currentZoomGallery[(currentZoomIndex + 1) % currentZoomGallery.length];
+          const prevLabel = prevImage && prevImage.dataset.zoomView === "interaction" ? "交互图" : prevImage && prevImage.dataset.zoomView === "ui" ? "UI图" : "上一张";
+          const nextLabel = nextImage && nextImage.dataset.zoomView === "interaction" ? "交互图" : nextImage && nextImage.dataset.zoomView === "ui" ? "UI图" : "下一张";
+          if (zoomPrevButton) {
+            zoomPrevButton.setAttribute("aria-label", "查看上一张（" + prevLabel + "）");
+          }
+          if (zoomNextButton) {
+            zoomNextButton.setAttribute("aria-label", "查看下一张（" + nextLabel + "）");
+          }
+        };
+
+        const openZoomModal = async (image, options = {}) => {
+          const { preserveGallery = false } = options;
+          if (!preserveGallery) {
+            currentZoomGallery = getZoomGallery(image);
+            currentZoomIndex = Math.max(0, currentZoomGallery.indexOf(image));
+          }
+          const requestId = ++openRequestId;
+          const fallbackSrc = image.dataset.zoomSrc || image.currentSrc || image.src;
+          zoomModalImage.src = fallbackSrc;
+          zoomModalImage.alt = image.alt || "放大图片";
+          updateZoomNavState();
+          zoomModal.classList.add("is-open");
+          zoomModal.setAttribute("aria-hidden", "false");
+          document.body.style.overflow = "hidden";
+          isModalOpen = true;
+          const resolvedSrc = await resolveZoomSource(image);
+          if (!isModalOpen || requestId !== openRequestId) {
+            return;
+          }
+          zoomModalImage.src = resolvedSrc;
+        };
+
+        const stepZoomImage = (step) => {
+          if (!isModalOpen || currentZoomGallery.length < 2) {
+            return;
+          }
+          const nextIndex = (currentZoomIndex + step + currentZoomGallery.length) % currentZoomGallery.length;
+          currentZoomIndex = nextIndex;
+          const nextImage = currentZoomGallery[nextIndex];
+          if (!nextImage) {
+            return;
+          }
+          openZoomModal(nextImage, { preserveGallery: true });
+        };
+
+        zoomableImages.forEach((image) => {
+          image.classList.add("js-zoomable-image");
+          image.tabIndex = 0;
+          image.addEventListener("click", () => openZoomModal(image));
+          image.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              openZoomModal(image);
+            }
+          });
+        });
+
+        zoomModal.addEventListener("click", (event) => {
+          const target = event.target;
+          if (!(target instanceof HTMLElement)) {
+            return;
+          }
+          if (target.closest("[data-zoom-close]")) {
+            closeZoomModal();
+            return;
+          }
+          const navButton = target.closest("[data-zoom-nav]");
+          if (navButton) {
+            const direction = navButton.getAttribute("data-zoom-nav");
+            stepZoomImage(direction === "prev" ? -1 : 1);
+          }
+        });
+
+        window.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") {
+            closeZoomModal();
+            return;
+          }
+          if (!isModalOpen) {
+            return;
+          }
+          if (event.key === "ArrowLeft") {
+            event.preventDefault();
+            stepZoomImage(-1);
+          } else if (event.key === "ArrowRight") {
+            event.preventDefault();
+            stepZoomImage(1);
+          }
+        });
+
+        const applyZhiLinkImageDensityLimit = () => {
+          const section = document.querySelector("#social-zhilink");
+          if (!section) {
+            return;
+          }
+          const dpr = Math.max(1, window.devicePixelRatio || 1);
+          const images = Array.from(section.querySelectorAll("img.zhihu-social-goal-image, .zhihu-social-profile-image img"));
+          images.forEach((img) => {
+            const naturalWidth = img.naturalWidth || 0;
+            if (!naturalWidth) {
+              return;
+            }
+            const limit = Math.floor(naturalWidth / dpr);
+            if (limit <= 0) {
+              return;
+            }
+            img.style.maxWidth = limit + "px";
+            img.style.width = "100%";
+            img.style.marginLeft = "auto";
+            img.style.marginRight = "auto";
+          });
+        };
+
+        applyZhiLinkImageDensityLimit();
+        window.addEventListener("resize", applyZhiLinkImageDensityLimit);
+      }
+    </script>
+  
+  <script>
+const openContactMenu = (menu) => {
+  const toggle = menu.querySelector(".nav-contact-toggle");
+  const popover = menu.querySelector(".contact-popover");
+  if (!toggle || !popover) return;
+  closeContactMenus(menu);
+  menu.classList.add("is-open");
+  toggle.setAttribute("aria-expanded", "true");
+  popover.hidden = false;
+};
+
+const closeContactMenu = (menu) => {
+  const toggle = menu.querySelector(".nav-contact-toggle");
+  const popover = menu.querySelector(".contact-popover");
+  if (!toggle || !popover) return;
+  menu.classList.remove("is-open");
+  toggle.setAttribute("aria-expanded", "false");
+  popover.hidden = true;
+};
+
+const closeContactMenus = (exceptMenu) => {
+  document.querySelectorAll("[data-contact-menu]").forEach((menu) => {
+    if (exceptMenu && menu === exceptMenu) return;
+    closeContactMenu(menu);
+  });
+};
+
+document.querySelectorAll("[data-contact-menu]").forEach((menu) => {
+  const toggle = menu.querySelector(".nav-contact-toggle");
+  const popover = menu.querySelector(".contact-popover");
+  if (!toggle || !popover) return;
+  toggle.addEventListener("click", (event) => {
+    event.preventDefault();
+    const isOpen = menu.classList.contains("is-open");
+    if (isOpen) {
+      closeContactMenu(menu);
+    } else {
+      openContactMenu(menu);
+    }
+  });
+  menu.addEventListener("mouseenter", () => {
+    openContactMenu(menu);
+  });
+  menu.addEventListener("mouseleave", () => {
+    closeContactMenu(menu);
+  });
+  menu.addEventListener("focusin", () => {
+    openContactMenu(menu);
+  });
+  menu.addEventListener("focusout", () => {
+    window.setTimeout(() => {
+      if (!menu.contains(document.activeElement)) {
+        closeContactMenu(menu);
+      }
+    }, 0);
+  });
+});
+
+document.addEventListener("click", (event) => {
+  if (!event.target.closest("[data-contact-menu]")) {
+    closeContactMenus();
+  }
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    closeContactMenus();
+  }
+});
+
+</script>
+
+<script>
+  document.querySelectorAll("[data-copy-text]").forEach((button) => {
+    if (button.dataset.copyBound === "true") return;
+    button.dataset.copyBound = "true";
+    const defaultLabel = button.textContent;
+    button.addEventListener("click", async () => {
+      const text = button.getAttribute("data-copy-text") || "";
+      if (!text) return;
+      try {
+        await navigator.clipboard.writeText(text);
+        button.textContent = "已复制";
+        button.classList.add("is-copied");
+        window.setTimeout(() => {
+          button.textContent = defaultLabel;
+          button.classList.remove("is-copied");
+        }, 1600);
+      } catch (error) {
+        button.textContent = "复制失败";
+        window.setTimeout(() => {
+          button.textContent = defaultLabel;
+        }, 1600);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
