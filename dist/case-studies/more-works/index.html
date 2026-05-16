@@ -2316,7 +2316,7 @@ button { font: inherit; }
       <section class="legacy-feature-grid">
         
         <a class="legacy-feature-card legacy-feature-card--link reveal" href="/work/air-oclock/">
-          <img src="/assets/case-study/air1.png" alt="空气时钟-翻页时钟小组件">
+          <img src="/assets/case-study/air1.png" alt="空气时钟-翻页时钟小组件" data-no-zoom>
           <div class="legacy-feature-copy">
             <h3>空气时钟-翻页时钟小组件</h3>
             <p>桌面时钟 &amp;数码时间显示</p>
@@ -2475,6 +2475,16 @@ document.querySelectorAll("[data-copy-text]").forEach((button) => {
 const homeIntroPlayButton = document.querySelector(".home-hero-intro-button");
 const homeIntroVideo = document.querySelector("#self-intro-video video");
 if (homeIntroPlayButton && homeIntroVideo) {
+  const homeIntroSpeed = 1.2;
+  const applyHomeIntroSpeed = () => {
+    homeIntroVideo.defaultPlaybackRate = homeIntroSpeed;
+    homeIntroVideo.playbackRate = homeIntroSpeed;
+  };
+  if (homeIntroVideo.readyState >= 1) {
+    applyHomeIntroSpeed();
+  } else {
+    homeIntroVideo.addEventListener("loadedmetadata", applyHomeIntroSpeed, { once: true });
+  }
   const homeIntroLabel = homeIntroPlayButton.querySelector(".home-hero-intro-label");
   const homeIntroIconPath = homeIntroPlayButton.querySelector(".home-hero-intro-icon-path");
   const playIconPath = "M8 6L18 12L8 18Z";

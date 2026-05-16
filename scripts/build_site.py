@@ -4190,12 +4190,12 @@ def personal_site_footer() -> str:
     return portfolio_footer()
 
 
-def personal_site_case_header() -> str:
+def personal_site_case_header(back_href: str = "/") -> str:
     nav = render_nav(CHINESE_NAV_ITEMS, None)
     return f"""
     <header class="topbar">
       <div class="topbar-inner">
-        <a href="/" class="brand brand--back">
+        <a href="{back_href}" class="brand brand--back">
           {back_brand_markup()}
         </a>
 
@@ -4213,6 +4213,7 @@ def personal_site_case_layout(
     body: str,
     body_class: str = "case-study-page case-study-page--zhihu-social",
     include_image_zoom: bool = True,
+    back_href: str = "/",
 ) -> str:
     zoom_style = f"<style>{IMAGE_ZOOM_MODAL_CSS}</style>" if include_image_zoom else ""
     zoom_script = IMAGE_ZOOM_SCRIPT if include_image_zoom else ""
@@ -4228,7 +4229,7 @@ def personal_site_case_layout(
   </head>
   <body class="{escape(body_class)}">
     <div class="cursor-dot" aria-hidden="true"></div>
-    {personal_site_case_header()}
+    {personal_site_case_header(back_href)}
     {body}
     {personal_site_footer()}
     {PERSONAL_SITE_CASE_INTERACTION_SCRIPT}
@@ -4259,6 +4260,7 @@ def page_shell(
     body_class: str = "",
     back_brand: bool = False,
     include_image_zoom: bool = False,
+    back_href: str = "/",
 ) -> str:
     items = nav_items or NAV_ITEMS
     nav = render_nav(items, active_href)
@@ -4314,7 +4316,7 @@ def page_shell(
     {nav_light_field}
     <header class="topbar">
       <div class="topbar-inner">
-        <a class="{brand_class}" href="/" aria-label="{brand_aria_label}">
+        <a class="{brand_class}" href="{back_href}" aria-label="{brand_aria_label}">
           {brand_markup}
         </a>
         <nav class="nav" aria-label="Primary">
@@ -4622,7 +4624,7 @@ def more_works_page() -> str:
         feature_cards_markup.append(
             f"""
         <{tag} class="legacy-feature-card{link_class} reveal"{href_attr}>
-          <img src="{item["media"]}" alt="{escape(item["title"])}">
+          <img src="{item["media"]}" alt="{escape(item["title"])}" data-no-zoom>
           <div class="legacy-feature-copy">
             <h3>{escape(item["title"])}</h3>
             <p>{escape(item["body"])}</p>
@@ -5036,6 +5038,7 @@ def air_clock_case_page() -> str:
         "空气时钟案例页，展示主题、桌面 widget、设置、付费与 App Store 页面设计。",
         body,
         body_class="case-study-page case-study-page--zhihu-social case-study-page--air-clock",
+        back_href="/case-studies/more-works/",
     )
 
 
@@ -5272,6 +5275,7 @@ def render_case_study_page(case: dict) -> str:
         body_class="cn-nav-page",
         back_brand=True,
         include_image_zoom=True,
+        back_href="/case-studies/more-works/",
     )
 
 
