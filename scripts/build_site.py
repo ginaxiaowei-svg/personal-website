@@ -4106,11 +4106,10 @@ def home_page() -> str:
       </div>
       <div class="hero-stage reveal">
         <iframe
-          src="https://www.youtube-nocookie.com/embed/wPW3jaMJVXU?rel=0&modestbranding=1"
+          src="https://player.bilibili.com/player.html?bvid=BV1DfL36xEXp&page=1&high_quality=1&danmaku=0"
           title="吕晓维自我介绍视频"
           loading="lazy"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
+          allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
           allowfullscreen></iframe>
       </div>
     </section>
