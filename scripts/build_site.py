@@ -957,7 +957,7 @@ button { font: inherit; }
   width: 80%;
   margin-left: auto;
   margin-right: auto;
-  aspect-ratio: 1.68 / 1;
+  aspect-ratio: 4 / 3;
   background: #111;
   border: 1px solid rgba(50, 64, 79, 0.08);
 }
@@ -4105,12 +4105,12 @@ def home_page() -> str:
         </div>
       </div>
       <div class="hero-stage reveal">
-        <iframe
-          src="https://player.bilibili.com/player.html?bvid=BV1DfL36xEXp&page=1&high_quality=1&danmaku=0"
-          title="吕晓维自我介绍视频"
-          loading="lazy"
-          allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-          allowfullscreen></iframe>
+        <video
+          src="/assets/custom/lvixaoweiVideo.mp4"
+          controls
+          playsinline
+          preload="metadata"
+          aria-label="吕晓维自我介绍视频"></video>
       </div>
     </section>
 
