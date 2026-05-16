@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>吕晓维 | 产品设计师</title>
   <meta name="description" content="User generated content products that encourage job seekers to share their work experiences on Indeed.">
-  <link rel="icon" href="/assets/custom/avatar.jpg">
-  <script>
+  <link rel="icon" href="/assets/custom/avatar-rounded.png">
+<script>
     if ("scrollRestoration" in history) {
       history.scrollRestoration = "manual";
     }
@@ -67,7 +67,7 @@ button { font: inherit; }
   position: sticky;
   top: 0;
   z-index: 20;
-  padding-top: 18px;
+  padding-top: clamp(12px, 2vw, 18px);
 }
 
 .topbar-inner {
@@ -75,8 +75,9 @@ button { font: inherit; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 18px;
-  padding: 10px 14px;
+  gap: clamp(8px, 1.4vw, 18px);
+  padding: clamp(8px, 1vw, 10px) clamp(8px, 1.4vw, 14px);
+  flex-wrap: nowrap;
   border: 1px solid rgba(255,255,255,0.5);
   background: rgba(255,255,255,0.62);
   -webkit-backdrop-filter: blur(22px) saturate(150%);
@@ -100,17 +101,18 @@ button { font: inherit; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: clamp(32px, 3.2vw, 40px);
+  height: clamp(32px, 3.2vw, 40px);
   border-radius: 999px;
   background: rgba(255,255,255,0.92);
   border: 1px solid rgba(52,69,86,0.05);
+  overflow: hidden;
 }
 
 .brand img {
   width: 100%;
   height: 100%;
-  border-radius: 999px;
+  border-radius: inherit;
   object-fit: cover;
   filter: brightness(1.04) contrast(1.06) saturate(1.08);
 }
@@ -128,8 +130,8 @@ button { font: inherit; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: clamp(32px, 3.2vw, 40px);
+  height: clamp(32px, 3.2vw, 40px);
   border-radius: 999px;
   color: rgba(50, 64, 79, 0.5);
   border: 1px solid rgba(50, 64, 79, 0.1);
@@ -145,7 +147,7 @@ button { font: inherit; }
 
 .back-label {
   font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
-  font-size: 14px;
+  font-size: clamp(12px, 1.1vw, 14px);
   color: rgba(50, 64, 79, 0.6);
   transition: color .25s ease, transform .25s ease;
 }
@@ -154,7 +156,7 @@ button { font: inherit; }
 .brand--back:focus-visible .back-icon {
   color: #32404F;
   border-color: rgba(50, 64, 79, 0.18);
-  transform: translateX(-2px);
+  transform: none;
 }
 
 .brand--back:hover .back-label,
@@ -165,9 +167,11 @@ button { font: inherit; }
 .nav {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
+  flex: 1 1 auto;
+  min-width: 0;
+  flex-wrap: nowrap;
+  gap: clamp(4px, 0.9vw, 10px);
+  justify-content: flex-end;
 }
 
 .nav a,
@@ -176,11 +180,18 @@ button { font: inherit; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 16px;
-  font-size: 12px;
+  min-height: clamp(32px, 3.2vw, 38px);
+  padding: clamp(7px, 0.9vw, 10px) clamp(8px, 1.5vw, 16px);
+  font-size: clamp(12px, 1.05vw, 14px);
   color: var(--muted);
   border-radius: 999px;
+  white-space: nowrap;
   transition: transform .25s ease, background-color .25s ease, color .25s ease;
+}
+
+.nav-contact {
+  position: relative;
+  flex: 0 0 auto;
 }
 
 .nav-contact-toggle {
@@ -197,11 +208,7 @@ button { font: inherit; }
 .nav-contact.is-open .nav-contact-toggle {
   color: #fff;
   background: #7b8493;
-  transform: translateY(-1px);
-}
-
-.nav-contact {
-  position: relative;
+  transform: none;
 }
 
 .contact-popover {
@@ -295,8 +302,17 @@ button { font: inherit; }
 }
 
 .cn-nav-page .topbar-inner {
-  border-color: rgba(255, 255, 255, 0.72);
-  background: rgba(255, 255, 255, 0.58);
+  border-color: rgba(255, 255, 255, 0.46);
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.24), rgba(244, 248, 255, 0.2), rgba(255, 253, 248, 0.2)),
+    rgba(255, 255, 255, 0.24);
+  -webkit-backdrop-filter: blur(20px) saturate(132%);
+  backdrop-filter: blur(20px) saturate(132%);
+  box-shadow: none;
+}
+
+.cn-nav-page .topbar-inner::before {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.04));
 }
 
 .cn-nav-page .nav {
@@ -734,7 +750,7 @@ button { font: inherit; }
 }
 
 .case-header {
-  padding-top: 42px;
+  padding-top: clamp(28px, 4vw, 42px);
 }
 
 .case-header-grid {
@@ -811,7 +827,7 @@ button { font: inherit; }
 
 .gallery .media-frame,
 .gallery .video-frame {
-  min-height: 280px;
+  min-height: clamp(220px, 30vw, 280px);
 }
 
 .gallery .media-frame img,
@@ -834,15 +850,175 @@ button { font: inherit; }
   --home-gap-20: 20px;
   --home-gap-12: 12px;
   font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+  position: relative;
+  min-height: 100vh;
+  isolation: isolate;
+  overflow-x: clip;
+}
+
+.home-light-field {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: min(980px, 88vh);
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 72%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 72%, transparent 100%);
+}
+
+.home-light-ribbon {
+  position: absolute;
+  left: 50%;
+  top: -9vh;
+  width: min(920px, 84vw);
+  height: clamp(126px, 22vh, 236px);
+  border-radius: 999px;
+  transform: translateX(-50%);
+  --color-1: rgba(107, 152, 226, 0.46);
+  --color-2: rgba(160, 136, 209, 0.4);
+  --color-3: rgba(128, 190, 219, 0.42);
+  --color-4: rgba(225, 192, 137, 0.28);
+  --color-5: rgba(132, 169, 221, 0.4);
+  background:
+    linear-gradient(90deg, var(--color-1), var(--color-5), var(--color-3), var(--color-4), var(--color-2)),
+    radial-gradient(ellipse at center, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0) 72%);
+  background-size: 220% 220%, 180% 180%;
+  background-position: 0% 50%, 50% 50%;
+  mix-blend-mode: lighten;
+  filter: blur(60px) saturate(102%);
+  opacity: 0.64;
+  animation:
+    homeRainbow 8s linear infinite,
+    homeRadial 12s linear infinite reverse,
+    homeRibbonFloat 6.8s ease-in-out infinite;
+  will-change: transform, opacity, background-position, background-size;
+}
+
+.home-light-ribbon::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -20%;
+  width: 62%;
+  height: 88%;
+  transform: translateX(-50%);
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--color-1), var(--color-5), var(--color-3), var(--color-4), var(--color-2));
+  background-size: 220% 100%;
+  mix-blend-mode: lighten;
+  filter: blur(18px);
+  opacity: 0.54;
+  animation: homeRainbow 6.6s linear infinite;
+}
+
+.home-light-noise {
+  position: absolute;
+  inset: -36%;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.home-light-noise--fine {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='164' height='164' viewBox='0 0 164 164'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.9' numOctaves='2' seed='9' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='164' height='164' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.45' numOctaves='1' seed='37' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 154px 154px, 118px 118px;
+  background-position: 0 0, 46px 26px;
+  background-blend-mode: soft-light, overlay;
+  mix-blend-mode: soft-light;
+  opacity: 0.024;
+  filter: contrast(106%);
+  animation:
+    homeNoiseJitter .62s steps(2, end) infinite,
+    homeNoiseOpacityPulse 4.8s ease-in-out infinite;
+}
+
+.home-light-noise--coarse {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='3' seed='17' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 236px 236px;
+  mix-blend-mode: overlay;
+  opacity: 0.012;
+  animation: homeNoiseFieldShiftA 2.2s steps(3, end) infinite;
+}
+
+@keyframes homeRainbow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+@keyframes homeRadial {
+  0% { background-position: -200% -200%; background-size: 200% 200%; }
+  50% { background-position: 0 0; background-size: 300% 300%; }
+  100% { background-position: 200% 200%; background-size: 200% 200%; }
+}
+
+@keyframes homeRibbonFloat {
+  0%, 100% { transform: translateX(-50%) translateY(-2%) scale(0.98); opacity: 0.54; }
+  50% { transform: translateX(-50%) translateY(2.4%) scale(1.03); opacity: 0.72; }
+}
+
+@keyframes homeNoiseJitter {
+  0% { transform: translate3d(0, 0, 0); }
+  25% { transform: translate3d(-0.35%, 0.3%, 0); }
+  50% { transform: translate3d(0.4%, -0.25%, 0); }
+  75% { transform: translate3d(-0.2%, -0.3%, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+@keyframes homeNoiseFieldShiftA {
+  0% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(-0.22%, 0.18%, 0); }
+  100% { transform: translate3d(0.18%, -0.15%, 0); }
+}
+
+@keyframes homeNoiseOpacityPulse {
+  0%, 100% { opacity: 0.032; }
+  50% { opacity: 0.054; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-light-ribbon,
+  .home-light-ribbon::before,
+  .home-light-noise,
+  .home-light-noise--coarse {
+    animation: none;
+  }
+
+  .home-light-ribbon {
+    opacity: 0.62;
+  }
+
+  .home-light-noise--fine {
+    opacity: 0.022;
+  }
+
+  .home-light-noise--coarse {
+    opacity: 0.01;
+  }
 }
 
 .home-page .site-shell {
+  position: relative;
+  z-index: 2;
   padding-bottom: 60px;
 }
 
 .home-page .topbar-inner {
-  border-color: rgba(255, 255, 255, 0.72);
-  background: rgba(255, 255, 255, 0.58);
+  border-color: rgba(255, 255, 255, 0.46);
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.24), rgba(244, 248, 255, 0.2), rgba(255, 253, 248, 0.2)),
+    rgba(255, 255, 255, 0.24);
+  -webkit-backdrop-filter: blur(20px) saturate(132%);
+  backdrop-filter: blur(20px) saturate(132%);
+  box-shadow: none;
+}
+
+.home-page .topbar-inner::before {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.04));
 }
 
 .home-page .nav {
@@ -851,9 +1027,9 @@ button { font: inherit; }
 
 .home-page .nav a {
   font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
-  font-size: 14px;
+  font-size: clamp(12px, 1.15vw, 14px);
   color: var(--home-text);
-  padding: 12px 20px;
+  padding: clamp(8px, 0.95vw, 12px) clamp(10px, 1.8vw, 20px);
 }
 
 .home-page .nav a:hover,
@@ -930,14 +1106,19 @@ button { font: inherit; }
 }
 
 .home-page .hero {
-  padding: 30px 0 0;
+  padding: clamp(34px, 4vw, 40px) 0 0;
+}
+
+.home-page .home-hero-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 5fr);
+  gap: 0;
+  align-items: center;
 }
 
 .home-page .home-hero-head {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: var(--home-gap-20);
-  align-items: start;
+  display: block;
+  padding-right: clamp(20px, 3vw, 36px);
 }
 
 .home-page .hero-meta {
@@ -947,12 +1128,33 @@ button { font: inherit; }
 
 .home-page .hero-stage {
   margin-top: 0;
-  width: 80%;
-  margin-left: auto;
-  margin-right: auto;
-  aspect-ratio: 1.68 / 1;
-  background: #111;
-  border: 1px solid rgba(50, 64, 79, 0.08);
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: transparent;
+  border: none;
+}
+
+.home-page .pill-button.home-hero-intro-button {
+  margin-top: 12px;
+  padding: 11px 22px;
+  gap: 10px;
+  font-size: 14px;
+  background: #13253b;
+  color: #fff;
+  border-color: #13253b;
+}
+
+.home-page .pill-button.home-hero-intro-button:hover,
+.home-page .pill-button.home-hero-intro-button:focus-visible {
+  background: #13253b;
+  color: #fff;
+}
+
+.home-page .home-hero-intro-icon {
+  width: 18px;
+  height: 18px;
+  display: block;
+  flex: 0 0 auto;
 }
 
 .home-page .hero-stage::after,
@@ -969,7 +1171,8 @@ button { font: inherit; }
   display: none;
 }
 
-.home-page .hero-stage iframe {
+.home-page .hero-stage iframe,
+.home-page .hero-stage video {
   width: 100%;
   height: 100%;
   border: 0;
@@ -993,6 +1196,10 @@ button { font: inherit; }
 
 .home-page #other-works .home-section-title {
   color: rgba(50, 64, 79, 0.8);
+}
+
+.home-page #other-works .section-heading {
+  margin-bottom: 30px;
 }
 
 .home-page .study-card {
@@ -1042,7 +1249,7 @@ button { font: inherit; }
 }
 
 .home-page .card-link {
-  background: #32404F;
+  background: #13253B;
   color: #fff;
 }
 
@@ -1103,7 +1310,7 @@ button { font: inherit; }
 .home-page .archive-cta {
   margin-top: 6px;
   padding: 12px 30px;
-  background: #32404F;
+  background: #13253B;
   color: #fff;
 }
 
@@ -1528,12 +1735,48 @@ button { font: inherit; }
 }
 
 .home-page .contact-section {
-  padding: 40px;
+  padding: clamp(24px, 4vw, 40px);
 }
 
 @media (max-width: 900px) {
-  .home-page .home-hero-head {
+  .topbar-inner {
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .brand,
+  .back-icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .brand--back .back-label {
+    display: none;
+  }
+
+  .nav,
+  .cn-nav-page .nav,
+  .home-page .nav {
+    gap: 4px;
+  }
+
+  .nav a,
+  .nav-contact-toggle,
+  .cn-nav-page .nav a,
+  .cn-nav-page .nav-contact-toggle,
+  .home-page .nav a {
+    min-height: 32px;
+    padding: 7px 9px;
+    font-size: 12px;
+  }
+
+  .home-page .home-hero-layout {
     grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .home-page .home-hero-head {
+    padding-right: 0;
   }
 
   .home-page .home-hero-title {
@@ -1631,29 +1874,40 @@ button { font: inherit; }
   }
 
   .topbar-inner {
-    border-radius: 28px;
-    align-items: start;
-    flex-direction: column;
+    border-radius: 999px;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 6px;
+    padding: 8px;
   }
 
   .nav {
-    width: 100%;
-    justify-content: flex-start;
+    width: auto;
+    min-width: 0;
+    flex: 1 1 auto;
+    justify-content: flex-end;
+    gap: 4px;
   }
 
   .nav-contact {
-    width: 100%;
+    width: auto;
+    flex: 0 0 auto;
   }
 
   .nav-contact-toggle {
-    width: 100%;
-    justify-content: flex-start;
+    width: auto;
+    justify-content: center;
+  }
+
+  .brand--back .back-label {
+    display: none;
   }
 
   .contact-popover {
-    left: 0;
-    right: auto;
-    width: min(100%, calc(100vw - 48px));
+    left: auto;
+    right: 0;
+    width: min(360px, calc(100vw - 32px));
   }
 
   .hero-stage {
@@ -1726,7 +1980,7 @@ button { font: inherit; }
   }
 
   .back-label {
-    font-size: 13px;
+    display: none;
   }
 
   .nav,
@@ -2016,6 +2270,13 @@ button { font: inherit; }
 </head>
 <body class="cn-nav-page">
   <div class="site-shell">
+    
+    <div class="home-light-field" aria-hidden="true">
+      <span class="home-light-ribbon"></span>
+      <span class="home-light-noise home-light-noise--fine"></span>
+      <span class="home-light-noise home-light-noise--coarse"></span>
+    </div>
+    
     <header class="topbar">
       <div class="topbar-inner">
         <a class="brand brand--back" href="/" aria-label="返回首页">
@@ -2409,6 +2670,42 @@ document.querySelectorAll("[data-copy-text]").forEach((button) => {
     }
   });
 });
+
+const homeIntroPlayButton = document.querySelector(".home-hero-intro-button");
+const homeIntroVideo = document.querySelector("#self-intro-video video");
+if (homeIntroPlayButton && homeIntroVideo) {
+  const homeIntroLabel = homeIntroPlayButton.querySelector(".home-hero-intro-label");
+  const homeIntroIconPath = homeIntroPlayButton.querySelector(".home-hero-intro-icon-path");
+  const playIconPath = "M8 6L18 12L8 18Z";
+  const pauseIconPath = "M8 6H11V18H8ZM13 6H16V18H13Z";
+
+  const syncHomeIntroButton = () => {
+    const isPlaying = !homeIntroVideo.paused && !homeIntroVideo.ended;
+    if (homeIntroLabel) {
+      homeIntroLabel.textContent = isPlaying ? "暂停播放" : "自我介绍";
+    }
+    if (homeIntroIconPath) {
+      homeIntroIconPath.setAttribute("d", isPlaying ? pauseIconPath : playIconPath);
+    }
+  };
+
+  homeIntroPlayButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    if (homeIntroVideo.paused || homeIntroVideo.ended) {
+      const playPromise = homeIntroVideo.play();
+      if (playPromise && typeof playPromise.catch === "function") {
+        playPromise.catch(() => {});
+      }
+    } else {
+      homeIntroVideo.pause();
+    }
+  });
+
+  homeIntroVideo.addEventListener("play", syncHomeIntroButton);
+  homeIntroVideo.addEventListener("pause", syncHomeIntroButton);
+  homeIntroVideo.addEventListener("ended", syncHomeIntroButton);
+  syncHomeIntroButton();
+}
 
 (() => {
   const clamp = (v, min, max) => Math.min(max, Math.max(min, v));

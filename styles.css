@@ -6777,3 +6777,361 @@ body.case-study-page.case-study-page--zhihu > main.case-shell.zhihu-case-shell >
     min-width: 180px;
   }
 }
+
+@media not all {
+  :root {
+    color-scheme: dark;
+    --color-text-primary: #edf3f8;
+    --color-text-secondary: rgba(226, 234, 242, 0.62);
+    --color-yellow-bg: rgba(245, 158, 12, 0.14);
+    --color-green-bg: rgba(18, 185, 129, 0.14);
+    --color-purple-bg: rgba(124, 93, 252, 0.16);
+    --color-red-bg: rgba(240, 81, 89, 0.16);
+    --bg: #0f141b;
+    --panel: rgba(18, 24, 32, 0.84);
+    --text: #edf3f8;
+    --muted: #a8b3bf;
+    --subtle: #737f8d;
+    --line: rgba(226, 234, 242, 0.12);
+    --line-strong: rgba(226, 234, 242, 0.22);
+    --accent: #6ca6ff;
+    --accent-soft: rgba(108, 166, 255, 0.14);
+    --shadow: 0 22px 54px rgba(0, 0, 0, 0.32);
+  }
+
+  body {
+    background:
+      radial-gradient(circle at top left, rgba(0, 102, 255, 0.2), transparent 30%),
+      radial-gradient(circle at 100% 20%, rgba(194, 167, 120, 0.13), transparent 24%),
+      var(--bg);
+    color: var(--text);
+  }
+
+  body::before {
+    background-image:
+      linear-gradient(rgba(15, 20, 27, 0.24), rgba(15, 20, 27, 0.24)),
+      linear-gradient(rgba(226, 234, 242, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(226, 234, 242, 0.03) 1px, transparent 1px);
+    opacity: 0.5;
+  }
+
+  .site-header,
+  .home-floating-nav,
+  .home-menu-panel {
+    background: rgba(15, 20, 27, 0.76);
+    border-color: var(--line);
+    box-shadow: 0 18px 60px rgba(0, 0, 0, 0.28);
+  }
+
+  .cursor-dot {
+    mix-blend-mode: screen;
+  }
+
+  .assistant-pill,
+  .back-icon,
+  .project-card,
+  .detail-card,
+  .admin-card,
+  .case-block,
+  .case-card,
+  .home-menu-panel,
+  .home-menu-link,
+  .zhilink-image-frame,
+  .interest-circle-method-card,
+  .interest-circle-flow-card,
+  .interaction-revamp-decision-module,
+  .interaction-revamp-device,
+  .interaction-revamp-action-bar {
+    border-color: var(--line);
+    background-color: rgba(22, 29, 38, 0.78);
+    color: var(--text);
+    box-shadow: var(--shadow);
+  }
+
+  .assistant-pill:hover,
+  .heart-button:hover,
+  .home-menu-link:hover {
+    background: rgba(28, 37, 49, 0.94);
+  }
+
+  h1 span,
+  .company,
+  .case-title,
+  .case-block h2,
+  .detail-card h3,
+  .admin-title,
+  .admin-section-head h2,
+  .admin-card-head h3,
+  .home-hero-clock-value,
+  .zhilink-problem-title,
+  .zhilink-section-title,
+  .interest-circle-section-title,
+  .interaction-revamp-section-title,
+  .interaction-revamp-decision-note-heading--dark,
+  .interaction-revamp-contribution-subtitle,
+  .interaction-revamp-decision-list {
+    color: var(--text);
+  }
+
+  .brand-role,
+  .back-label,
+  .site-nav a,
+  .footer-links a,
+  .detail-label,
+  .eyebrow,
+  .year,
+  .role,
+  .hero-lead,
+  .project-meta p,
+  .detail-card p,
+  .home-hero-clock,
+  .home-hero-clock-label,
+  .interaction-revamp-decision-note-copy,
+  .interaction-revamp-decision-note-copy--small {
+    color: var(--muted);
+  }
+
+  .site-nav a:hover,
+  .company:hover,
+  .footer-links a:hover,
+  .brand--back:hover .back-icon,
+  .brand--back:hover .back-label {
+    color: var(--accent);
+  }
+
+  .brand--back:hover .back-icon,
+  .interaction-revamp-vote {
+    border-color: rgba(108, 166, 255, 0.28);
+    background: var(--accent-soft);
+  }
+
+  .assistant-spark {
+    background:
+      radial-gradient(circle at 30% 30%, #fff, #fff 16%, transparent 17%),
+      radial-gradient(circle at center, var(--accent), color-mix(in srgb, var(--accent) 48%, #0f141b));
+  }
+
+  .project-visual,
+  .case-cover,
+  .media-frame,
+  .image-frame,
+  .interaction-revamp-device-top,
+  .interaction-revamp-device-lines span,
+  .interaction-revamp-device-image,
+  .interaction-revamp-action-bar--after .interaction-revamp-avatar {
+    background: rgba(226, 234, 242, 0.08);
+  }
+
+  .zhilink-case,
+  .zhihu-case,
+  .interest-circle-case,
+  .interaction-revamp-case {
+    background: transparent;
+    color: var(--text);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-text-primary: #edf3f8;
+  --color-text-secondary: rgba(226, 234, 242, 0.62);
+  --color-yellow-bg: rgba(245, 158, 12, 0.14);
+  --color-green-bg: rgba(18, 185, 129, 0.14);
+  --color-purple-bg: rgba(124, 93, 252, 0.16);
+  --color-red-bg: rgba(240, 81, 89, 0.16);
+  --bg: #0f141b;
+  --panel: rgba(18, 24, 32, 0.84);
+  --text: #edf3f8;
+  --muted: #a8b3bf;
+  --subtle: #737f8d;
+  --line: rgba(226, 234, 242, 0.12);
+  --line-strong: rgba(226, 234, 242, 0.22);
+  --accent: #6ca6ff;
+  --accent-soft: rgba(108, 166, 255, 0.14);
+  --shadow: 0 22px 54px rgba(0, 0, 0, 0.32);
+}
+
+:root[data-theme="dark"] body {
+  background:
+    radial-gradient(circle at top left, rgba(0, 102, 255, 0.2), transparent 30%),
+    radial-gradient(circle at 100% 20%, rgba(194, 167, 120, 0.13), transparent 24%),
+    var(--bg);
+  color: var(--text);
+}
+
+:root[data-theme="dark"] body::before {
+  background-image:
+    linear-gradient(rgba(15, 20, 27, 0.24), rgba(15, 20, 27, 0.24)),
+    linear-gradient(rgba(226, 234, 242, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(226, 234, 242, 0.03) 1px, transparent 1px);
+  opacity: 0.5;
+}
+
+:root[data-theme="dark"] .site-header,
+:root[data-theme="dark"] .home-floating-nav,
+:root[data-theme="dark"] .home-menu-panel {
+  background: rgba(15, 20, 27, 0.76);
+  border-color: var(--line);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.28);
+}
+
+:root[data-theme="dark"] .cursor-dot {
+  mix-blend-mode: screen;
+}
+
+:root[data-theme="dark"] .assistant-pill,
+:root[data-theme="dark"] .back-icon,
+:root[data-theme="dark"] .project-card,
+:root[data-theme="dark"] .detail-card,
+:root[data-theme="dark"] .admin-card,
+:root[data-theme="dark"] .case-block,
+:root[data-theme="dark"] .case-card,
+:root[data-theme="dark"] .home-menu-panel,
+:root[data-theme="dark"] .home-menu-link,
+:root[data-theme="dark"] .zhilink-image-frame,
+:root[data-theme="dark"] .interest-circle-method-card,
+:root[data-theme="dark"] .interest-circle-flow-card,
+:root[data-theme="dark"] .interaction-revamp-decision-module,
+:root[data-theme="dark"] .interaction-revamp-device,
+:root[data-theme="dark"] .interaction-revamp-action-bar {
+  border-color: var(--line);
+  background-color: rgba(22, 29, 38, 0.78);
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+
+:root[data-theme="dark"] .assistant-pill:hover,
+:root[data-theme="dark"] .heart-button:hover,
+:root[data-theme="dark"] .home-menu-link:hover {
+  background: rgba(28, 37, 49, 0.94);
+}
+
+:root[data-theme="dark"] h1 span,
+:root[data-theme="dark"] .company,
+:root[data-theme="dark"] .case-title,
+:root[data-theme="dark"] .case-block h2,
+:root[data-theme="dark"] .detail-card h3,
+:root[data-theme="dark"] .admin-title,
+:root[data-theme="dark"] .admin-section-head h2,
+:root[data-theme="dark"] .admin-card-head h3,
+:root[data-theme="dark"] .home-hero-clock-value,
+:root[data-theme="dark"] .zhilink-problem-title,
+:root[data-theme="dark"] .zhilink-section-title,
+:root[data-theme="dark"] .interest-circle-section-title,
+:root[data-theme="dark"] .interaction-revamp-section-title,
+:root[data-theme="dark"] .interaction-revamp-decision-note-heading--dark,
+:root[data-theme="dark"] .interaction-revamp-contribution-subtitle,
+:root[data-theme="dark"] .interaction-revamp-decision-list {
+  color: var(--text);
+}
+
+:root[data-theme="dark"] .brand-role,
+:root[data-theme="dark"] .back-label,
+:root[data-theme="dark"] .site-nav a,
+:root[data-theme="dark"] .footer-links a,
+:root[data-theme="dark"] .detail-label,
+:root[data-theme="dark"] .eyebrow,
+:root[data-theme="dark"] .year,
+:root[data-theme="dark"] .role,
+:root[data-theme="dark"] .hero-lead,
+:root[data-theme="dark"] .project-meta p,
+:root[data-theme="dark"] .detail-card p,
+:root[data-theme="dark"] .home-hero-clock,
+:root[data-theme="dark"] .home-hero-clock-label,
+:root[data-theme="dark"] .interaction-revamp-decision-note-copy,
+:root[data-theme="dark"] .interaction-revamp-decision-note-copy--small {
+  color: var(--muted);
+}
+
+:root[data-theme="dark"] .site-nav a:hover,
+:root[data-theme="dark"] .company:hover,
+:root[data-theme="dark"] .footer-links a:hover,
+:root[data-theme="dark"] .brand--back:hover .back-icon,
+:root[data-theme="dark"] .brand--back:hover .back-label {
+  color: var(--accent);
+}
+
+:root[data-theme="dark"] .brand--back:hover .back-icon,
+:root[data-theme="dark"] .interaction-revamp-vote {
+  border-color: rgba(108, 166, 255, 0.28);
+  background: var(--accent-soft);
+}
+
+:root[data-theme="dark"] .assistant-spark {
+  background:
+    radial-gradient(circle at 30% 30%, #fff, #fff 16%, transparent 17%),
+    radial-gradient(circle at center, var(--accent), color-mix(in srgb, var(--accent) 48%, #0f141b));
+}
+
+:root[data-theme="dark"] .project-visual,
+:root[data-theme="dark"] .case-cover,
+:root[data-theme="dark"] .media-frame,
+:root[data-theme="dark"] .image-frame,
+:root[data-theme="dark"] .interaction-revamp-device-top,
+:root[data-theme="dark"] .interaction-revamp-device-lines span,
+:root[data-theme="dark"] .interaction-revamp-device-image,
+:root[data-theme="dark"] .interaction-revamp-action-bar--after .interaction-revamp-avatar {
+  background: rgba(226, 234, 242, 0.08);
+}
+
+:root[data-theme="dark"] .zhilink-case,
+:root[data-theme="dark"] .zhihu-case,
+:root[data-theme="dark"] .interest-circle-case,
+:root[data-theme="dark"] .interaction-revamp-case {
+  background: transparent;
+  color: var(--text);
+}
+
+:root[data-theme="dark"] body.case-study-page {
+  color: var(--text);
+}
+
+:root[data-theme="dark"] body.case-study-page :is(
+  h1,
+  h2,
+  h3,
+  h4,
+  strong,
+  .case-title,
+  .zhilink-case-title,
+  .zhihu-case-title,
+  .zhihu-social-title,
+  .zhihu-pc-section-title,
+  .air-clock-title,
+  .zhihu-case-meta strong,
+  .zhihu-case-card-title,
+  .interaction-revamp-section-title,
+  .interaction-revamp-decision-note-heading,
+  .interest-circle-section-title
+) {
+  color: var(--text) !important;
+}
+
+:root[data-theme="dark"] body.case-study-page :is(
+  p,
+  li,
+  .muted,
+  .case-copy,
+  .zhihu-case-meta span,
+  .zhihu-case-overview-copy,
+  .zhihu-case-outline-link,
+  .zhihu-case-outline-child,
+  .zhilink-section-copy,
+  .interaction-revamp-decision-note-copy,
+  .interaction-revamp-decision-note-copy--small,
+  .interest-circle-section-copy,
+  .air-clock-section-copy
+) {
+  color: var(--muted) !important;
+}
+
+:root[data-theme="dark"] body.case-study-page :is(
+  .case-shell,
+  .zhihu-case-shell,
+  .zhilink-case-shell,
+  .interest-circle-shell,
+  .interaction-revamp-shell,
+  .air-clock-shell
+) {
+  background: transparent;
+}

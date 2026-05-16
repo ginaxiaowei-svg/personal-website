@@ -21,8 +21,8 @@ LOCAL_WORK_PAGE_SLUGS = [
     "interest-circle-community",
     "zhihu-interaction-bar-revamp-2026",
 ]
-RESUME_PDF_SOURCE = Path("/Users/zhihu/Desktop/吕晓维-简历 ｜ 产品设计师.pdf")
 RESUME_PDF_DIST = "assets/custom/lvxiaowei-resume-product-designer.pdf"
+RESUME_PDF_SOURCE = ROOT / RESUME_PDF_DIST
 LEGACY_PORTFOLIO_IMAGE_SOURCE_DIR = Path("/Users/zhihu/Desktop/2021 作品集")
 LEGACY_PORTFOLIO_IMAGE_NAMES = [*[f"a{i}.png" for i in range(1, 20)], *[f"c{i}.png" for i in range(1, 5)]]
 CONTACT_PHONE = "15600132844"
@@ -74,7 +74,7 @@ button { font: inherit; }
   position: sticky;
   top: 0;
   z-index: 20;
-  padding-top: 18px;
+  padding-top: clamp(12px, 2vw, 18px);
 }
 
 .topbar-inner {
@@ -82,8 +82,9 @@ button { font: inherit; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 18px;
-  padding: 10px 14px;
+  gap: clamp(8px, 1.4vw, 18px);
+  padding: clamp(8px, 1vw, 10px) clamp(8px, 1.4vw, 14px);
+  flex-wrap: nowrap;
   border: 1px solid rgba(255,255,255,0.5);
   background: rgba(255,255,255,0.62);
   -webkit-backdrop-filter: blur(22px) saturate(150%);
@@ -107,17 +108,18 @@ button { font: inherit; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: clamp(32px, 3.2vw, 40px);
+  height: clamp(32px, 3.2vw, 40px);
   border-radius: 999px;
   background: rgba(255,255,255,0.92);
   border: 1px solid rgba(52,69,86,0.05);
+  overflow: hidden;
 }
 
 .brand img {
   width: 100%;
   height: 100%;
-  border-radius: 999px;
+  border-radius: inherit;
   object-fit: cover;
   filter: brightness(1.04) contrast(1.06) saturate(1.08);
 }
@@ -135,8 +137,8 @@ button { font: inherit; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: clamp(32px, 3.2vw, 40px);
+  height: clamp(32px, 3.2vw, 40px);
   border-radius: 999px;
   color: rgba(50, 64, 79, 0.5);
   border: 1px solid rgba(50, 64, 79, 0.1);
@@ -152,7 +154,7 @@ button { font: inherit; }
 
 .back-label {
   font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
-  font-size: 14px;
+  font-size: clamp(12px, 1.1vw, 14px);
   color: rgba(50, 64, 79, 0.6);
   transition: color .25s ease, transform .25s ease;
 }
@@ -161,7 +163,7 @@ button { font: inherit; }
 .brand--back:focus-visible .back-icon {
   color: #32404F;
   border-color: rgba(50, 64, 79, 0.18);
-  transform: translateX(-2px);
+  transform: none;
 }
 
 .brand--back:hover .back-label,
@@ -172,9 +174,11 @@ button { font: inherit; }
 .nav {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
+  flex: 1 1 auto;
+  min-width: 0;
+  flex-wrap: nowrap;
+  gap: clamp(4px, 0.9vw, 10px);
+  justify-content: flex-end;
 }
 
 .nav a,
@@ -183,11 +187,18 @@ button { font: inherit; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 10px 16px;
-  font-size: 12px;
+  min-height: clamp(32px, 3.2vw, 38px);
+  padding: clamp(7px, 0.9vw, 10px) clamp(8px, 1.5vw, 16px);
+  font-size: clamp(12px, 1.05vw, 14px);
   color: var(--muted);
   border-radius: 999px;
+  white-space: nowrap;
   transition: transform .25s ease, background-color .25s ease, color .25s ease;
+}
+
+.nav-contact {
+  position: relative;
+  flex: 0 0 auto;
 }
 
 .nav-contact-toggle {
@@ -204,11 +215,7 @@ button { font: inherit; }
 .nav-contact.is-open .nav-contact-toggle {
   color: #fff;
   background: #7b8493;
-  transform: translateY(-1px);
-}
-
-.nav-contact {
-  position: relative;
+  transform: none;
 }
 
 .contact-popover {
@@ -302,8 +309,17 @@ button { font: inherit; }
 }
 
 .cn-nav-page .topbar-inner {
-  border-color: rgba(255, 255, 255, 0.72);
-  background: rgba(255, 255, 255, 0.58);
+  border-color: rgba(255, 255, 255, 0.46);
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.24), rgba(244, 248, 255, 0.2), rgba(255, 253, 248, 0.2)),
+    rgba(255, 255, 255, 0.24);
+  -webkit-backdrop-filter: blur(20px) saturate(132%);
+  backdrop-filter: blur(20px) saturate(132%);
+  box-shadow: none;
+}
+
+.cn-nav-page .topbar-inner::before {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.04));
 }
 
 .cn-nav-page .nav {
@@ -741,7 +757,7 @@ button { font: inherit; }
 }
 
 .case-header {
-  padding-top: 42px;
+  padding-top: clamp(28px, 4vw, 42px);
 }
 
 .case-header-grid {
@@ -818,7 +834,7 @@ button { font: inherit; }
 
 .gallery .media-frame,
 .gallery .video-frame {
-  min-height: 280px;
+  min-height: clamp(220px, 30vw, 280px);
 }
 
 .gallery .media-frame img,
@@ -841,15 +857,175 @@ button { font: inherit; }
   --home-gap-20: 20px;
   --home-gap-12: 12px;
   font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+  position: relative;
+  min-height: 100vh;
+  isolation: isolate;
+  overflow-x: clip;
+}
+
+.home-light-field {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: min(980px, 88vh);
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 72%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 72%, transparent 100%);
+}
+
+.home-light-ribbon {
+  position: absolute;
+  left: 50%;
+  top: -9vh;
+  width: min(920px, 84vw);
+  height: clamp(126px, 22vh, 236px);
+  border-radius: 999px;
+  transform: translateX(-50%);
+  --color-1: rgba(107, 152, 226, 0.46);
+  --color-2: rgba(160, 136, 209, 0.4);
+  --color-3: rgba(128, 190, 219, 0.42);
+  --color-4: rgba(225, 192, 137, 0.28);
+  --color-5: rgba(132, 169, 221, 0.4);
+  background:
+    linear-gradient(90deg, var(--color-1), var(--color-5), var(--color-3), var(--color-4), var(--color-2)),
+    radial-gradient(ellipse at center, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0) 72%);
+  background-size: 220% 220%, 180% 180%;
+  background-position: 0% 50%, 50% 50%;
+  mix-blend-mode: lighten;
+  filter: blur(60px) saturate(102%);
+  opacity: 0.64;
+  animation:
+    homeRainbow 8s linear infinite,
+    homeRadial 12s linear infinite reverse,
+    homeRibbonFloat 6.8s ease-in-out infinite;
+  will-change: transform, opacity, background-position, background-size;
+}
+
+.home-light-ribbon::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -20%;
+  width: 62%;
+  height: 88%;
+  transform: translateX(-50%);
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--color-1), var(--color-5), var(--color-3), var(--color-4), var(--color-2));
+  background-size: 220% 100%;
+  mix-blend-mode: lighten;
+  filter: blur(18px);
+  opacity: 0.54;
+  animation: homeRainbow 6.6s linear infinite;
+}
+
+.home-light-noise {
+  position: absolute;
+  inset: -36%;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.home-light-noise--fine {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='164' height='164' viewBox='0 0 164 164'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.9' numOctaves='2' seed='9' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='164' height='164' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.45' numOctaves='1' seed='37' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 154px 154px, 118px 118px;
+  background-position: 0 0, 46px 26px;
+  background-blend-mode: soft-light, overlay;
+  mix-blend-mode: soft-light;
+  opacity: 0.024;
+  filter: contrast(106%);
+  animation:
+    homeNoiseJitter .62s steps(2, end) infinite,
+    homeNoiseOpacityPulse 4.8s ease-in-out infinite;
+}
+
+.home-light-noise--coarse {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='3' seed='17' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 236px 236px;
+  mix-blend-mode: overlay;
+  opacity: 0.012;
+  animation: homeNoiseFieldShiftA 2.2s steps(3, end) infinite;
+}
+
+@keyframes homeRainbow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+@keyframes homeRadial {
+  0% { background-position: -200% -200%; background-size: 200% 200%; }
+  50% { background-position: 0 0; background-size: 300% 300%; }
+  100% { background-position: 200% 200%; background-size: 200% 200%; }
+}
+
+@keyframes homeRibbonFloat {
+  0%, 100% { transform: translateX(-50%) translateY(-2%) scale(0.98); opacity: 0.54; }
+  50% { transform: translateX(-50%) translateY(2.4%) scale(1.03); opacity: 0.72; }
+}
+
+@keyframes homeNoiseJitter {
+  0% { transform: translate3d(0, 0, 0); }
+  25% { transform: translate3d(-0.35%, 0.3%, 0); }
+  50% { transform: translate3d(0.4%, -0.25%, 0); }
+  75% { transform: translate3d(-0.2%, -0.3%, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+@keyframes homeNoiseFieldShiftA {
+  0% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(-0.22%, 0.18%, 0); }
+  100% { transform: translate3d(0.18%, -0.15%, 0); }
+}
+
+@keyframes homeNoiseOpacityPulse {
+  0%, 100% { opacity: 0.032; }
+  50% { opacity: 0.054; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-light-ribbon,
+  .home-light-ribbon::before,
+  .home-light-noise,
+  .home-light-noise--coarse {
+    animation: none;
+  }
+
+  .home-light-ribbon {
+    opacity: 0.62;
+  }
+
+  .home-light-noise--fine {
+    opacity: 0.022;
+  }
+
+  .home-light-noise--coarse {
+    opacity: 0.01;
+  }
 }
 
 .home-page .site-shell {
+  position: relative;
+  z-index: 2;
   padding-bottom: 60px;
 }
 
 .home-page .topbar-inner {
-  border-color: rgba(255, 255, 255, 0.72);
-  background: rgba(255, 255, 255, 0.58);
+  border-color: rgba(255, 255, 255, 0.46);
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.24), rgba(244, 248, 255, 0.2), rgba(255, 253, 248, 0.2)),
+    rgba(255, 255, 255, 0.24);
+  -webkit-backdrop-filter: blur(20px) saturate(132%);
+  backdrop-filter: blur(20px) saturate(132%);
+  box-shadow: none;
+}
+
+.home-page .topbar-inner::before {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.04));
 }
 
 .home-page .nav {
@@ -858,9 +1034,9 @@ button { font: inherit; }
 
 .home-page .nav a {
   font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
-  font-size: 14px;
+  font-size: clamp(12px, 1.15vw, 14px);
   color: var(--home-text);
-  padding: 12px 20px;
+  padding: clamp(8px, 0.95vw, 12px) clamp(10px, 1.8vw, 20px);
 }
 
 .home-page .nav a:hover,
@@ -937,14 +1113,19 @@ button { font: inherit; }
 }
 
 .home-page .hero {
-  padding: 30px 0 0;
+  padding: clamp(34px, 4vw, 40px) 0 0;
+}
+
+.home-page .home-hero-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 5fr);
+  gap: 0;
+  align-items: center;
 }
 
 .home-page .home-hero-head {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: var(--home-gap-20);
-  align-items: start;
+  display: block;
+  padding-right: clamp(20px, 3vw, 36px);
 }
 
 .home-page .hero-meta {
@@ -954,12 +1135,33 @@ button { font: inherit; }
 
 .home-page .hero-stage {
   margin-top: 0;
-  width: 80%;
-  margin-left: auto;
-  margin-right: auto;
+  width: 100%;
   aspect-ratio: 4 / 3;
-  background: #111;
-  border: 1px solid rgba(50, 64, 79, 0.08);
+  background: transparent;
+  border: none;
+}
+
+.home-page .pill-button.home-hero-intro-button {
+  margin-top: 12px;
+  padding: 11px 22px;
+  gap: 10px;
+  font-size: 14px;
+  background: #13253b;
+  color: #fff;
+  border-color: #13253b;
+}
+
+.home-page .pill-button.home-hero-intro-button:hover,
+.home-page .pill-button.home-hero-intro-button:focus-visible {
+  background: #13253b;
+  color: #fff;
+}
+
+.home-page .home-hero-intro-icon {
+  width: 18px;
+  height: 18px;
+  display: block;
+  flex: 0 0 auto;
 }
 
 .home-page .hero-stage::after,
@@ -976,7 +1178,8 @@ button { font: inherit; }
   display: none;
 }
 
-.home-page .hero-stage iframe {
+.home-page .hero-stage iframe,
+.home-page .hero-stage video {
   width: 100%;
   height: 100%;
   border: 0;
@@ -1000,6 +1203,10 @@ button { font: inherit; }
 
 .home-page #other-works .home-section-title {
   color: rgba(50, 64, 79, 0.8);
+}
+
+.home-page #other-works .section-heading {
+  margin-bottom: 30px;
 }
 
 .home-page .study-card {
@@ -1049,7 +1256,7 @@ button { font: inherit; }
 }
 
 .home-page .card-link {
-  background: #32404F;
+  background: #13253B;
   color: #fff;
 }
 
@@ -1110,7 +1317,7 @@ button { font: inherit; }
 .home-page .archive-cta {
   margin-top: 6px;
   padding: 12px 30px;
-  background: #32404F;
+  background: #13253B;
   color: #fff;
 }
 
@@ -1535,12 +1742,48 @@ button { font: inherit; }
 }
 
 .home-page .contact-section {
-  padding: 40px;
+  padding: clamp(24px, 4vw, 40px);
 }
 
 @media (max-width: 900px) {
-  .home-page .home-hero-head {
+  .topbar-inner {
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .brand,
+  .back-icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .brand--back .back-label {
+    display: none;
+  }
+
+  .nav,
+  .cn-nav-page .nav,
+  .home-page .nav {
+    gap: 4px;
+  }
+
+  .nav a,
+  .nav-contact-toggle,
+  .cn-nav-page .nav a,
+  .cn-nav-page .nav-contact-toggle,
+  .home-page .nav a {
+    min-height: 32px;
+    padding: 7px 9px;
+    font-size: 12px;
+  }
+
+  .home-page .home-hero-layout {
     grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .home-page .home-hero-head {
+    padding-right: 0;
   }
 
   .home-page .home-hero-title {
@@ -1638,29 +1881,40 @@ button { font: inherit; }
   }
 
   .topbar-inner {
-    border-radius: 28px;
-    align-items: start;
-    flex-direction: column;
+    border-radius: 999px;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 6px;
+    padding: 8px;
   }
 
   .nav {
-    width: 100%;
-    justify-content: flex-start;
+    width: auto;
+    min-width: 0;
+    flex: 1 1 auto;
+    justify-content: flex-end;
+    gap: 4px;
   }
 
   .nav-contact {
-    width: 100%;
+    width: auto;
+    flex: 0 0 auto;
   }
 
   .nav-contact-toggle {
-    width: 100%;
-    justify-content: flex-start;
+    width: auto;
+    justify-content: center;
+  }
+
+  .brand--back .back-label {
+    display: none;
   }
 
   .contact-popover {
-    left: 0;
-    right: auto;
-    width: min(100%, calc(100vw - 48px));
+    left: auto;
+    right: 0;
+    width: min(360px, calc(100vw - 32px));
   }
 
   .hero-stage {
@@ -1733,7 +1987,7 @@ button { font: inherit; }
   }
 
   .back-label {
-    font-size: 13px;
+    display: none;
   }
 
   .nav,
@@ -2149,6 +2403,42 @@ document.querySelectorAll("[data-copy-text]").forEach((button) => {
   });
 });
 
+const homeIntroPlayButton = document.querySelector(".home-hero-intro-button");
+const homeIntroVideo = document.querySelector("#self-intro-video video");
+if (homeIntroPlayButton && homeIntroVideo) {
+  const homeIntroLabel = homeIntroPlayButton.querySelector(".home-hero-intro-label");
+  const homeIntroIconPath = homeIntroPlayButton.querySelector(".home-hero-intro-icon-path");
+  const playIconPath = "M8 6L18 12L8 18Z";
+  const pauseIconPath = "M8 6H11V18H8ZM13 6H16V18H13Z";
+
+  const syncHomeIntroButton = () => {
+    const isPlaying = !homeIntroVideo.paused && !homeIntroVideo.ended;
+    if (homeIntroLabel) {
+      homeIntroLabel.textContent = isPlaying ? "暂停播放" : "自我介绍";
+    }
+    if (homeIntroIconPath) {
+      homeIntroIconPath.setAttribute("d", isPlaying ? pauseIconPath : playIconPath);
+    }
+  };
+
+  homeIntroPlayButton.addEventListener("click", (event) => {
+    event.preventDefault();
+    if (homeIntroVideo.paused || homeIntroVideo.ended) {
+      const playPromise = homeIntroVideo.play();
+      if (playPromise && typeof playPromise.catch === "function") {
+        playPromise.catch(() => {});
+      }
+    } else {
+      homeIntroVideo.pause();
+    }
+  });
+
+  homeIntroVideo.addEventListener("play", syncHomeIntroButton);
+  homeIntroVideo.addEventListener("pause", syncHomeIntroButton);
+  homeIntroVideo.addEventListener("ended", syncHomeIntroButton);
+  syncHomeIntroButton();
+}
+
 (() => {
   const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
 
@@ -2501,7 +2791,7 @@ PERSONAL_SITE_CASE_NAV_OVERRIDES = r"""
   z-index: 40;
   width: min(100%, 1120px);
   margin: 0 auto;
-  padding: 18px clamp(20px, 4vw, 56px) 0;
+  padding: clamp(12px, 2vw, 18px) clamp(16px, 4vw, 56px) 0;
 }
 
 .topbar-inner {
@@ -2509,8 +2799,9 @@ PERSONAL_SITE_CASE_NAV_OVERRIDES = r"""
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 18px;
-  padding: 10px 14px;
+  gap: clamp(8px, 1.4vw, 18px);
+  padding: clamp(8px, 1vw, 10px) clamp(8px, 1.4vw, 14px);
+  flex-wrap: nowrap;
   border: 1px solid rgba(255, 255, 255, 0.72);
   background: rgba(255, 255, 255, 0.58);
   -webkit-backdrop-filter: blur(22px) saturate(150%);
@@ -2534,12 +2825,13 @@ PERSONAL_SITE_CASE_NAV_OVERRIDES = r"""
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: clamp(32px, 3.2vw, 40px);
+  height: clamp(32px, 3.2vw, 40px);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.92);
   border: 1px solid rgba(50, 64, 79, 0.08);
   min-width: 0;
+  overflow: hidden;
 }
 
 .topbar .brand--back {
@@ -2555,8 +2847,8 @@ PERSONAL_SITE_CASE_NAV_OVERRIDES = r"""
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: clamp(32px, 3.2vw, 40px);
+  height: clamp(32px, 3.2vw, 40px);
   border-radius: 999px;
   color: rgba(50, 64, 79, 0.5);
   border: 1px solid rgba(50, 64, 79, 0.1);
@@ -2572,7 +2864,7 @@ PERSONAL_SITE_CASE_NAV_OVERRIDES = r"""
 
 .topbar .back-label {
   font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
-  font-size: 14px;
+  font-size: clamp(12px, 1.1vw, 14px);
   letter-spacing: 0;
   color: rgba(50, 64, 79, 0.6);
   transition: color .25s ease, transform .25s ease;
@@ -2582,7 +2874,7 @@ PERSONAL_SITE_CASE_NAV_OVERRIDES = r"""
 .topbar .brand--back:focus-visible .back-icon {
   color: #32404F;
   border-color: rgba(50, 64, 79, 0.18);
-  transform: translateX(-2px);
+  transform: none;
 }
 
 .topbar .brand--back:hover .back-label,
@@ -2593,9 +2885,11 @@ PERSONAL_SITE_CASE_NAV_OVERRIDES = r"""
 .topbar .nav {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  justify-content: center;
+  flex: 1 1 auto;
+  min-width: 0;
+  flex-wrap: nowrap;
+  gap: clamp(4px, 1vw, 12px);
+  justify-content: flex-end;
 }
 
 .topbar .nav a,
@@ -2604,12 +2898,14 @@ PERSONAL_SITE_CASE_NAV_OVERRIDES = r"""
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 20px;
+  min-height: clamp(32px, 3.2vw, 40px);
+  padding: clamp(7px, 0.95vw, 12px) clamp(8px, 1.8vw, 20px);
   border-radius: 999px;
   font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
-  font-size: 14px;
+  font-size: clamp(12px, 1.15vw, 14px);
   letter-spacing: 0;
   color: rgba(50, 64, 79, 0.5);
+  white-space: nowrap;
   transition: transform .25s ease, background-color .25s ease, color .25s ease;
 }
 
@@ -2627,11 +2923,12 @@ PERSONAL_SITE_CASE_NAV_OVERRIDES = r"""
 .topbar .nav-contact.is-open .nav-contact-toggle {
   color: #32404F;
   background: rgba(50, 64, 79, 0.08);
-  transform: translateY(-1px);
+  transform: none;
 }
 
 .topbar .nav-contact {
   position: relative;
+  flex: 0 0 auto;
 }
 
 .topbar .contact-popover {
@@ -2726,32 +3023,83 @@ PERSONAL_SITE_CASE_NAV_OVERRIDES = r"""
 
 @media (max-width: 820px) {
   .topbar {
-    padding-top: 14px;
+    padding-top: 12px;
   }
 
   .topbar-inner {
-    gap: 12px;
-    flex-wrap: wrap;
+    gap: 6px;
+    padding: 8px;
   }
 
   .topbar .nav {
-    width: 100%;
-    justify-content: flex-start;
+    width: auto;
+    min-width: 0;
+    justify-content: flex-end;
+    gap: 4px;
   }
 
   .topbar .nav-contact {
-    width: 100%;
+    width: auto;
   }
 
   .topbar .nav-contact-toggle {
-    width: 100%;
-    justify-content: flex-start;
+    width: auto;
+    justify-content: center;
+  }
+
+  .topbar .brand,
+  .topbar .back-icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .topbar .back-label {
+    display: none;
+  }
+
+  .topbar .nav a,
+  .topbar .nav-contact-toggle {
+    min-height: 32px;
+    padding: 7px 9px;
+    font-size: 12px;
+  }
+
+  .case-title,
+  .zhihu-social-title,
+  .zhihu-pc-section-title,
+  .air-clock-title {
+    font-size: clamp(34px, 5.4vw, 40px);
+    line-height: 1.18;
+  }
+
+  .case-block h2,
+  .detail-card h3,
+  .zhihu-pc-compare-card h3,
+  .zhihu-pc-principle-card h3,
+  .zhihu-social-card h3,
+  .air-clock-section-title {
+    font-size: clamp(22px, 3.2vw, 28px);
+    line-height: 1.28;
+  }
+
+  .case-subtitle,
+  .case-block p,
+  .detail-card p,
+  .zhihu-social-copy,
+  .zhihu-pc-card-copy,
+  .air-clock-copy {
+    font-size: clamp(15px, 2vw, 17px);
+    line-height: 1.72;
+  }
+
+  .case-block {
+    padding: clamp(20px, 2.5vw, 24px) 0 clamp(22px, 3vw, 28px);
   }
 
   .topbar .contact-popover {
-    left: 0;
-    right: auto;
-    width: min(100%, calc(100vw - 48px));
+    left: auto;
+    right: 0;
+    width: min(360px, calc(100vw - 32px));
   }
 }
 
@@ -2779,7 +3127,7 @@ PERSONAL_SITE_CASE_NAV_OVERRIDES = r"""
   }
 
   .topbar .back-label {
-    font-size: 13px;
+    display: none;
   }
 
   .topbar .nav {
@@ -3245,7 +3593,7 @@ PERSONAL_SITE_CASE_INTERACTION_SCRIPT = r"""
 PERSONAL_SITE_ZHIHU_PC_CASE_OVERRIDES = r"""
 /* Codex rebuild: zhihu pc case page */
 .zhihu-pc-case-shell {
-  padding-top: 52px;
+  padding-top: clamp(34px, 4.4vw, 52px);
 }
 
 .zhihu-pc-case-main {
@@ -3253,7 +3601,7 @@ PERSONAL_SITE_ZHIHU_PC_CASE_OVERRIDES = r"""
 }
 
 .zhihu-pc-summary-grid {
-  margin-top: 20px;
+  margin-top: clamp(14px, 2vw, 20px);
 }
 
 .zhihu-pc-lead-image .zhihu-social-image-placeholder-img {
@@ -3262,29 +3610,29 @@ PERSONAL_SITE_ZHIHU_PC_CASE_OVERRIDES = r"""
 }
 
 .zhihu-pc-bullet-list {
-  margin: 16px 0 0;
-  padding-left: 18px;
+  margin: clamp(12px, 1.8vw, 16px) 0 0;
+  padding-left: clamp(14px, 1.8vw, 18px);
   display: grid;
-  gap: 10px;
+  gap: clamp(8px, 1.2vw, 10px);
 }
 
 .zhihu-pc-bullet-list li {
   color: #32404f;
   font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
-  font-size: 14px;
+  font-size: clamp(13px, 1.15vw, 14px);
   line-height: 1.65;
 }
 
 .zhihu-pc-principle-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 20px;
+  gap: clamp(10px, 1.4vw, 14px);
+  margin-top: clamp(14px, 2vw, 20px);
 }
 
 .zhihu-pc-principle-card,
 .zhihu-pc-compare-card {
-  padding: 20px;
+  padding: clamp(16px, 2.2vw, 20px);
   border: 1px solid rgba(50, 64, 79, 0.08);
   border-radius: 16px;
   background: linear-gradient(180deg, #ffffff 0%, #fafbfc 100%);
@@ -3295,7 +3643,7 @@ PERSONAL_SITE_ZHIHU_PC_CASE_OVERRIDES = r"""
   margin: 8px 0 0;
   color: #32404f;
   font-family: "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", serif;
-  font-size: 22px;
+  font-size: clamp(20px, 2.2vw, 22px);
   font-weight: 500;
   line-height: 1.35;
 }
@@ -3305,22 +3653,22 @@ PERSONAL_SITE_ZHIHU_PC_CASE_OVERRIDES = r"""
   margin: 12px 0 0;
   color: #32404fcc;
   font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
-  font-size: 14px;
+  font-size: clamp(13px, 1.15vw, 14px);
   line-height: 1.65;
 }
 
 .zhihu-pc-decision-stack {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-  margin-top: 20px;
+  gap: clamp(12px, 1.8vw, 16px);
+  margin-top: clamp(14px, 2vw, 20px);
 }
 
 .zhihu-pc-compare-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-  margin-top: 20px;
+  gap: clamp(12px, 1.8vw, 16px);
+  margin-top: clamp(14px, 2vw, 20px);
 }
 
 .zhihu-pc-compare-card .zhilink-image-frame {
@@ -3336,13 +3684,13 @@ PERSONAL_SITE_ZHIHU_PC_CASE_OVERRIDES = r"""
 }
 
 .zhihu-pc-ba-wrap + .zhihu-pc-ba-wrap {
-  margin-top: 28px;
+  margin-top: clamp(20px, 2.8vw, 28px);
 }
 
 .zhihu-pc-ba-title {
-  margin: 0 0 20px;
+  margin: 0 0 clamp(14px, 2vw, 20px);
   font-family: "Source Han Serif SC", "Source Han Serif CN", "Source Han Serif", "Songti SC", serif;
-  font-size: 24px;
+  font-size: clamp(22px, 2.4vw, 24px);
   font-weight: 500;
   line-height: 1.3;
   color: rgba(50, 64, 79, 0.8);
@@ -3353,7 +3701,7 @@ PERSONAL_SITE_ZHIHU_PC_CASE_OVERRIDES = r"""
   width: 100%;
   background: #f1f1f1;
   border-radius: 24px;
-  padding: 24px;
+  padding: clamp(16px, 2.4vw, 24px);
   user-select: none;
   -webkit-user-select: none;
   --ba-pos: 50%;
@@ -3363,7 +3711,7 @@ PERSONAL_SITE_ZHIHU_PC_CASE_OVERRIDES = r"""
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: clamp(14px, 2vw, 20px);
 }
 
 .ba-compare__stage {
@@ -3402,8 +3750,8 @@ PERSONAL_SITE_ZHIHU_PC_CASE_OVERRIDES = r"""
 }
 
 .ba-label {
-  padding: 8px 14px;
-  font-size: 13px;
+  padding: clamp(6px, 1vw, 8px) clamp(10px, 1.4vw, 14px);
+  font-size: clamp(12px, 1.1vw, 13px);
   font-weight: 500;
   line-height: 1;
   border-radius: 999px;
@@ -3439,8 +3787,8 @@ PERSONAL_SITE_ZHIHU_PC_CASE_OVERRIDES = r"""
   top: 50%;
   left: var(--ba-pos);
   transform: translate(-50%, -50%);
-  width: 40px;
-  height: 40px;
+  width: clamp(36px, 3.2vw, 40px);
+  height: clamp(36px, 3.2vw, 40px);
   border: 1px solid rgba(29, 29, 31, 0.08);
   border-radius: 999px;
   background: #ffffff;
@@ -3467,8 +3815,8 @@ PERSONAL_SITE_ZHIHU_PC_CASE_OVERRIDES = r"""
 }
 
 .ba-handle svg {
-  width: 16px;
-  height: 16px;
+  width: clamp(14px, 1.4vw, 16px);
+  height: clamp(14px, 1.4vw, 16px);
   display: block;
 }
 
@@ -3905,10 +4253,22 @@ def page_shell(
     items = nav_items or NAV_ITEMS
     nav = render_nav(items, active_href)
     brand_class = "brand brand--back" if back_brand else "brand"
-    brand_markup = back_brand and back_brand_markup() or f'<img src="{SITE["brand_mark_light"]}" alt="">'
+    brand_mark_nav = SITE.get("brand_mark_nav", SITE["brand_mark_light"])
+    brand_markup = back_brand and back_brand_markup() or f'<img src="{brand_mark_nav}" alt="">'
     brand_aria_label = "返回首页" if back_brand else "Mr March home"
     zoom_style = f"<style>{IMAGE_ZOOM_MODAL_CSS}</style>" if include_image_zoom else ""
     zoom_script = IMAGE_ZOOM_SCRIPT if include_image_zoom else ""
+    nav_light_field = (
+        """
+    <div class="home-light-field" aria-hidden="true">
+      <span class="home-light-ribbon"></span>
+      <span class="home-light-noise home-light-noise--fine"></span>
+      <span class="home-light-noise home-light-noise--coarse"></span>
+    </div>
+    """
+        if "cn-nav-page" in body_class
+        else ""
+    )
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -3941,6 +4301,7 @@ def page_shell(
 </head>
 <body class="{escape(body_class)}">
   <div class="site-shell">
+    {nav_light_field}
     <header class="topbar">
       <div class="topbar-inner">
         <a class="{brand_class}" href="/" aria-label="{brand_aria_label}">
@@ -4098,19 +4459,27 @@ def home_page() -> str:
     )
     body = f"""
     <section class="hero">
-      <div class="home-hero-head reveal">
-        <div class="hero-copy">
-          <h1 class="home-hero-title">{escape(HOME["hero_title"])}</h1>
-          <p style="max-width: 1008px;">{escape(HOME["hero_body"])}</p>
+      <div class="home-hero-layout">
+        <div class="home-hero-head reveal">
+          <div class="hero-copy">
+            <h1 class="home-hero-title">{escape(HOME["hero_title"])}</h1>
+            <p style="max-width: 1008px;">{escape(HOME["hero_body"])}</p>
+            <a class="pill-button home-hero-intro-button" href="#self-intro-video">
+              <svg class="home-hero-intro-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path class="home-hero-intro-icon-path" d="M8 6L18 12L8 18Z" fill="currentColor"></path>
+              </svg>
+              <span class="home-hero-intro-label">自我介绍</span>
+            </a>
+          </div>
         </div>
-      </div>
-      <div class="hero-stage reveal">
-        <video
-          src="/assets/custom/lvixaoweiVideo.mp4"
-          controls
-          playsinline
-          preload="metadata"
-          aria-label="吕晓维自我介绍视频"></video>
+        <div class="hero-stage reveal" id="self-intro-video">
+          <video
+            src="/assets/custom/lvixaoweiVideo.mp4"
+            controls
+            playsinline
+            preload="metadata"
+            aria-label="吕晓维自我介绍视频"></video>
+        </div>
       </div>
     </section>
 
@@ -4411,7 +4780,7 @@ def zhihu_pc_case_page() -> str:
             <h2 class="zhihu-social-diagnosis-title">内容社区产品的桌面体验正整体走向更轻、更平、更沉浸</h2>
           </div>
           <div class="zhilink-third-copy">
-            <p>调研覆盖 X、Reddit、Medium、YouTube、Bilibili、小红书与长桥，发现内容社区产品逐渐呈现出一组稳定趋势。</p>
+            <p>调研覆盖 X、Reddit、Medium、YouTube、Bilibili、小红书与 Substack，发现内容社区产品逐渐呈现出一组稳定趋势。</p>
           </div>
           <div class="zhihu-pc-trend-carousel" data-pc-trend-carousel aria-label="竞品趋势轮播">
             <div class="zhihu-pc-trend-frame">
@@ -4426,7 +4795,7 @@ def zhihu_pc_case_page() -> str:
                   <img class="zhihu-pc-trend-shot" src="/assets/case-study/Reddit.png" alt="Reddit 桌面端界面截图" loading="lazy" />
                 </article>
                 <article class="zhihu-pc-trend-slide" data-pc-trend-slide>
-                  <img class="zhihu-pc-trend-shot" src="/assets/case-study/longbridge.png" alt="Longbridge 桌面端界面截图" loading="lazy" />
+                  <img class="zhihu-pc-trend-shot" src="/assets/case-study/Substack.png" alt="Substack 桌面端界面截图" loading="lazy" />
                 </article>
               </div>
             </div>
@@ -4899,7 +5268,30 @@ def render_case_study_page(case: dict) -> str:
 def write_file(relative_path: str, content: str) -> None:
     target = DIST / relative_path
     target.parent.mkdir(parents=True, exist_ok=True)
+    if target.suffix == ".html":
+        content = normalize_browser_head(content)
     target.write_text(content, encoding="utf-8")
+
+
+def normalize_browser_head(content: str) -> str:
+    if "</head>" not in content.lower():
+        return content
+
+    page_title = f"<title>{escape(SITE['title'])}</title>"
+    favicon = f'<link rel="icon" href="{SITE["brand_mark_light"]}">'
+
+    if re.search(r"<title>.*?</title>", content, flags=re.IGNORECASE | re.DOTALL):
+        content = re.sub(r"<title>.*?</title>", page_title, content, count=1, flags=re.IGNORECASE | re.DOTALL)
+    else:
+        content = re.sub(r"(<head[^>]*>)", r"\1\n  " + page_title, content, count=1, flags=re.IGNORECASE)
+
+    icon_pattern = r'<link\s+[^>]*rel=["\'](?:shortcut icon|icon)["\'][^>]*>\s*'
+    if re.search(icon_pattern, content, flags=re.IGNORECASE):
+        content = re.sub(icon_pattern, favicon + "\n", content, count=1, flags=re.IGNORECASE)
+    else:
+        content = re.sub(r"(</head>)", "  " + favicon + "\n\\1", content, count=1, flags=re.IGNORECASE)
+
+    return content
 
 
 def with_base_path(path: str) -> str:
