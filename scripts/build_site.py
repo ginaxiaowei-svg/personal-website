@@ -4614,10 +4614,8 @@ def home_page() -> str:
         </div>
         <div class="hero-stage reveal" id="self-intro-video">
           <video
-            src="/assets/custom/lvixaoweiVideo-preview-30s.mp4"
-            data-full-src="/assets/custom/lvixaoweiVideo.mp4"
-            data-preview-switch-at="26"
-            poster="/assets/custom/lvixaoweiVideo-poster.jpg"
+            src="/assets/custom/晓维Video.mp4"
+            poster="/assets/custom/晓维Video-poster.jpg"
             controls
             playsinline
             preload="none"
