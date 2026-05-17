@@ -1,3 +1,35 @@
+@font-face {
+  font-family: "Source Han Serif SC";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("https://fonts.gstatic.com/s/notoserifsc/v35/H4cyBXePl9DZ0Xe7gG9cyOj7uK2-n-D2rd4FY7SCqyWv.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Source Han Serif SC";
+  font-style: normal;
+  font-weight: 500;
+  font-display: block;
+  src: url("https://fonts.gstatic.com/s/notoserifsc/v35/H4cyBXePl9DZ0Xe7gG9cyOj7uK2-n-D2rd4FY7SwqyWv.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Source Han Serif SC";
+  font-style: normal;
+  font-weight: 600;
+  font-display: block;
+  src: url("https://fonts.gstatic.com/s/notoserifsc/v35/H4cyBXePl9DZ0Xe7gG9cyOj7uK2-n-D2rd4FY7RcrCWv.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Source Han Serif SC";
+  font-style: normal;
+  font-weight: 700;
+  font-display: block;
+  src: url("https://fonts.gstatic.com/s/notoserifsc/v35/H4cyBXePl9DZ0Xe7gG9cyOj7uK2-n-D2rd4FY7RlrCWv.ttf") format("truetype");
+}
+
 :root {
   --color-text-primary: #32404f;
   --color-text-secondary: rgba(50, 64, 79, 0.5);
@@ -54,6 +86,7 @@ body {
     var(--bg);
   color: var(--text);
   font-family: "Avenir Next", "SF Pro Display", "Helvetica Neue", "Segoe UI", sans-serif;
+  font-synthesis: none;
   text-wrap: pretty;
 }
 
@@ -294,6 +327,7 @@ h1,
   margin: 0;
   font-family: var(--serif-title);
   font-weight: 500;
+  font-synthesis: none;
   letter-spacing: 1px;
 }
 

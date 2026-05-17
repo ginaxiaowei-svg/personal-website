@@ -7,6 +7,7 @@ import json
 import os
 import re
 import shutil
+from io import BytesIO
 from pathlib import Path
 
 from site_data import ABOUT, CASE_STUDIES, EXPERIMENTS, EXPERIMENTS_PAGE, HOME, LEGACY_PORTFOLIO_PAGE, SITE
@@ -30,10 +31,14 @@ CONTACT_EMAIL = "ginaxiaowei@gmail.com"
 SITE_BASE_PATH = "/" + os.environ.get("SITE_BASE_PATH", "").strip().strip("/") if os.environ.get("SITE_BASE_PATH", "").strip().strip("/") else ""
 ROOT_RELATIVE_ATTR_RE = re.compile(r'(?P<prefix>\b(?:href|src|content)=["\'])(?P<path>/(?!/)[^"\']*)')
 ROOT_RELATIVE_CSS_URL_RE = re.compile(r'(?P<prefix>url\((?P<quote>["\']?))(?P<path>/(?!/)[^)"\']+)(?P=quote)(?P<suffix>\))')
+LOSSY_IMAGE_SUFFIXES = {".png", ".jpg", ".jpeg"}
+JPEG_QUALITY = 90
+JPEG_SUBSAMPLING = 0
+MIN_SAVING_BYTES = 8 * 1024
 
 
 CSS = r"""
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@700&family=Noto+Serif+SC:wght@400;500;600;700&display=block");
 
 :root {
   --bg: #ffffff;
@@ -48,6 +53,7 @@ CSS = r"""
   --page-pad: clamp(20px, 4vw, 56px);
   --content-max: 1120px;
   --font-body: "IBM Plex Sans", "Aptos", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-title: "Noto Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", serif;
 }
 
 * { box-sizing: border-box; }
@@ -55,6 +61,7 @@ html { scroll-behavior: smooth; }
 body {
   margin: 0;
   font-family: var(--font-body);
+  font-synthesis: none;
   color: var(--text);
   background: var(--bg);
   line-height: 1.55;
@@ -1054,8 +1061,9 @@ button { font: inherit; }
 .home-section-title,
 .home-card-title,
 .home-contact-title {
-  font-family: "Source Han Serif SC", "Source Han Serif CN", "Songti SC", serif;
+  font-family: var(--font-title);
   font-weight: 500;
+  font-synthesis: none;
   color: var(--home-title);
 }
 
@@ -1402,8 +1410,9 @@ button { font: inherit; }
 }
 
 .legacy-gallery-head h1 {
-  font-family: "Source Han Serif SC", "Source Han Serif CN", "Source Han Serif", "Songti SC", serif;
+  font-family: var(--font-title);
   font-weight: 500;
+  font-synthesis: none;
   color: #32404F;
 }
 
@@ -1494,8 +1503,9 @@ button { font: inherit; }
 .legacy-intro h2,
 .legacy-gallery-intro h2 {
   margin: 0;
-  font-family: "Source Han Serif SC", "Source Han Serif CN", "Source Han Serif", "Songti SC", serif;
+  font-family: var(--font-title);
   font-weight: 500;
+  font-synthesis: none;
   color: #32404F;
   line-height: 1.04;
   letter-spacing: -.04em;
@@ -1590,8 +1600,9 @@ button { font: inherit; }
 .legacy-practice-card h3,
 .legacy-project-card h3 {
   margin: 0;
-  font-family: "Source Han Serif SC", "Source Han Serif CN", "Source Han Serif", "Songti SC", serif;
+  font-family: var(--font-title);
   font-weight: 500;
+  font-synthesis: none;
   color: #32404F;
   font-size: 24px;
   line-height: 1.08;
@@ -2407,15 +2418,103 @@ const homeIntroPlayButton = document.querySelector(".home-hero-intro-button");
 const homeIntroVideo = document.querySelector("#self-intro-video video");
 if (homeIntroPlayButton && homeIntroVideo) {
   const homeIntroSpeed = 1.2;
+  const previewSrc = homeIntroVideo.getAttribute("src") || "";
+  const fullSrc = homeIntroVideo.dataset.fullSrc || previewSrc;
+  const previewSwitchAtRaw = Number(homeIntroVideo.dataset.previewSwitchAt || "26");
+  const previewSwitchAt = Number.isFinite(previewSwitchAtRaw) ? previewSwitchAtRaw : 26;
+  let fullVideoPreloader = null;
+  let fullVideoReady = false;
+  let fullVideoLoading = false;
+  let isSwitchingSource = false;
+
   const applyHomeIntroSpeed = () => {
     homeIntroVideo.defaultPlaybackRate = homeIntroSpeed;
     homeIntroVideo.playbackRate = homeIntroSpeed;
   };
+
+  const primePreviewLoad = () => {
+    if (homeIntroVideo.dataset.previewPrimed === "1") return;
+    homeIntroVideo.dataset.previewPrimed = "1";
+    homeIntroVideo.preload = "auto";
+    homeIntroVideo.load();
+  };
+
+  const preloadFullVideo = () => {
+    if (!fullSrc || fullSrc === previewSrc || fullVideoReady || fullVideoLoading) return;
+    fullVideoLoading = true;
+    fullVideoPreloader = document.createElement("video");
+    fullVideoPreloader.preload = "auto";
+    fullVideoPreloader.src = fullSrc;
+    fullVideoPreloader.addEventListener(
+      "canplay",
+      () => {
+        fullVideoReady = true;
+        fullVideoLoading = false;
+      },
+      { once: true }
+    );
+    fullVideoPreloader.addEventListener(
+      "error",
+      () => {
+        fullVideoLoading = false;
+      },
+      { once: true }
+    );
+    fullVideoPreloader.load();
+  };
+
+  const swapToFullVideo = (resumeAt = 0, shouldPlay = true) => {
+    if (!fullSrc || fullSrc === previewSrc) return;
+    if (homeIntroVideo.dataset.streamStage === "full" || isSwitchingSource) return;
+    isSwitchingSource = true;
+    const targetTime = Math.max(0, resumeAt);
+    homeIntroVideo.dataset.streamStage = "full";
+    homeIntroVideo.src = fullSrc;
+    homeIntroVideo.preload = "auto";
+    homeIntroVideo.load();
+    homeIntroVideo.addEventListener(
+      "loadedmetadata",
+      () => {
+        applyHomeIntroSpeed();
+        try {
+          homeIntroVideo.currentTime = targetTime;
+        } catch (error) {}
+        if (shouldPlay) {
+          const playPromise = homeIntroVideo.play();
+          if (playPromise && typeof playPromise.catch === "function") {
+            playPromise.catch(() => {});
+          }
+        }
+        isSwitchingSource = false;
+      },
+      { once: true }
+    );
+  };
+
+  homeIntroVideo.dataset.streamStage = "preview";
+  homeIntroVideo.addEventListener("loadedmetadata", applyHomeIntroSpeed);
   if (homeIntroVideo.readyState >= 1) {
     applyHomeIntroSpeed();
-  } else {
-    homeIntroVideo.addEventListener("loadedmetadata", applyHomeIntroSpeed, { once: true });
   }
+
+  if ("IntersectionObserver" in window) {
+    const introVideoObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            primePreviewLoad();
+            introVideoObserver.disconnect();
+            break;
+          }
+        }
+      },
+      { rootMargin: "220px 0px" }
+    );
+    introVideoObserver.observe(homeIntroVideo);
+  } else {
+    primePreviewLoad();
+  }
+
   const homeIntroLabel = homeIntroPlayButton.querySelector(".home-hero-intro-label");
   const homeIntroIconPath = homeIntroPlayButton.querySelector(".home-hero-intro-icon-path");
   const playIconPath = "M8 6L18 12L8 18Z";
@@ -2433,19 +2532,39 @@ if (homeIntroPlayButton && homeIntroVideo) {
 
   homeIntroPlayButton.addEventListener("click", (event) => {
     event.preventDefault();
+    primePreviewLoad();
     if (homeIntroVideo.paused || homeIntroVideo.ended) {
       const playPromise = homeIntroVideo.play();
       if (playPromise && typeof playPromise.catch === "function") {
         playPromise.catch(() => {});
       }
+      preloadFullVideo();
     } else {
       homeIntroVideo.pause();
     }
   });
 
-  homeIntroVideo.addEventListener("play", syncHomeIntroButton);
+  homeIntroVideo.addEventListener("play", () => {
+    preloadFullVideo();
+    syncHomeIntroButton();
+  });
   homeIntroVideo.addEventListener("pause", syncHomeIntroButton);
-  homeIntroVideo.addEventListener("ended", syncHomeIntroButton);
+  homeIntroVideo.addEventListener("timeupdate", () => {
+    if (homeIntroVideo.dataset.streamStage !== "preview") return;
+    if (homeIntroVideo.currentTime < previewSwitchAt) return;
+    preloadFullVideo();
+    if (fullVideoReady) {
+      swapToFullVideo(homeIntroVideo.currentTime, true);
+    }
+  });
+  homeIntroVideo.addEventListener("ended", () => {
+    if (homeIntroVideo.dataset.streamStage === "preview" && fullSrc && fullSrc !== previewSrc) {
+      preloadFullVideo();
+      swapToFullVideo(homeIntroVideo.currentTime, true);
+      return;
+    }
+    syncHomeIntroButton();
+  });
   syncHomeIntroButton();
 }
 
@@ -3652,9 +3771,10 @@ PERSONAL_SITE_ZHIHU_PC_CASE_OVERRIDES = r"""
 .zhihu-pc-compare-card h3 {
   margin: 8px 0 0;
   color: #32404f;
-  font-family: "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", serif;
+  font-family: var(--font-title);
   font-size: clamp(20px, 2.2vw, 22px);
   font-weight: 500;
+  font-synthesis: none;
   line-height: 1.35;
 }
 
@@ -3699,9 +3819,10 @@ PERSONAL_SITE_ZHIHU_PC_CASE_OVERRIDES = r"""
 
 .zhihu-pc-ba-title {
   margin: 0 0 clamp(14px, 2vw, 20px);
-  font-family: "Source Han Serif SC", "Source Han Serif CN", "Source Han Serif", "Songti SC", serif;
+  font-family: var(--font-title);
   font-size: clamp(22px, 2.4vw, 24px);
   font-weight: 500;
+  font-synthesis: none;
   line-height: 1.3;
   color: rgba(50, 64, 79, 0.8);
 }
@@ -4045,9 +4166,10 @@ PERSONAL_SITE_AIR_CLOCK_CASE_OVERRIDES = r"""
 .air-clock-section-title {
   margin: 0;
   color: rgba(50, 64, 79, 0.8);
-  font-family: "Source Han Serif SC", "Source Han Serif CN", "Source Han Serif", "Songti SC", serif;
+  font-family: var(--font-title);
   font-size: 24px;
   font-weight: 600;
+  font-synthesis: none;
   line-height: 1.44;
 }
 
@@ -4486,10 +4608,13 @@ def home_page() -> str:
         </div>
         <div class="hero-stage reveal" id="self-intro-video">
           <video
-            src="/assets/custom/lvixaoweiVideo.mp4"
+            src="/assets/custom/lvixaoweiVideo-preview-30s.mp4"
+            data-full-src="/assets/custom/lvixaoweiVideo.mp4"
+            data-preview-switch-at="26"
+            poster="/assets/custom/lvixaoweiVideo-poster.jpg"
             controls
             playsinline
-            preload="metadata"
+            preload="none"
             aria-label="吕晓维自我介绍视频"></video>
         </div>
       </div>
@@ -5383,6 +5508,68 @@ def import_local_work_pages() -> None:
         print(f"Built work/{slug}/index.html")
 
 
+def optimize_dist_images() -> None:
+    try:
+        from PIL import Image, ImageOps
+    except Exception:
+        print("Skipped dist image optimization: Pillow is not available.")
+        return
+
+    optimized_count = 0
+    total_before = 0
+    total_after = 0
+
+    for image_path in sorted((DIST / "assets").rglob("*")):
+        if not image_path.is_file() or image_path.suffix.lower() not in LOSSY_IMAGE_SUFFIXES:
+            continue
+
+        try:
+            original_bytes = image_path.stat().st_size
+        except FileNotFoundError:
+            continue
+        total_before += original_bytes
+        output_bytes = original_bytes
+
+        try:
+            with Image.open(image_path) as opened:
+                image = ImageOps.exif_transpose(opened)
+                buffer = BytesIO()
+
+                if image_path.suffix.lower() in {".jpg", ".jpeg"}:
+                    if image.mode not in {"RGB", "L"}:
+                        image = image.convert("RGB")
+                    image.save(
+                        buffer,
+                        format="JPEG",
+                        quality=JPEG_QUALITY,
+                        subsampling=JPEG_SUBSAMPLING,
+                        optimize=True,
+                        progressive=True,
+                    )
+                else:
+                    # Keep PNG in lossless mode to preserve detail and edge sharpness.
+                    image.save(buffer, format="PNG", optimize=True, compress_level=9)
+
+                candidate = buffer.getvalue()
+                candidate_size = len(candidate)
+                if candidate_size + MIN_SAVING_BYTES < original_bytes:
+                    image_path.write_bytes(candidate)
+                    output_bytes = candidate_size
+                    optimized_count += 1
+        except Exception as exc:
+            print(f"Skipped image optimization for {image_path}: {exc}")
+
+        total_after += output_bytes
+
+    saved_bytes = total_before - total_after
+    print(
+        "Optimized dist images: "
+        f"{optimized_count} files, "
+        f"saved {saved_bytes / 1024 / 1024:.2f} MB "
+        f"({total_before / 1024 / 1024:.2f} -> {total_after / 1024 / 1024:.2f} MB)."
+    )
+
+
 def main() -> None:
     ensure_dist()
     write_file("index.html", home_page())
@@ -5410,6 +5597,7 @@ def main() -> None:
     print("Built case-studies/more-works/index.html")
     print("Built experiments/index.html")
     apply_base_path_to_dist()
+    optimize_dist_images()
 
 
 if __name__ == "__main__":

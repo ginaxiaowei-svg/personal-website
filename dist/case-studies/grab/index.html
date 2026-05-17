@@ -26,7 +26,7 @@
     });
   </script>
   <style>
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@700&family=Noto+Serif+SC:wght@400;500;600;700&display=block");
 
 :root {
   --bg: #ffffff;
@@ -41,6 +41,7 @@
   --page-pad: clamp(20px, 4vw, 56px);
   --content-max: 1120px;
   --font-body: "IBM Plex Sans", "Aptos", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-title: "Noto Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", serif;
 }
 
 * { box-sizing: border-box; }
@@ -48,6 +49,7 @@ html { scroll-behavior: smooth; }
 body {
   margin: 0;
   font-family: var(--font-body);
+  font-synthesis: none;
   color: var(--text);
   background: var(--bg);
   line-height: 1.55;
@@ -1047,8 +1049,9 @@ button { font: inherit; }
 .home-section-title,
 .home-card-title,
 .home-contact-title {
-  font-family: "Source Han Serif SC", "Source Han Serif CN", "Songti SC", serif;
+  font-family: var(--font-title);
   font-weight: 500;
+  font-synthesis: none;
   color: var(--home-title);
 }
 
@@ -1395,8 +1398,9 @@ button { font: inherit; }
 }
 
 .legacy-gallery-head h1 {
-  font-family: "Source Han Serif SC", "Source Han Serif CN", "Source Han Serif", "Songti SC", serif;
+  font-family: var(--font-title);
   font-weight: 500;
+  font-synthesis: none;
   color: #32404F;
 }
 
@@ -1487,8 +1491,9 @@ button { font: inherit; }
 .legacy-intro h2,
 .legacy-gallery-intro h2 {
   margin: 0;
-  font-family: "Source Han Serif SC", "Source Han Serif CN", "Source Han Serif", "Songti SC", serif;
+  font-family: var(--font-title);
   font-weight: 500;
+  font-synthesis: none;
   color: #32404F;
   line-height: 1.04;
   letter-spacing: -.04em;
@@ -1583,8 +1588,9 @@ button { font: inherit; }
 .legacy-practice-card h3,
 .legacy-project-card h3 {
   margin: 0;
-  font-family: "Source Han Serif SC", "Source Han Serif CN", "Source Han Serif", "Songti SC", serif;
+  font-family: var(--font-title);
   font-weight: 500;
+  font-synthesis: none;
   color: #32404F;
   font-size: 24px;
   line-height: 1.08;
@@ -2695,15 +2701,103 @@ const homeIntroPlayButton = document.querySelector(".home-hero-intro-button");
 const homeIntroVideo = document.querySelector("#self-intro-video video");
 if (homeIntroPlayButton && homeIntroVideo) {
   const homeIntroSpeed = 1.2;
+  const previewSrc = homeIntroVideo.getAttribute("src") || "";
+  const fullSrc = homeIntroVideo.dataset.fullSrc || previewSrc;
+  const previewSwitchAtRaw = Number(homeIntroVideo.dataset.previewSwitchAt || "26");
+  const previewSwitchAt = Number.isFinite(previewSwitchAtRaw) ? previewSwitchAtRaw : 26;
+  let fullVideoPreloader = null;
+  let fullVideoReady = false;
+  let fullVideoLoading = false;
+  let isSwitchingSource = false;
+
   const applyHomeIntroSpeed = () => {
     homeIntroVideo.defaultPlaybackRate = homeIntroSpeed;
     homeIntroVideo.playbackRate = homeIntroSpeed;
   };
+
+  const primePreviewLoad = () => {
+    if (homeIntroVideo.dataset.previewPrimed === "1") return;
+    homeIntroVideo.dataset.previewPrimed = "1";
+    homeIntroVideo.preload = "auto";
+    homeIntroVideo.load();
+  };
+
+  const preloadFullVideo = () => {
+    if (!fullSrc || fullSrc === previewSrc || fullVideoReady || fullVideoLoading) return;
+    fullVideoLoading = true;
+    fullVideoPreloader = document.createElement("video");
+    fullVideoPreloader.preload = "auto";
+    fullVideoPreloader.src = fullSrc;
+    fullVideoPreloader.addEventListener(
+      "canplay",
+      () => {
+        fullVideoReady = true;
+        fullVideoLoading = false;
+      },
+      { once: true }
+    );
+    fullVideoPreloader.addEventListener(
+      "error",
+      () => {
+        fullVideoLoading = false;
+      },
+      { once: true }
+    );
+    fullVideoPreloader.load();
+  };
+
+  const swapToFullVideo = (resumeAt = 0, shouldPlay = true) => {
+    if (!fullSrc || fullSrc === previewSrc) return;
+    if (homeIntroVideo.dataset.streamStage === "full" || isSwitchingSource) return;
+    isSwitchingSource = true;
+    const targetTime = Math.max(0, resumeAt);
+    homeIntroVideo.dataset.streamStage = "full";
+    homeIntroVideo.src = fullSrc;
+    homeIntroVideo.preload = "auto";
+    homeIntroVideo.load();
+    homeIntroVideo.addEventListener(
+      "loadedmetadata",
+      () => {
+        applyHomeIntroSpeed();
+        try {
+          homeIntroVideo.currentTime = targetTime;
+        } catch (error) {}
+        if (shouldPlay) {
+          const playPromise = homeIntroVideo.play();
+          if (playPromise && typeof playPromise.catch === "function") {
+            playPromise.catch(() => {});
+          }
+        }
+        isSwitchingSource = false;
+      },
+      { once: true }
+    );
+  };
+
+  homeIntroVideo.dataset.streamStage = "preview";
+  homeIntroVideo.addEventListener("loadedmetadata", applyHomeIntroSpeed);
   if (homeIntroVideo.readyState >= 1) {
     applyHomeIntroSpeed();
-  } else {
-    homeIntroVideo.addEventListener("loadedmetadata", applyHomeIntroSpeed, { once: true });
   }
+
+  if ("IntersectionObserver" in window) {
+    const introVideoObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            primePreviewLoad();
+            introVideoObserver.disconnect();
+            break;
+          }
+        }
+      },
+      { rootMargin: "220px 0px" }
+    );
+    introVideoObserver.observe(homeIntroVideo);
+  } else {
+    primePreviewLoad();
+  }
+
   const homeIntroLabel = homeIntroPlayButton.querySelector(".home-hero-intro-label");
   const homeIntroIconPath = homeIntroPlayButton.querySelector(".home-hero-intro-icon-path");
   const playIconPath = "M8 6L18 12L8 18Z";
@@ -2721,19 +2815,39 @@ if (homeIntroPlayButton && homeIntroVideo) {
 
   homeIntroPlayButton.addEventListener("click", (event) => {
     event.preventDefault();
+    primePreviewLoad();
     if (homeIntroVideo.paused || homeIntroVideo.ended) {
       const playPromise = homeIntroVideo.play();
       if (playPromise && typeof playPromise.catch === "function") {
         playPromise.catch(() => {});
       }
+      preloadFullVideo();
     } else {
       homeIntroVideo.pause();
     }
   });
 
-  homeIntroVideo.addEventListener("play", syncHomeIntroButton);
+  homeIntroVideo.addEventListener("play", () => {
+    preloadFullVideo();
+    syncHomeIntroButton();
+  });
   homeIntroVideo.addEventListener("pause", syncHomeIntroButton);
-  homeIntroVideo.addEventListener("ended", syncHomeIntroButton);
+  homeIntroVideo.addEventListener("timeupdate", () => {
+    if (homeIntroVideo.dataset.streamStage !== "preview") return;
+    if (homeIntroVideo.currentTime < previewSwitchAt) return;
+    preloadFullVideo();
+    if (fullVideoReady) {
+      swapToFullVideo(homeIntroVideo.currentTime, true);
+    }
+  });
+  homeIntroVideo.addEventListener("ended", () => {
+    if (homeIntroVideo.dataset.streamStage === "preview" && fullSrc && fullSrc !== previewSrc) {
+      preloadFullVideo();
+      swapToFullVideo(homeIntroVideo.currentTime, true);
+      return;
+    }
+    syncHomeIntroButton();
+  });
   syncHomeIntroButton();
 }
 
