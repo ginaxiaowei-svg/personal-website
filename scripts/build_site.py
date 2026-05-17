@@ -29,7 +29,7 @@ LEGACY_PORTFOLIO_IMAGE_NAMES = [*[f"a{i}.png" for i in range(1, 20)], *[f"c{i}.p
 CONTACT_PHONE = "15600132844"
 CONTACT_EMAIL = "ginaxiaowei@gmail.com"
 SITE_BASE_PATH = "/" + os.environ.get("SITE_BASE_PATH", "").strip().strip("/") if os.environ.get("SITE_BASE_PATH", "").strip().strip("/") else ""
-ROOT_RELATIVE_ATTR_RE = re.compile(r'(?P<prefix>\b(?:href|src|content)=["\'])(?P<path>/(?!/)[^"\']*)')
+ROOT_RELATIVE_ATTR_RE = re.compile(r'(?P<prefix>\b(?:href|src|content|poster|data-full-src)=["\'])(?P<path>/(?!/)[^"\']*)')
 ROOT_RELATIVE_CSS_URL_RE = re.compile(r'(?P<prefix>url\((?P<quote>["\']?))(?P<path>/(?!/)[^)"\']+)(?P=quote)(?P<suffix>\))')
 LOSSY_IMAGE_SUFFIXES = {".png", ".jpg", ".jpeg"}
 JPEG_QUALITY = 90
