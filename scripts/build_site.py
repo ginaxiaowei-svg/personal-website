@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import html
+import hashlib
 import json
 import os
 import re
@@ -16,6 +17,7 @@ from site_data import ABOUT, CASE_STUDIES, EXPERIMENTS, EXPERIMENTS_PAGE, HOME, 
 ROOT = Path(__file__).resolve().parent.parent
 DIST = ROOT / "dist"
 ASSETS_SRC = ROOT / "assets"
+STYLESHEET_VERSION = hashlib.sha1((ROOT / "styles.css").read_bytes()).hexdigest()[:10]
 LOCAL_WORK_SOURCE = ROOT / "source" / "work"
 LOCAL_WORK_PAGE_SLUGS = [
     "zhihu-detail-container-rebuild",
@@ -31,6 +33,10 @@ CONTACT_EMAIL = "ginaxiaowei@gmail.com"
 SITE_BASE_PATH = "/" + os.environ.get("SITE_BASE_PATH", "").strip().strip("/") if os.environ.get("SITE_BASE_PATH", "").strip().strip("/") else ""
 ROOT_RELATIVE_ATTR_RE = re.compile(r'(?P<prefix>\b(?:href|src|content|poster|data-full-src)=["\'])(?P<path>/(?!/)[^"\']*)')
 ROOT_RELATIVE_CSS_URL_RE = re.compile(r'(?P<prefix>url\((?P<quote>["\']?))(?P<path>/(?!/)[^)"\']+)(?P=quote)(?P<suffix>\))')
+ROOT_STYLESHEET_LINK_RE = re.compile(
+    r'(?P<prefix><link\b[^>]*\brel=["\']stylesheet["\'][^>]*\bhref=["\'])/styles\.css(?:\?[^"\']*)?(?P<suffix>["\'])',
+    flags=re.IGNORECASE,
+)
 LOSSY_IMAGE_SUFFIXES = {".png", ".jpg", ".jpeg"}
 JPEG_QUALITY = 90
 JPEG_SUBSAMPLING = 0
@@ -5429,6 +5435,11 @@ def normalize_browser_head(content: str) -> str:
         content = re.sub(icon_pattern, favicon + "\n", content, count=1, flags=re.IGNORECASE)
     else:
         content = re.sub(r"(</head>)", "  " + favicon + "\n\\1", content, count=1, flags=re.IGNORECASE)
+
+    content = ROOT_STYLESHEET_LINK_RE.sub(
+        lambda match: f'{match.group("prefix")}/styles.css?v={STYLESHEET_VERSION}{match.group("suffix")}',
+        content,
+    )
 
     return content
 
