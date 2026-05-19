@@ -2,7 +2,7 @@
   font-family: "Source Han Serif SC";
   font-style: normal;
   font-weight: 400;
-  font-display: block;
+  font-display: swap;
   src: url("https://fonts.gstatic.com/s/notoserifsc/v35/H4cyBXePl9DZ0Xe7gG9cyOj7uK2-n-D2rd4FY7SCqyWv.ttf") format("truetype");
 }
 
@@ -10,7 +10,7 @@
   font-family: "Source Han Serif SC";
   font-style: normal;
   font-weight: 500;
-  font-display: block;
+  font-display: swap;
   src: url("https://fonts.gstatic.com/s/notoserifsc/v35/H4cyBXePl9DZ0Xe7gG9cyOj7uK2-n-D2rd4FY7SwqyWv.ttf") format("truetype");
 }
 
@@ -18,7 +18,7 @@
   font-family: "Source Han Serif SC";
   font-style: normal;
   font-weight: 600;
-  font-display: block;
+  font-display: swap;
   src: url("https://fonts.gstatic.com/s/notoserifsc/v35/H4cyBXePl9DZ0Xe7gG9cyOj7uK2-n-D2rd4FY7RcrCWv.ttf") format("truetype");
 }
 
@@ -26,7 +26,7 @@
   font-family: "Source Han Serif SC";
   font-style: normal;
   font-weight: 700;
-  font-display: block;
+  font-display: swap;
   src: url("https://fonts.gstatic.com/s/notoserifsc/v35/H4cyBXePl9DZ0Xe7gG9cyOj7uK2-n-D2rd4FY7RlrCWv.ttf") format("truetype");
 }
 
@@ -3483,7 +3483,7 @@ body.case-study-page.case-study-page--zhihu .zhihu-strategy-one-next {
   margin: 0;
   color: #32404f;
   font-family: "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", "STSong", serif;
-  font-size: 12px;
+  font-size: 20px;
   font-weight: 500;
   line-height: 1.5;
 }
@@ -6157,6 +6157,13 @@ body.case-study-page.case-study-page--zhihu > main.case-shell.zhihu-case-shell >
   height: 24px;
 }
 
+/* a/b/c/d/e/f 为整块导出图标（3x），按 Figma 节点 42x42 展示。 */
+.case-study-page--interaction-revamp-lite .interaction-revamp-kpi-icon,
+.case-study-page--interaction-revamp-lite .interaction-revamp-kpi-icon--lg {
+  width: 42px;
+  height: 42px;
+}
+
 .interaction-revamp-decision-module {
   margin-top: 20px;
   padding: 20px;
@@ -6449,6 +6456,11 @@ body.case-study-page.case-study-page--zhihu > main.case-shell.zhihu-case-shell >
   margin-top: 0;
 }
 
+/* 仅移除内容区末尾分隔线，保留 footer 顶部分隔线。 */
+.case-study-page--interaction-revamp-lite .zhihu-social-hero {
+  border-bottom: 0;
+}
+
 .interaction-revamp-decision-note-text--contribution {
   gap: 14px;
 }
@@ -6630,9 +6642,34 @@ body.case-study-page.case-study-page--zhihu > main.case-shell.zhihu-case-shell >
   }
 }
 
+/* 互动 bar 案例页：字号随视口同步缩放（仅此页面） */
+.case-study-page--interaction-revamp-lite .zhihu-social-title {
+  font-size: clamp(28px, 7vw, 52px);
+}
+
+.case-study-page--interaction-revamp-lite .zhihu-social-diagnosis-title,
+.case-study-page--interaction-revamp-lite .zhilink-third-title {
+  font-size: clamp(20px, 3.4vw, 24px);
+}
+
+.case-study-page--interaction-revamp-lite .interaction-revamp-decision-title {
+  font-size: clamp(14px, 1.8vw, 16px);
+}
+
+.case-study-page--interaction-revamp-lite .interaction-revamp-validation-caption,
+.case-study-page--interaction-revamp-lite .interaction-revamp-feedback-module p {
+  font-size: clamp(16px, 2.4vw, 20px);
+}
+
 .case-study-page--interaction-revamp-lite #social-zhilink,
 .case-study-page--interaction-revamp-lite #social-circle {
   display: none !important;
+}
+
+.case-study-page--air-clock #air-widget .air-clock-image-frame {
+  border: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
 }
 
 .case-study-page--interaction-revamp-lite .site-footer--case-nav {

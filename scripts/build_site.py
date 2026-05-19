@@ -4197,6 +4197,12 @@ PERSONAL_SITE_AIR_CLOCK_CASE_OVERRIDES = r"""
   box-shadow: 0 18px 40px rgba(52, 69, 86, 0.06);
 }
 
+.air-clock-image-frame--plain {
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+
 .air-clock-image-frame img {
   display: block;
   width: 100%;
@@ -5095,9 +5101,10 @@ def air_clock_case_page() -> str:
         images: list[str] = []
         for index, (src, alt) in enumerate(section["images"]):
             crop_class = " air-clock-image-frame--crop" if section["id"] == "air-store" and index == 0 else ""
+            plain_class = " air-clock-image-frame--plain" if section["id"] == "air-widget" and index == 0 else ""
             images.append(
                 f"""
-              <figure class="air-clock-image-frame{crop_class}">
+              <figure class="air-clock-image-frame{crop_class}{plain_class}">
                 <img src="{src}" alt="{alt}" loading="lazy" />
               </figure>
               """
