@@ -529,7 +529,7 @@ ABOUT = {
 
 HOME = {
     "hero_title": "Hi~ 我是晓维",
-    "hero_body": "一名有10年工作经验的产品设计师，近5年就职于知乎，主负责知乎核心消费场景（问答页）和社交方向的设计，擅长在复杂系统中关注用户行为与平台生态设计",
+    "hero_body": "一名有10年工作经验的产品设计师，近5年就职于知乎，主负责知乎核心消费场景和社交方向的设计，擅长在复杂系统中关注用户行为与平台生态设计",
     "hero_media": "/assets/framer/images/home-hero.png",
     "showreel": "/assets/framer/assets/qmNVzBBo2CSFLiXgZlEATXcHxYY.mp4",
     "featured_section_title": "精选作品",

@@ -8236,6 +8236,12 @@ body.case-study-page.case-study-page--zhihu > main.case-shell.zhihu-case-shell >
   box-shadow: 0 18px 40px rgba(52, 69, 86, 0.06);
 }
 
+.air-clock-image-frame--plain {
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+
 .air-clock-image-frame img {
   display: block;
   width: 100%;
