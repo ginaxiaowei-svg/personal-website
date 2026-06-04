@@ -29,7 +29,7 @@ RESUME_PDF_SOURCE = ROOT / RESUME_PDF_DIST
 LEGACY_PORTFOLIO_IMAGE_SOURCE_DIR = Path("/Users/zhihu/Desktop/2021 作品集")
 LEGACY_PORTFOLIO_IMAGE_NAMES = [*[f"a{i}.png" for i in range(1, 20)], *[f"c{i}.png" for i in range(1, 5)]]
 CONTACT_PHONE = "15600132844"
-CONTACT_EMAIL = "ginaxiaowei@gmail.com"
+CONTACT_EMAIL = "13311074353@163.com"
 SITE_BASE_PATH = "/" + os.environ.get("SITE_BASE_PATH", "").strip().strip("/") if os.environ.get("SITE_BASE_PATH", "").strip().strip("/") else ""
 ROOT_RELATIVE_ATTR_RE = re.compile(r'(?P<prefix>\b(?:href|src|content|poster|data-full-src)=["\'])(?P<path>/(?!/)[^"\']*)')
 ROOT_RELATIVE_CSS_URL_RE = re.compile(r'(?P<prefix>url\((?P<quote>["\']?))(?P<path>/(?!/)[^)"\']+)(?P=quote)(?P<suffix>\))')
@@ -41,6 +41,20 @@ LOSSY_IMAGE_SUFFIXES = {".png", ".jpg", ".jpeg"}
 JPEG_QUALITY = 90
 JPEG_SUBSAMPLING = 0
 MIN_SAVING_BYTES = 8 * 1024
+DEFAULT_VERCEL_ANALYTICS_SCRIPT_SRC = "/_vercel/insights/script.js"
+VERCEL_ANALYTICS_BOOTSTRAP_SNIPPET = (
+    "<script>\n"
+    "window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };\n"
+    "</script>"
+)
+VERCEL_ANALYTICS_SCRIPT_TAG_RE = re.compile(
+    r'\s*<script[^>]+src=["\'][^"\']*(?:_vercel/insights|vercel-insights\.com)[^"\']*["\'][^>]*></script>\s*',
+    flags=re.IGNORECASE,
+)
+VERCEL_ANALYTICS_BOOTSTRAP_RE = re.compile(
+    r"\s*<script>\s*window\.va\s*=\s*window\.va\s*\|\|\s*function\s*\(\)\s*\{\s*\(window\.vaq\s*=\s*window\.vaq\s*\|\|\s*\[\]\)\.push\(arguments\);\s*\};?\s*</script>\s*",
+    flags=re.IGNORECASE,
+)
 
 
 CSS = r"""
@@ -4507,8 +4521,8 @@ def portfolio_footer() -> str:
               <button class="portfolio-footer-copy-button" type="button" data-copy-text="15600132844">复制</button>
             </span>
             <span class="portfolio-footer-item">
-              <a href="mailto:ginaxiaowei@gmail.com">邮箱：ginaxiaowei@gmail.com</a>
-              <button class="portfolio-footer-copy-button" type="button" data-copy-text="ginaxiaowei@gmail.com">复制</button>
+              <a href="mailto:13311074353@163.com">邮箱：13311074353@163.com</a>
+              <button class="portfolio-footer-copy-button" type="button" data-copy-text="13311074353@163.com">复制</button>
             </span>
           </div>
         </div>
@@ -5586,6 +5600,43 @@ def optimize_dist_images() -> None:
     )
 
 
+def resolve_vercel_analytics_script_src() -> str:
+    raw = os.environ.get("VERCEL_OBSERVABILITY_CLIENT_CONFIG", "").strip()
+    if not raw:
+        return DEFAULT_VERCEL_ANALYTICS_SCRIPT_SRC
+    try:
+        config = json.loads(raw)
+        analytics_config = config.get("analytics") if isinstance(config, dict) else None
+        script_src = analytics_config.get("scriptSrc") if isinstance(analytics_config, dict) else None
+        if isinstance(script_src, str) and script_src.strip():
+            return script_src.strip()
+    except Exception as exc:
+        print(f"Failed to parse VERCEL_OBSERVABILITY_CLIENT_CONFIG: {exc}")
+    return DEFAULT_VERCEL_ANALYTICS_SCRIPT_SRC
+
+
+def inject_vercel_analytics() -> None:
+    script_src = html.escape(resolve_vercel_analytics_script_src(), quote=True)
+    analytics_script_tag = f'<script defer src="{script_src}"></script>'
+    analytics_snippet = f"{VERCEL_ANALYTICS_BOOTSTRAP_SNIPPET}\n{analytics_script_tag}"
+    injected = 0
+    replaced = 0
+    for path in DIST.rglob("*.html"):
+        content = path.read_text(encoding="utf-8")
+        if "</head>" not in content:
+            continue
+
+        cleaned = VERCEL_ANALYTICS_SCRIPT_TAG_RE.sub("\n", content)
+        cleaned = VERCEL_ANALYTICS_BOOTSTRAP_RE.sub("\n", cleaned)
+        if cleaned != content:
+            replaced += 1
+
+        updated = cleaned.replace("</head>", f"    {analytics_snippet}\n  </head>", 1)
+        path.write_text(updated, encoding="utf-8")
+        injected += 1
+    print(f"Injected Vercel Analytics snippet into {injected} HTML files (replaced existing in {replaced}).")
+
+
 def main() -> None:
     ensure_dist()
     write_file("index.html", home_page())
@@ -5613,6 +5664,7 @@ def main() -> None:
     print("Built case-studies/more-works/index.html")
     print("Built experiments/index.html")
     apply_base_path_to_dist()
+    inject_vercel_analytics()
     optimize_dist_images()
 
 

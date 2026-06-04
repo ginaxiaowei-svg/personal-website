@@ -2912,6 +2912,15 @@ h1 span {
   letter-spacing: 0;
 }
 
+.zhihu-case-meta .zhihu-case-meta-value {
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  color: #32404f;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  letter-spacing: 0;
+}
+
 .zhihu-case-intro {
   margin-top: var(--space-40);
   padding-left: 18px;

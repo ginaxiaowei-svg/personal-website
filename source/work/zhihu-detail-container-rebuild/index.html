@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>知乎问答详情页容器重构 | Case Study</title>
-    <meta name="description" content="知乎问答详情页容器重构，围绕筛选与消费并存的结构改版案例。" />
+    <title>知乎问答页改版 | Case Study</title>
+    <meta name="description" content="知乎问答页改版，围绕筛选与消费并存的结构改版案例。" />
     <link rel="stylesheet" href="/styles.css?v=20260509-1550" />
   </head>
   <body class="case-study-page case-study-page--zhihu">
@@ -33,11 +33,11 @@
       </button>
       <div class="contact-popover" hidden>
         <div class="contact-popover-list">
-          <a class="contact-popover-item" href="mailto:ginaxiaowei@gmail.com">
+          <a class="contact-popover-item" href="mailto:13311074353@163.com">
             <span class="contact-popover-icon" aria-hidden="true">@</span>
             <span class="contact-popover-copy">
               <strong>邮箱</strong>
-              <span>ginaxiaowei@gmail.com</span>
+              <span>13311074353@163.com</span>
             </span>
           </a>
           <a class="contact-popover-item" href="tel:15600132844">
@@ -69,7 +69,7 @@
           <a href="#overview" class="zhihu-case-outline-link">项目概览</a>
           
                 <div class="zhihu-case-outline-children">
-                  <a href="#why" class="zhihu-case-outline-child">业务愿景（Why）</a><a href="#scope" class="zhihu-case-outline-child">范围收敛（Scope）</a><a href="#insight" class="zhihu-case-outline-child">用户行为洞察（Insight）</a><a href="#what" class="zhihu-case-outline-child">阶段目标（What）</a>
+                  <a href="#why" class="zhihu-case-outline-child">业务背景（Why）</a><a href="#insight" class="zhihu-case-outline-child">用户行为洞察（Insight）</a><a href="#what" class="zhihu-case-outline-child">阶段目标（What）</a>
                 </div>
               
         </div>
@@ -100,16 +100,16 @@
       <div class="zhihu-case-main">
         <section class="zhihu-case-hero reveal is-visible" id="overview">
           <img class="zhihu-case-brand" src="/assets/zhicon_brand_zhihu_logo.svg" alt="知乎 Logo" />
-          <h1 class="zhihu-case-title">知乎问答详情页容器重构</h1>
+          <h1 class="zhihu-case-title">知乎问答页改版</h1>
 
           <div class="zhihu-case-meta">
             <div>
               <span>我的角色</span>
-              <strong>产品设计 Owner</strong>
+              <span class="zhihu-case-meta-value">产品设计 Owner</span>
             </div>
             <div>
               <span>项目时间</span>
-              <strong>2022 年 4 月 → 2024 年 6 月 · 26 个月</strong>
+              <span class="zhihu-case-meta-value">2023 年</span>
             </div>
           </div>
 
@@ -122,31 +122,8 @@
         </section>
 
         <section class="zhihu-case-section reveal is-visible" id="why">
-          <h2>业务愿景（Why）</h2>
-          <p class="zhihu-case-kicker">通过「统一、融合」的产品设计手段来达到「降本增效」</p>
-          <ul class="zhihu-case-list">
-            <li>统一的容器 & 互动提升消费效率，降低认知成本（不同内容形态/规则不一致，用户需要反复适应）</li>
-          </ul>
-        </section>
-
-        <section class="zhihu-case-section reveal is-visible" id="scope">
-          <h2>范围收敛（Scope）</h2>
-          <p class="zhihu-case-muted">当前的内容组织形式有 3 种，用户认知成本高（如下图，3 种容器）</p>
-          <p class="zhihu-case-kicker">阶段聚焦：先做核心消费容器 A（回答 / 文章 - 长图文内容）</p>
-          <ul class="zhihu-case-list">
-            <li>回答/文章是知乎最核心的消费载体，消费时长/消费深度/互动量/变现等关键指标上贡献最高，因此本轮结构统一优先聚焦回答/文章容器</li>
-            <li>视频不在业务中心 → 可以暂不纳入本轮结构统一</li>
-          </ul>
-
-          <figure class="zhihu-figure zhihu-figure--panel">
-            <img
-              class="js-zoomable-image"
-              src="/assets/case-study/40000371-127413.png"
-              data-zoom-src="/assets/case-study/40000371-127413.png"
-              alt="知乎现有三种内容容器对比图"
-              loading="lazy"
-            />
-          </figure>
+          <h2>业务背景（Why）</h2>
+          <p>知乎面临流量增长放缓、创作者流失问题，内容消费和互动减少，直接影响创作者动力。所以希望通过产品设计手段来加提升内容的消费和互动。</p>
         </section>
 
         <section class="zhihu-case-section reveal is-visible" id="insight">
@@ -199,28 +176,11 @@
             <article class="zhihu-strategy-one-row">
               <span class="zhihu-strategy-one-line" aria-hidden="true"></span>
               <div class="zhihu-strategy-one-content">
-                <h3>小流量实验：</h3>
-                <div class="zhihu-strategy-one-cards">
-                  <section class="zhihu-strategy-one-card">
-                    <h4>验证命题</h4>
-                    <p>用户能否在首条回答内感知“下面还有更多内容”，从而降低 10 秒内退出？</p>
-                  </section>
-                  <section class="zhihu-strategy-one-card">
-                    <h4>验证指标</h4>
-                    <p>10 秒退出率降低 ⬇️<br />「下一个」按钮点击率上升 ⬆️<br />消费深度上升 ⬆️</p>
-                  </section>
-                </div>
-              </div>
-            </article>
-
-            <article class="zhihu-strategy-one-row">
-              <span class="zhihu-strategy-one-line" aria-hidden="true"></span>
-              <div class="zhihu-strategy-one-content">
                 <h3>结论与下一步：</h3>
                 <div class="zhihu-strategy-one-cards">
                   <section class="zhihu-strategy-one-card">
                     <h4>数据指标</h4>
-                    <p>XXX</p>
+                    <p>用户能否在首条回答内感知“下面还有更多内容”，从而降低 10 秒内退出？</p>
                   </section>
                   <section class="zhihu-strategy-one-card">
                     <h4>用户反馈</h4>
@@ -777,27 +737,15 @@
           <div class="zhihu-metric-grid">
             
         <article class="zhihu-metric-card">
+          <strong>1.3～2.0</strong>
+          <h3>人均真实消费时长</h3>
+          <p>人均消费深度增加</p>
+        </article>
+      
+        <article class="zhihu-metric-card">
           <strong>+21 %</strong>
           <h3>大盘消费增长</h3>
           <p>短容器带动平台整体消费增长</p>
-        </article>
-      
-        <article class="zhihu-metric-card">
-          <strong>67.09 %</strong>
-          <h3>详情页路径，短容器曝光 UV 渗透</h3>
-          <p>超过 2/3 的详情页用户会看到短容器</p>
-        </article>
-      
-        <article class="zhihu-metric-card">
-          <strong>4.5 亿</strong>
-          <h3>短容器 cardshow（50%的流量）</h3>
-          <p>短容器成为站内第三大流量场</p>
-        </article>
-      
-        <article class="zhihu-metric-card">
-          <strong>40.96</strong>
-          <h3>短容器人均 Cardshow</h3>
-          <p>短容器的用户平均产生 40 次卡片曝光，用户在单个 SESSION 阅读中消费更多内容</p>
         </article>
       
         <article class="zhihu-metric-card">
@@ -810,6 +758,18 @@
           <strong>+14.8%</strong>
           <h3>商业广告Adload</h3>
           <p>每 100 次内容曝光约 15 次商业曝光，在不影响体验的情况下提升商业承载</p>
+        </article>
+      
+        <article class="zhihu-metric-card">
+          <strong>40.96</strong>
+          <h3>短容器人均 Cardshow</h3>
+          <p>短容器的用户平均产生 40 次卡片曝光，用户在单个 SESSION 阅读中消费更多内容</p>
+        </article>
+      
+        <article class="zhihu-metric-card">
+          <strong>67.09 %</strong>
+          <h3>详情页路径，短容器曝光 UV 渗透</h3>
+          <p>超过 2/3 的详情页用户会看到短容器</p>
         </article>
       
           </div>
@@ -866,8 +826,8 @@
               <button class="portfolio-footer-copy-button" type="button" data-copy-text="15600132844">复制</button>
             </span>
             <span class="portfolio-footer-item">
-              <a href="mailto:ginaxiaowei@gmail.com">邮箱：ginaxiaowei@gmail.com</a>
-              <button class="portfolio-footer-copy-button" type="button" data-copy-text="ginaxiaowei@gmail.com">复制</button>
+              <a href="mailto:13311074353@163.com">邮箱：13311074353@163.com</a>
+              <button class="portfolio-footer-copy-button" type="button" data-copy-text="13311074353@163.com">复制</button>
             </span>
           </div>
         </div>

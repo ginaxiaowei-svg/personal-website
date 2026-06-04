@@ -529,7 +529,7 @@ ABOUT = {
 
 HOME = {
     "hero_title": "Hi~ 我是晓维",
-    "hero_body": "一名有10年工作经验的产品设计师，近5年就职于知乎，主负责知乎核心消费场景和社交方向的设计，擅长在复杂系统中关注用户行为与平台生态设计",
+    "hero_body": "一名有 10 年工作经验的产品设计师，近 5 年就职于知乎，主负责知乎核心消费场景和社交方向的设计，擅长在复杂系统中关注用户行为与平台生态设计",
     "hero_media": "/assets/framer/images/home-hero.png",
     "showreel": "/assets/framer/assets/qmNVzBBo2CSFLiXgZlEATXcHxYY.mp4",
     "featured_section_title": "精选作品",
@@ -537,8 +537,8 @@ HOME = {
         {
             "slug": "solace",
             "eyebrow": "复杂系统设计 · 内容消费升级 · 复杂产品决策力",
-            "title": "知乎问答详情页容器重构",
-            "summary": "通过重构知乎问答详情页核心结构，优化高密度内容场景下的信息组织与消费路径，在复杂业务约束下提升用户消费效率和消费深度，并增强平台整体内容分发与商业转化能力",
+            "title": "知乎问答页改版",
+            "summary": "通过重构知乎问答详情页核心结构，优化高密度内容场景下的信息组织与消费路径，在复杂业务约束下提升用户消费效率和消费深度，并增强平台整体内容分发与商业转化能力。",
             "card_media": "/assets/case-study/case%201.png",
             "href": "/work/zhihu-detail-container-rebuild/",
             "button_label": "查看案例",
@@ -546,8 +546,8 @@ HOME = {
         {
             "slug": "parkit",
             "eyebrow": "提升互动率 · 用户表达 · 社区长期价值",
-            "title": "知乎互动bar改版",
-            "summary": "围绕知乎社区表达机制，对互动 Bar 进行系统性升级，在用户表达效率、内容互动体验与社区长期价值之间建立平衡，统一多内容场景下的互动表达体系。",
+            "title": "知乎互动 bar 改版",
+            "summary": "围绕知乎社区表达机制，对互动 bar 进行系统性升级，在用户表达效率、内容互动体验与社区长期价值之间建立平衡，统一多内容场景下的互动表达体系。",
             "card_media": "/assets/case-study/case%202.png",
             "href": "/work/zhihu-interaction-bar-revamp-2026/",
             "button_label": "查看案例",
